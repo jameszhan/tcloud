@@ -1,13 +1,16 @@
 window.$polling = (function(){
+  var started = false;
   var tasks = [], run = function(){
     for(var i = 0; i < tasks.length; i++){
       tasks[i]();
     }      
   }, schedule = function(){
-    run();
-    window.setTimeout(function(){
-      schedule();
-    }, 10000); 
+    if(!started){
+      run();
+      window.setTimeout(function(){
+        schedule();
+      }, 10000); 
+    }
   };
   return {
     add: function(task, type, interval) {
@@ -83,8 +86,7 @@ angular.module('webvirtDirectives', []).
         var changed = false;
         var deferred = $q.defer();
         deferred.promise.then(function(){
-          $polling.add(function(){   
-            console.log(attrs.url);
+          $polling.add(function(){  
             $http.get(attrs.url).success(function(data){
               scope.tops = data;
             });
@@ -94,7 +96,7 @@ angular.module('webvirtDirectives', []).
         });
         $timeout(function(){
           deferred.resolve();
-        }, 0);
+        }, 1000);
                 
         /*
         scope.$watch('url', function(new_value, old_value){       
