@@ -24,29 +24,19 @@ function DataCenterCtrl($scope, $http, $routeParams) {
   }); 
 }
 
-/*
-var vmMgmtModule = angular.module("vmMgmtModule", []);
-vmMgmtModule.factory("currentCluster", function ($window) {
-  return {
-    target: nil
-  };
-});
-var injector = angular.injector(['vmMgmtModule','ng']);
-var cluster = injector.get("currentCluster");
-*/
-
-function ClusterCtrl($scope, $http, $routeParams, $dialog, $templateCache, $rootScope) {
+function ClusterCtrl($scope, $http, $routeParams, $dialog, $templateCache, currentCluster) {
   for(var i = 0; i < 6; i++){
-    $http.get("/assets/vms/step_0" + (i + 1) + ".html", {cache:$templateCache})
+    $http.get("/partials/vms/step_0" + (i + 1) + ".html", {cache:$templateCache})
   }  
 
   $http.get('/clusters/' + $routeParams.id).success(function(data) {
     $scope.cluster = data;
-    $rootScope.cluster = data;
+    currentCluster.set($scope.cluster);
     $scope.hosts = data.hosts;
     $scope.vmSetupModal = true;
     $scope.vms = flatten($scope.hosts, 'virtual_machines');
   });
+  
   $scope.opts = {
     backdrop: true,
     keyboard: true,
@@ -64,6 +54,7 @@ function ClusterCtrl($scope, $http, $routeParams, $dialog, $templateCache, $root
   }
 }
 
+
 function HostCtrl($scope, $http) {
 
 }
@@ -74,13 +65,14 @@ function VMCtrl($scope, $http) {
 
 }
 
-function VMWorkflowCtrl($scope, $http, $templateCache, $rootScope, dialog) {
+function VMWorkflowCtrl($scope, $http, $templateCache, dialog, currentCluster) {
+  $scope.cluster = currentCluster.get();
   $scope.current_step = 1;
   $scope.step01_style = "btn-success";
   $scope.steps = ["虚拟机设置", "操作系统类型", "选择计算方案", "选择存储方案", "选择网络方案", "确认创建"];
   
   $scope.load_step = function(){
-    dialog.modalEl.find('.modal-body').html($templateCache.get("/assets/vms/step_0" + $scope.current_step + ".html")[1]);
+    dialog.modalEl.find('.modal-body').html($templateCache.get("/partials/vms/step_0" + $scope.current_step + ".html")[1]);
   };  
   $scope.prev_step = function(){
     $scope.current_step -= 1;

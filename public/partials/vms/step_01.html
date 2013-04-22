@@ -1,0 +1,61 @@
+<fieldset>
+  <legend>{{steps[0]}}</legend>
+  <div class="row-fluid">  
+    <div class="span8">
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label for="cluster" class="control-label">集群：</label>
+        <div class="controls">
+            <select disabled="disabled" class="span5">
+              <option value="{{cluster.id}}">{{cluster.name}}</option>
+            </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">主机(可不选择)：</label>
+        <div class="controls">
+          <select ng-model="host" ng-options="h.id as h.name for h in cluster.hosts" class="span5">
+            <option value="">-- 默认主机 --</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="name" class="control-label">名字：</label>
+        <div class="controls">
+          <input type="text" ng-model="name" class="input" placeholder="虚拟机名称" />
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">显示设置：</label>
+        <div class="controls">
+            <select ng-model="view_type" class="span5">
+              <option value="vnc">vnc</option>
+            </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="mem" class="control-label">USB重定向：</label>
+        <div class="controls">
+          <input type="checkbox" class="input-mini">
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="inputWarning" class="control-label">随主机启动：</label>
+        <div class="controls">
+          <input type="checkbox" id="inputWarning" class="input-mini">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">虚拟机描述：</label>
+        <div class="controls">
+          <textarea ng-model="desc"></textarea>
+        </div>
+      </div>
+    </form>
+    </div>
+    <div class="span4">
+    
+    </div>
+  </div>
+  <button ng-click="next_step()" class="btn btn-mini pull-right btn-primary">下一步</div>
+</fieldset>  
