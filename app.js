@@ -10,9 +10,24 @@ var express = require('express')
   , datacenters = require('./routes/datacenters')
   , clusters = require('./routes/clusters')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , ejs = require('ejs');
 
 var app = express();
+
+app.engine('.json', ejs.renderFile);
+
+ejs.filters.sample = function(arr) {
+  var rand = Math.floor(Math.random() * arr.length);
+  return arr[rand];
+};
+
+ejs.filters.range_rand = function(range) {
+  var start = range[0] || 0, end = range[1] | 100;
+  var rand = Math.floor(Math.random() * (end - start)) + start;
+  return rand;
+};
+
 
 app.configure(function(){
   app.set('port', process.env.PORT || 8080);

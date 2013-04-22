@@ -12,13 +12,14 @@ exports.events = function(req, res){
 exports.top_hosts = function(req, res){
   res.set("ContentType", "application/json");
   //For actual Logic, you should give the top hosts according to current datacenter id {params.id}
-  var rand = Math.ceil(Math.random() * 5)
-  res.sendfile(__dirname + '/json/dcs/top_hosts/0' + rand + '.json');  
+  var hosts = ["Dell", "IBM", "Apple", "HP", "Intel", "MIC"];
+  res.render("templates/tops.json", {hosts: hosts});  
 }
 
 exports.top_vms = function(req, res){
   res.set("ContentType", "application/json");
   //For actual Logic, you should give the top vms according to current datacenter id {params.id}
+  var vms = ["OSX", "Windows", "CentOS", "Redhat", "Ubuntu", "Unix", "Windows2008"];
   var rand = Math.ceil(Math.random() * 5)
-  res.sendfile(__dirname + '/json/dcs/top_vms/0' + rand + '.json');  
+  res.render("templates/tops.json", {hosts: vms});   
 }

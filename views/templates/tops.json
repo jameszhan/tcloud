@@ -1,0 +1,15 @@
+[ 
+<% for(var i = 0; i < hosts.length; i++) { -%>    
+  <% if(i != 0){ -%>
+  ,
+  <% } -%>
+  { 
+    "cpu" : <%=: [2, 8] | range_rand %>,
+    "id" : <%= i %>,
+    "memory" : <%=: [0, 100] | range_rand %>,
+    "name" : "<%= hosts[i] %>",
+    "status" : "<%=: ['startup', 'running', 'shutdown'] | sample %>"
+  }
+<% } -%>
+]
+
