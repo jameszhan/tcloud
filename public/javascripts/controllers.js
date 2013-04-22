@@ -70,23 +70,58 @@ function VMMgmtCtrl($scope, $http, $templateCache, $dialog){
 
 function VMWorkflowCtrl($scope, $templateCache, dialog, currentCluster) {
   $scope.cluster = currentCluster.get();
-  $scope.current_step = 1;
-  $scope.step01_style = "btn-success";
-  $scope.steps = ["虚拟机设置", "操作系统类型", "选择计算方案", "选择存储方案", "选择网络方案", "确认创建"];
   
-  $scope.load_step = function(){
-    dialog.modalEl.find('.modal-body').html($templateCache.get("/partials/vms/step_0" + $scope.current_step + ".html")[1]);
+  $scope.current_step = 1;
+  $scope.steps = ["虚拟机设置", "操作系统类型", "选择计算方案", "选择存储方案", "选择网络方案", "确认创建"];
+  $scope.view_types = ['vnc'];
+  
+  $scope.vm = {
+    cluster_id: currentCluster.id,
+    view_type: 'vnc',
+    usb_redirect: true,
+    startup_with_host: true
+  };
+  
+  $scope.template = {
+    url: "/partials/vms/step_0" + $scope.current_step + ".html"
+  };
+  
+  var templates = [];
+  for(var i = 0; i < 6; i++){
+    templates.push({name: "step0" + (i + 1), url: "/partials/vms/step_0" + (i + 1) + ".html"});
+  }
+  
+  var change_style = function(){
+    for(var i = 0; i < 6; i++){
+      var j = i + 1;
+      if(j < $scope.current_step){
+        $scope['step0' + j + '_style'] = "btn-success";
+      }else if(j > $scope.current_step){
+        $scope['step0' + j + '_style'] = "";
+      }else{
+        $scope['step0' + j + '_style'] = "btn-info";
+      }      
+    }
+  }
+        
+  var load_step = function(){
+    change_style();
+    $scope.template = templates[$scope.current_step - 1];
   };  
   $scope.prev_step = function(){
     $scope.current_step -= 1;
-    $scope.load_step();
+    load_step();
   };
   $scope.next_step = function(){
     $scope.current_step += 1;
-    $scope.load_step();
+    load_step();
   };
+  $scope.create = function(){
+    console.log($scope.vm);
+  };
+  
   $scope.close = function(result){
     dialog.close(result)
   };
-  $scope.load_step();
+  load_step();
 }
