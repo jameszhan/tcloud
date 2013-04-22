@@ -20,6 +20,7 @@
                   "children":[
                      {
                         "name":"Windows2008",
+                        "url":"#/virtual_machies/1",
                         "icon":"/images/host.png"
                      },
                      {

@@ -1,0 +1,25 @@
+<div ng-controller="VMMgmtCtrl">
+  <div class="input-prepend input-append">
+    <button type="button" class="btn">修改</button>
+    <button type="button" class="btn">删除</button>
+    <button type="button" class="btn">存为模板</button>
+    <button type="button" class="btn">迁移</button>
+    <button type="button" class="btn">暂停</button>
+  </div>
+  <div class="input-append input-prepend">
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        创建
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a ng-click="open_dialog()">创建服务器</a></li>
+        <li><a href="#/setup_vm">创建桌面</a></li>
+      </ul>
+    </div>
+    <button type="button" class="btn">启动</button>
+    <button type="button" class="btn">关机</button>
+    <button type="button" class="btn">重启</button>
+    <button type="button" class="btn">快照管理</button>
+  </div>
+</div>
