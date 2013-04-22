@@ -56,16 +56,6 @@ function VMMgmtCtrl($scope, $templateCache, $dialog, VMService, selectedVM){
     controller: 'VMWorkflowCtrl'
   });
   
-  $scope.open_dialog = function(){
-    selectedVM.set(null);
-    d.open().then(function(result){
-      if(result){
-        alert('dialog closed with result: ' + result);
-      }
-    });
-  };
-  
-  $scope.selected = {};
   
   var safe_do = function(min, max, fn){
     var vms = $.grep($scope.vms, function(vm) {
@@ -81,6 +71,18 @@ function VMMgmtCtrl($scope, $templateCache, $dialog, VMService, selectedVM){
     }
     fn(vms);
   }
+  
+  $scope.do_create = function(){
+    selectedVM.set(null);
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+  
+  $scope.selected = {};
+
   $scope.do_edit = function() {
     safe_do(1, 1, function(vms){
       selectedVM.set(vms[0]);
@@ -94,9 +96,9 @@ function VMMgmtCtrl($scope, $templateCache, $dialog, VMService, selectedVM){
   
   $scope.do_delete = function(){
     safe_do(1, 100, function(vms){
-//      if(window.confirm("你确定要删除它们吗，此操作将无法恢复!")){
+      if(window.confirm("你确定要删除它们吗，此操作将无法恢复!")){
         
-//      }
+      }
     });    
   };
 }

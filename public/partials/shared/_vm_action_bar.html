@@ -1,6 +1,6 @@
-<div ng-controller="VMMgmtCtrl">
+<div>
   <div class="input-prepend input-append">
-    <button type="button" class="btn">修改</button>
+    <button type="button" class="btn" ng-click="do_edit()">修改</button>
     <button type="button" class="btn">删除</button>
     <button type="button" class="btn">存为模板</button>
     <button type="button" class="btn">迁移</button>
@@ -13,7 +13,7 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-        <li><a ng-click="open_dialog()">创建服务器</a></li>
+        <li><a ng-click="do_create()">创建服务器</a></li>
         <li><a href="#/setup_vm">创建桌面</a></li>
       </ul>
     </div>

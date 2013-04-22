@@ -6,6 +6,8 @@ lib-cov
 *.out
 *.pid
 *.gz
+
+public/stylesheets/*.css
 public/.sass-cache/*
 pids
 logs
