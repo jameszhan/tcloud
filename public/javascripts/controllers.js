@@ -17,57 +17,23 @@ function DataCenterCtrl($scope, $routeParams, DataCenter) {
     $scope.datacenter = datacenter;
     $scope.hosts = flatten($scope.datacenter.clusters, 'hosts');
     $scope.vms = flatten($scope.hosts, 'virtual_machines');
-  });
-  
-  
-  /*
-  $http.get('/datacenters/' + $routeParams.id).success(function(data) {
-    $scope.datacenter = data;
-    $scope.hosts = flatten(data.clusters, 'hosts');
-    $scope.vms = flatten($scope.hosts, 'virtual_machines');
-  });
-  */  
+  });  
 }
 
 function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
   DataCenterEvent.query({data_center_id: $routeParams.id}, function(events, headersFn){
     $scope.events = events;
-  })
-  /*
-  $http.get('/datacenters/' + $routeParams.id + "/events").success(function(data){
-    $scope.events = data;
   });
-  */
 }
 
-function ClusterCtrl($scope, $http, $routeParams, $dialog, $templateCache, currentCluster) {
-  for(var i = 0; i < 6; i++){
-    $http.get("/partials/vms/step_0" + (i + 1) + ".html", {cache:$templateCache})
-  }  
-
-  $http.get('/clusters/' + $routeParams.id).success(function(data) {
-    $scope.cluster = data;
-    currentCluster.set($scope.cluster);
-    $scope.hosts = data.hosts;
+function ClusterCtrl($scope, $routeParams, $dialog, $templateCache, Cluster, currentCluster) {
+  Cluster.get({id: $routeParams.id}, function(cluster){
+    $scope.cluster = cluster;
+    currentCluster.set(cluster);
+    $scope.hosts = cluster.hosts;
     $scope.vmSetupModal = true;
     $scope.vms = flatten($scope.hosts, 'virtual_machines');
   });
-  
-  $scope.opts = {
-    backdrop: true,
-    keyboard: true,
-    backdropClick: true,
-    templateUrl: "vm_workflow.html",
-    controller: 'VMWorkflowCtrl'
-  };
-  $scope.open_dialog = function(){
-    var d = $dialog.dialog($scope.opts);
-    d.open().then(function(result){
-      if(result){
-        alert('dialog closed with result: ' + result);
-      }
-    });
-  }
 }
 
 
@@ -81,7 +47,28 @@ function VMCtrl($scope, $http) {
 
 }
 
-function VMWorkflowCtrl($scope, $http, $templateCache, dialog, currentCluster) {
+function VMMgmtCtrl($scope, $http, $templateCache, $dialog){
+  for(var i = 0; i < 6; i++){
+    $http.get("/partials/vms/step_0" + (i + 1) + ".html", {cache:$templateCache});
+  }  
+  
+  $scope.open_dialog = function(){
+    var d = $dialog.dialog({
+      backdrop: true,
+      keyboard: true,
+      backdropClick: true,
+      templateUrl: "vm_workflow.html",
+      controller: 'VMWorkflowCtrl'
+    });
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  }  
+}
+
+function VMWorkflowCtrl($scope, $templateCache, dialog, currentCluster) {
   $scope.cluster = currentCluster.get();
   $scope.current_step = 1;
   $scope.step01_style = "btn-success";

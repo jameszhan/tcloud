@@ -15,6 +15,8 @@ angular.module('webvirtServices', []).service('currentCluster', function() {
     get: {method: 'GET'},
     query: {method: 'GET', isArray: true}
   });
+}).factory('Cluster', function($resource){
+  return $resource('clusters/:id', {id: '@id'}, {get: {method: 'GET'}});
 });
 
 

@@ -126,7 +126,7 @@
    {
       "name":"深圳",
       "icon":"/images/datacenter.png",
-      "url":"#data_centers/2",
+      "url":"#/datacenters/2",
       "children":[
          {
             "name":"数据中心",
