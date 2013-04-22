@@ -1,0 +1,50 @@
+@import "compass";
+
+.navbar-inner {
+  background-color: #2C2C2C;
+  @include background-image(linear-gradient(center top, #555555, #222222)); 
+  background-repeat: repeat-x;
+  border: 1px solid #D4D4D4;
+  border-radius: 4px 4px 4px 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+  min-height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+body {
+  padding-top: 50px;
+}
+
+td > .progress{
+  margin-bottom: 0px;
+}
+
+body .modal.ng-scope {
+  width: 700px;
+  margin-left: -350px;  
+  fieldset {
+    padding-top: 10px;
+    border: 1px solid #666;
+    border-radius: 5px;
+    legend {
+      width: 80px;
+      text-align: left;
+      font-size: 16px;
+      border-style: none;
+      padding: 0 3px;
+      margin-left: 10px;
+      margin-bottom: 0;
+      line-height: 10px;
+    }
+  }  
+  
+  .form-horizontal{
+    .control-label{
+      width: 100px;
+    }
+    .controls{
+      margin-left: 120px;
+    }
+  } 
+}

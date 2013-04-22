@@ -1,0 +1,31 @@
+[ { "cpu" : 89,
+    "id" : 1,
+    "memory" : 66,
+    "name" : "DELL",
+    "status" : "running"
+  },
+  { "cpu" : 83,
+    "id" : 2,
+    "memory" : 38,
+    "name" : "IBM",
+    "status" : "running"
+  },
+  { "cpu" : 53,
+    "id" : 3,
+    "memory" : 0,
+    "name" : "DELL",
+    "status" : "started"
+  },
+  { "cpu" : 83,
+    "id" : 4,
+    "memory" : 99,
+    "name" : "IBM",
+    "status" : "running"
+  },
+  { "cpu" : 62,
+    "id" : 5,
+    "memory" : 80,
+    "name" : "Apple",
+    "status" : "running"
+  }
+]

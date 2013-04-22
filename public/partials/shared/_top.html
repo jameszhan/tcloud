@@ -1,0 +1,25 @@
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>CPU使用率</th>
+      <th>内存使用率</th>
+      <th>状态</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="m in tops | orderBy:'-cpu' | limitTo:5">  
+      <td>{{m.name}}</td>
+      <td><div class="progress progress-striped active">
+        <div class="bar" style="width: {{m.cpu}}%;">{{m.cpu}}%</div>
+      </div>
+      </td>
+      <td>
+        <div class="progress progress-success">
+          <div class="bar" style="width: {{m.memory}}%;">{{m.memory}}%</div>
+        </div>
+      </td>  
+      <td>{{m.status}}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,103 @@
+[ { "cpu" : 16,
+    "id" : 1,
+    "memory" : 94,
+    "name" : "Windows2008",
+    "status" : "shutdown"
+  },
+  { "cpu" : 39,
+    "id" : 2,
+    "memory" : 79,
+    "name" : "Ubuntu",
+    "status" : "running"
+  },
+  { "cpu" : 8,
+    "id" : 3,
+    "memory" : 3,
+    "name" : "CentOS",
+    "status" : "notfound"
+  },
+  { "cpu" : 40,
+    "id" : 4,
+    "memory" : 88,
+    "name" : "RedHat",
+    "status" : "failure"
+  },
+  { "cpu" : 84,
+    "id" : 5,
+    "memory" : 77,
+    "name" : "Debian",
+    "status" : "failure"
+  },
+  { "cpu" : 12,
+    "id" : 6,
+    "memory" : 14,
+    "name" : "FreeBSD",
+    "status" : "running"
+  },
+  { "cpu" : 67,
+    "id" : 7,
+    "memory" : 61,
+    "name" : "UbuntuX",
+    "status" : "started"
+  },
+  { "cpu" : 22,
+    "id" : 8,
+    "memory" : 63,
+    "name" : "DebianX",
+    "status" : "notfound"
+  },
+  { "cpu" : 60,
+    "id" : 9,
+    "memory" : 73,
+    "name" : "Windows2008",
+    "status" : "notfound"
+  },
+  { "cpu" : 20,
+    "id" : 10,
+    "memory" : 60,
+    "name" : "Ubuntu",
+    "status" : "notfound"
+  },
+  { "cpu" : 31,
+    "id" : 11,
+    "memory" : 84,
+    "name" : "CentOS",
+    "status" : "started"
+  },
+  { "cpu" : 11,
+    "id" : 12,
+    "memory" : 66,
+    "name" : "RedHat",
+    "status" : "running"
+  },
+  { "cpu" : 59,
+    "id" : 13,
+    "memory" : 67,
+    "name" : "Debian",
+    "status" : "shutdown"
+  },
+  { "cpu" : 64,
+    "id" : 14,
+    "memory" : 68,
+    "name" : "FreeBSD",
+    "status" : "shutdown"
+  },
+  { "cpu" : 49,
+    "id" : 15,
+    "memory" : 78,
+    "name" : "UbuntuX",
+    "status" : "shutdown"
+  },
+  { "cpu" : 4,
+    "id" : 16,
+    "memory" : 52,
+    "name" : "OSX1",
+    "status" : "notfound"
+  },
+  { "cpu" : 12,
+    "id" : 17,
+    "memory" : 91,
+    "name" : "OSX2",
+    "status" : "shutdown"
+  }
+]
