@@ -1,5 +1,10 @@
 [
    {
+       "name": "书签管理",
+       "icon": "/images/host.png",
+       "url": "#shortcuts"
+   },
+   {
       "name":"北京",
       "icon":"/images/datacenter.png",
       "url":"#/datacenters/1",
@@ -216,5 +221,20 @@
             ]
          }
       ]
+   },
+   {
+       "name": "基础架构",
+       "icon": "/images/host.png",
+       "url": "#architect"
+   },
+   {
+       "name": "全局配置",
+       "icon": "/images/host.png",
+       "url": "#configs"
+   },
+   {
+       "name": "平台信息",
+       "icon": "/images/host.png",
+       "url": "#copyrights"
    }
 ]
