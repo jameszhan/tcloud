@@ -12,16 +12,32 @@ var flatten = function(arr, target){
   return ret;
 };
 
-function DataCenterCtrl($scope, $http, $routeParams) {
+function DataCenterCtrl($scope, $routeParams, DataCenter) {
+  DataCenter.get({id: $routeParams.id}, function(datacenter){
+    $scope.datacenter = datacenter;
+    $scope.hosts = flatten($scope.datacenter.clusters, 'hosts');
+    $scope.vms = flatten($scope.hosts, 'virtual_machines');
+  });
+  
+  
+  /*
   $http.get('/datacenters/' + $routeParams.id).success(function(data) {
     $scope.datacenter = data;
     $scope.hosts = flatten(data.clusters, 'hosts');
     $scope.vms = flatten($scope.hosts, 'virtual_machines');
   });
-  
+  */  
+}
+
+function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
+  DataCenterEvent.query({data_center_id: $routeParams.id}, function(events, headersFn){
+    $scope.events = events;
+  })
+  /*
   $http.get('/datacenters/' + $routeParams.id + "/events").success(function(data){
     $scope.events = data;
-  }); 
+  });
+  */
 }
 
 function ClusterCtrl($scope, $http, $routeParams, $dialog, $templateCache, currentCluster) {
