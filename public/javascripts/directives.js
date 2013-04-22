@@ -7,7 +7,7 @@ window.$polling = (function(){
     run();
     window.setTimeout(function(){
       schedule();
-    }, 3000); 
+    }, 10000); 
   };
   return {
     add: function(task, type, interval) {
@@ -17,7 +17,7 @@ window.$polling = (function(){
   }
 })();
 
-$polling.schedule()
+
 
 angular.module('webvirtDirectives', []).
   directive('searchtree', function($q, $http, $templateCache) {
@@ -72,7 +72,7 @@ angular.module('webvirtDirectives', []).
         '</div>'
     };
   }).
-  directive('toplist', function($q, $http, $templateCache) {    
+  directive('toplist', function($q, $http, $timeout) {    
     return {
       restrict: 'E',
       scope: {
@@ -81,6 +81,22 @@ angular.module('webvirtDirectives', []).
       transclude: true,
       link: function(scope, element, attrs){
         var changed = false;
+        var deferred = $q.defer();
+        deferred.promise.then(function(){
+          $polling.add(function(){   
+            console.log(attrs.url);
+            $http.get(attrs.url).success(function(data){
+              scope.tops = data;
+            });
+          }, scope);
+        }).then(function(){
+          $polling.schedule();
+        });
+        $timeout(function(){
+          deferred.resolve();
+        }, 0);
+                
+        /*
         scope.$watch('url', function(new_value, old_value){       
           if(changed){
             $polling.add(function(){
@@ -91,6 +107,7 @@ angular.module('webvirtDirectives', []).
           } 
           changed = true
         });
+        */
       }, 
       templateUrl: '/partials/shared/_top.html'
     };

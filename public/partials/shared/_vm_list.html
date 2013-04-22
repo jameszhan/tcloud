@@ -1,76 +1,79 @@
 <div ng-controller="VMMgmtCtrl">
-  <div class="input-prepend input-append">
-    <button type="button" class="btn">修改</button>
-    <button type="button" class="btn">删除</button>
-    <button type="button" class="btn">存为模板</button>
-    <button type="button" class="btn">迁移</button>
-    <button type="button" class="btn">暂停</button>
-  </div>
-  <div class="input-append input-prepend">
-    <div class="btn-group">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        创建
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a ng-click="open_dialog()">创建服务器</a></li>
-        <li><a href="#/setup_vm">创建桌面</a></li>
-      </ul>
+  <div>
+    <div class="input-prepend input-append">
+      <button type="button" class="btn" ng-click="do_edit()">修改</button>
+      <button type="button" class="btn">删除</button>
+      <button type="button" class="btn">存为模板</button>
+      <button type="button" class="btn">迁移</button>
+      <button type="button" class="btn">暂停</button>
     </div>
-    <button type="button" class="btn">启动</button>
-    <button type="button" class="btn">关机</button>
-    <button type="button" class="btn">重启</button>
-    <button type="button" class="btn">快照管理</button>
-  </div>
-</div>
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th></th>
-      <th>名称</th>
-      <th>CPU使用率</th>
-      <th>内存使用率</th>
-      <th>集群</th>
-      <th>主机</th>
-      <th>IP</th>
-      <th>显示</th>
-      <th>操作系统</th>
-      <th>模板</th>
-      <th>CPU</th>
-      <th>内存</th>
-      <th>磁盘</th>
-      <th>网络</th>
-      <th>USB</th>
-      <th>用户</th>
-      <th>状态</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="m in vms">  
-      <td><input type="checkbox" value="{{m.id}}" /></td>
-      <td>{{m.name}}</td>
-      <td><div class="progress progress-striped active">
-        <div class="bar" style="width: {{m.cpu_usage}}%;">{{m.cpu_usage}}%</div>
+    <div class="input-append input-prepend">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          创建
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a ng-click="open_dialog()">创建服务器</a></li>
+          <li><a href="#/setup_vm">创建桌面</a></li>
+        </ul>
       </div>
-      </td>
-      <td>
-        <div class="progress progress-success">
-          <div class="bar" style="width: {{m.memory_usage}}%;">{{m.memory_usage}}%</div>
+      <button type="button" class="btn">启动</button>
+      <button type="button" class="btn">关机</button>
+      <button type="button" class="btn">重启</button>
+      <button type="button" class="btn">快照管理</button>
+    </div>
+  </div>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th></th>
+        <th>名称</th>
+        <th>CPU使用率</th>
+        <th>内存使用率</th>
+        <th>集群</th>
+        <th>主机</th>
+        <th>IP</th>
+        <th>显示</th>
+        <th>操作系统</th>
+        <th>模板</th>
+        <th>CPU</th>
+        <th>内存</th>
+        <th>磁盘</th>
+        <th>网络</th>
+        <th>USB</th>
+        <th>用户</th>
+        <th>状态</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="m in vms">  
+        <td><input type="checkbox" value="{{m.id}}" ng-model="selected[m.id]" /></td>
+        <td>{{m.name}}</td>
+        <td><div class="progress progress-striped active">
+          <div class="bar" style="width: {{m.cpu_usage}}%;">{{m.cpu_usage}}%</div>
         </div>
-      </td>
-      <td></td>  
-      <td>{{m.host}}</td>  
-      <td>{{m.ip}}</td> 
-      <td>{{m.view}}</td> 
-      <td>{{m.os_type}}</td> 
-      <td>{{m.template}}</td> 
-      <td>{{m.cpu_count}}</td>
-      <td>{{m.total_memory | bytes}}</td>
-      <td>{{m.hard_disk_capacity | bytes}}</td>
-      <td>{{m.network}}</td>
-      <td>{{m.usb}}</td>
-      <td>{{m.userh}}</td>
-      <td>{{m.status}}</td>
-    </tr>
-  </tbody>
-</table>
+        </td>
+        <td>
+          <div class="progress progress-success">
+            <div class="bar" style="width: {{m.memory_usage}}%;">{{m.memory_usage}}%</div>
+          </div>
+        </td>
+        <td></td>  
+        <td>{{m.host}}</td>  
+        <td>{{m.ip}}</td> 
+        <td>{{m.view}}</td> 
+        <td>{{m.os_type}}</td> 
+        <td>{{m.template}}</td> 
+        <td>{{m.cpu_count}}</td>
+        <td>{{m.total_memory | bytes}}</td>
+        <td>{{m.hard_disk_capacity | bytes}}</td>
+        <td>{{m.network}}</td>
+        <td>{{m.usb}}</td>
+        <td>{{m.userh}}</td>
+        <td>{{m.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

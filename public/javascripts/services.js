@@ -1,11 +1,21 @@
 angular.module('webvirtServices', []).service('currentCluster', function() {
-  var currentCluster = {};
+  var currentCluster = null;
   return {
     get: function(){
       return currentCluster;
     },
     set: function(cluster){
      currentCluster = cluster;
+    }
+  };
+}).factory("selectedVM", function(){
+  var selectedVM = null;
+  return {
+    get: function(){
+      return selectedVM;
+    },
+    set: function(vm){
+     selectedVM = vm;
     }
   };
 }).factory('DataCenter', function($resource) {
@@ -17,6 +27,10 @@ angular.module('webvirtServices', []).service('currentCluster', function() {
   });
 }).factory('Cluster', function($resource){
   return $resource('clusters/:id', {id: '@id'}, {get: {method: 'GET'}});
+}).factory('VMService', function($resource){
+  return $resource('vms/:id', {id: '@id'}, {
+    'delete_all': {method: 'DELETE'}
+  })
 });
 
 

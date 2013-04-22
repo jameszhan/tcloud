@@ -47,40 +47,80 @@ function VMCtrl($scope, $http) {
 
 }
 
-function VMMgmtCtrl($scope, $http, $templateCache, $dialog){
-  for(var i = 0; i < 6; i++){
-    $http.get("/partials/vms/step_0" + (i + 1) + ".html", {cache:$templateCache});
-  }  
+function VMMgmtCtrl($scope, $templateCache, $dialog, VMService, selectedVM){
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "vm_workflow.html",
+    controller: 'VMWorkflowCtrl'
+  });
   
   $scope.open_dialog = function(){
-    var d = $dialog.dialog({
-      backdrop: true,
-      keyboard: true,
-      backdropClick: true,
-      templateUrl: "vm_workflow.html",
-      controller: 'VMWorkflowCtrl'
-    });
+    selectedVM.set(null);
     d.open().then(function(result){
       if(result){
         alert('dialog closed with result: ' + result);
       }
     });
-  }  
+  };
+  
+  $scope.selected = {};
+  
+  var safe_do = function(min, max, fn){
+    var vms = $.grep($scope.vms, function(vm) {
+      return $scope.selected[vm.id];
+    });
+    if(vms.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      return false;
+    }
+    if(vms.length > min){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      return false;
+    }
+    fn(vms);
+  }
+  $scope.do_edit = function() {
+    safe_do(1, 1, function(vms){
+      selectedVM.set(vms[0]);
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+  
+  $scope.do_delete = function(){
+    safe_do(1, 100, function(vms){
+//      if(window.confirm("你确定要删除它们吗，此操作将无法恢复!")){
+        
+//      }
+    });    
+  };
 }
 
-function VMWorkflowCtrl($scope, $templateCache, dialog, currentCluster) {
+function VMWorkflowCtrl($scope, $templateCache, dialog, currentCluster, selectedVM) {
   $scope.cluster = currentCluster.get();
   
   $scope.current_step = 1;
   $scope.steps = ["虚拟机设置", "操作系统类型", "选择计算方案", "选择存储方案", "选择网络方案", "确认创建"];
   $scope.view_types = ['vnc'];
   
-  $scope.vm = {
-    cluster_id: currentCluster.id,
-    view_type: 'vnc',
-    usb_redirect: true,
-    startup_with_host: true
-  };
+  selected_vm = selectedVM.get();
+  if(selected_vm){
+    console.log("Edit VM.");
+    $scope.vm = selected_vm;
+  } else {
+    console.log("Add VM.");
+    $scope.vm = {
+      cluster_id: currentCluster.id,
+      view_type: 'vnc',
+      usb_redirect: true,
+      startup_with_host: true
+    };    
+  } 
   
   $scope.template = {
     url: "/partials/vms/step_0" + $scope.current_step + ".html"
