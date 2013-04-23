@@ -17,43 +17,43 @@
               <tr>
                 <td>
                   <div>状态:</div>
-                  <div><span class="label label-success">运行</span></div> 
+                  <div><span class="label label-success">{{vm.status}}</span></div> 
                 </td> 
                 <td>
                   <div>随主机启动:</div>
-                  <div style="width:66px;"><span style="border: 1px solid #dddddd; background-color: #0088cc; color: #fff;padding: 0 3px;">ON</span><span style="border: 1px solid #dddddd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+                  <div style="width:66px;"><span style="border: 1px solid #dddddd; background-color: #0088cc; color: #fff;padding: 0 3px;">{{vm.start_as_host}}</span><span style="border: 1px solid #dddddd;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
                 </td>
                 <td>
                   <div>内存已缓存:</div>
-                  <div><span class="label label-warning">21GB</span></div>
+                  <div><span class="label label-warning">{{vm.memory_cache_usage}}GB</span></div>
                 </td>
               </tr>
               <tr>
                 <td>
                   <div>cpu:</div>
-                  <div><span class="badge badge-success">2</span></div>
+                  <div><span class="badge badge-success">{{vm.cpu_count}}</span></div>
                 </td>
                 <td>
                   <div>内存:</div>
-                  <div><span class="label label-info">42GB</span></div>
+                  <div><span class="label label-info">{{vm.total_memory}}GB</span></div>
                 </td>
                 <td>
                   <div>内存可用:</div>
-                <div><span class="label label-warning">21GB</span></div>
+                <div><span class="label label-warning">{{vm.memory_idle}}GB</span></div>
                 </td>
               </tr>
               <tr>
                 <td>
                   <div>硬盘大小:</div>
-                  <div><span class="label label-info">21GB</span></div>
+                  <div><span class="label label-info">{{vm.hard_disk_capacity}}GB</span></div>
                 </td>
                 <td>
                   <div>内存使用中:</div>
-                  <div><span class="label label-warning">21GB</span></div>
+                  <div><span class="label label-warning">{{vm.memory_usage}}GB</span></div>
                 </td>
                 <td>
                   <div>操作系统:</div>
-                  <div><span class="label label-info">Windows 7</span></div>
+                  <div><span class="label label-info">{{vm.os_type}}</span></div>
                 </td>
               </tr>
             </tbody>
@@ -69,9 +69,6 @@
 
           $(function() {
 
-            // We use an inline data source in the example, usually data would
-            // be fetched from a server
-
             var data = [],
               totalPoints = 200;
 
@@ -79,8 +76,6 @@
 
               if (data.length > 0)
                 data = data.slice(1);
-
-              // Do a random walk
 
               while (data.length < totalPoints) {
 
@@ -96,13 +91,10 @@
                 data.push(y);
               }
 
-              // Zip the generated y values with the x values
-
               var res = [];
               for (var i = 0; i < data.length; ++i) {
                 res.push([i, data[i]])
               }
-
               return res;
             }
 
@@ -117,16 +109,11 @@
             });
 
             function update() {
-
               plot.setData([getRandomData()]);
-              // Since the axes don't change, we don't need to call plot.setupGrid()
-
               plot.draw();
               setTimeout(update, 30);
             }
-
             update();
-
           });
           </script>
           CPU使用率

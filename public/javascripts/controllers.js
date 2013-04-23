@@ -41,8 +41,12 @@ function HostCtrl($scope, $http) {
 
 }
 
-function VMCtrl($scope, $http) {
-
+function VMCtrl($scope, $routeParams, VM) {
+  VM.get({id: $routeParams.id}, function(vm){
+    $scope.vm = vm;
+    //$scope.hosts = flatten($scope.datacenter.clusters, 'hosts');
+    //$scope.vms = flatten($scope.hosts, 'virtual_machines');
+  });
 }
 
 function VMMgmtCtrl($scope){
