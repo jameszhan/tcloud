@@ -25,18 +25,22 @@
                      },
                      {
                         "name":"Ubuntu",
+                        "url":"#/virtual_machies/2",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"CentOS",
+                        "url":"#/virtual_machies/3",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"RedHat",
+                        "url":"#/virtual_machies/4",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"Debian",
+                        "url":"#/virtual_machies/5",
                         "icon":"/images/host.png"
                      }
                   ]
@@ -47,14 +51,17 @@
                   "children":[
                      {
                         "name":"FreeBSD",
+                        "url":"#/virtual_machies/6",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"UbuntuX",
+                        "url":"#/virtual_machies/7",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"DebianX",
+                        "url":"#/virtual_machies/8",
                         "icon":"/images/host.png"
                      }
                   ]
@@ -72,22 +79,27 @@
                   "children":[
                      {
                         "name":"Windows2008",
+                        "url":"#/virtual_machies/9",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"Ubuntu",
+                        "url":"#/virtual_machies/10",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"CentOS",
+                        "url":"#/virtual_machies/11",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"RedHat",
+                        "url":"#/virtual_machies/12",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"Debian",
+                        "url":"#/virtual_machies/13",
                         "icon":"/images/host.png"
                      }
                   ]
@@ -98,10 +110,12 @@
                   "children":[
                      {
                         "name":"FreeBSD",
+                        "url":"#/virtual_machies/14",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"UbuntuX",
+                        "url":"#/virtual_machies/15",
                         "icon":"/images/host.png"
                      }
                   ]
@@ -112,10 +126,12 @@
                   "children":[
                      {
                         "name":"OSX1",
+                        "url":"#/virtual_machies/16",
                         "icon":"/images/host.png"
                      },
                      {
                         "name":"OSX2",
+                        "url":"#/virtual_machies/17",
                         "icon":"/images/host.png"
                      }
                   ]

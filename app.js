@@ -9,6 +9,7 @@ var express = require('express')
   , routes = require('./routes')  
   , datacenters = require('./routes/datacenters')
   , clusters = require('./routes/clusters')
+  , vms = require('./routes/vms')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs');
@@ -62,6 +63,8 @@ app.get('/datacenters/:id/top_vms', datacenters.top_vms);
 app.get('/clusters/:id', clusters.show);
 app.get('/clusters/:id/top_hosts', clusters.top_hosts);
 app.get('/clusters/:id/top_vms', clusters.top_vms);
+
+app.get('/virtual_machies/:id', vms.show)
 
 
 
