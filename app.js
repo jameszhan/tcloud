@@ -9,6 +9,7 @@ var express = require('express')
   , routes = require('./routes')  
   , datacenters = require('./routes/datacenters')
   , clusters = require('./routes/clusters')
+  , vms = require('./routes/vms')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs');
@@ -64,6 +65,17 @@ app.get('/clusters/:id/top_hosts', clusters.top_hosts);
 app.get('/clusters/:id/top_vms', clusters.top_vms);
 
 
+app.post('/vms/delete_all', vms.delete_all);
+app.post('/vms/save_template', vms.save_template);
+app.post('/vms/migrate', vms.migrate);
+app.post('/vms/suspend', vms.suspend);
+app.post('/vms/start', vms.start);
+app.post('/vms/reboot', vms.reboot);
+app.post('/vms/shutdown', vms.shutdown);
+app.post('/vms/snapshot', vms.snapshot);
+
+
+               
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

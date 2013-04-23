@@ -25,10 +25,5 @@ angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilte
       when('/clusters/:id', {templateUrl: '/partials/clusters/overview.html', controller: ClusterCtrl}).
       when('/hosts/:id', {templateUrl: '/partials/hosts/overview.html',   controller: HostCtrl}).
       when('/virtual_machies/:id', {templateUrl: '/partials/vms/overview.html', controller: VMCtrl}).
-      when('/vm_setup/step01', {
-        popup:{
-          templateUrl : 'workflow_step01.html'
-        }        
-      }).
       otherwise({redirectTo: '/'});
 }]);

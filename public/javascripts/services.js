@@ -29,7 +29,14 @@ angular.module('webvirtServices', []).service('currentCluster', function() {
   return $resource('clusters/:id', {id: '@id'}, {get: {method: 'GET'}});
 }).factory('VMService', function($resource){
   return $resource('vms/:id', {id: '@id'}, {
-    'delete_all': {method: 'DELETE'}
+    'delete_all': {method: 'POST', url: 'vms/delete_all'}, 
+    'save_template': {method: 'POST', url: 'vms/save_template'},
+    'migrate': {method: 'POST', url: 'vms/migrate'},
+    'suspend': {method: 'POST', url: 'vms/suspend'},  
+    'start': {method: 'POST', url: 'vms/start'},  
+    'shutdown': {method: 'POST', url: 'vms/shutdown'},   
+    'reboot': {method: 'POST', url: 'vms/reboot'},
+    'snapshot': {method: 'POST', url: 'vms/snapshot'}
   })
 });
 
