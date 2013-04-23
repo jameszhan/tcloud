@@ -37,8 +37,11 @@ function ClusterCtrl($scope, $routeParams, $dialog, $templateCache, Cluster, cur
 }
 
 
-function HostCtrl($scope, $http) {
-
+function HostCtrl($scope, $routeParams, Host) {
+  Host.get({id: $routeParams.id}, function(host){
+    $scope.host = host;
+    $scope.vms = $scope.host.virtual_machines;
+  });
 }
 
 
@@ -46,8 +49,6 @@ function HostCtrl($scope, $http) {
 function VMCtrl($scope, $routeParams, VM) {
   VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
-    //$scope.hosts = flatten($scope.datacenter.clusters, 'hosts');
-    //$scope.vms = flatten($scope.hosts, 'virtual_machines');
   });
 }
 

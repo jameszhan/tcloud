@@ -16,6 +16,7 @@
             "children":[
                {
                   "name":"DELL",
+                  "url":"#/hosts/1",
                   "icon":"/images/host.png",
                   "children":[
                      {

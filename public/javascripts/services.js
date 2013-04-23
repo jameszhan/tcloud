@@ -33,6 +33,8 @@ angular.module('webvirtServices', []).service('currentCluster', function() {
   })
 }).factory('VM', function($resource){
   return $resource('virtual_machies/:id', {id: '@id'}, {get: {method: 'GET'}});
+}).factory('Host', function($resource){
+  return $resource('hosts/:id', {id: '@id'}, {get: {method: 'GET'}});
 });
 
 
