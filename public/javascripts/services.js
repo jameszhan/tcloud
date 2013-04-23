@@ -31,6 +31,8 @@ angular.module('webvirtServices', []).service('currentCluster', function() {
   return $resource('vms/:id', {id: '@id'}, {
     'delete_all': {method: 'DELETE'}
   })
+}).factory('VM', function($resource){
+  return $resource('virtual_machies/:id', {id: '@id'}, {get: {method: 'GET'}});
 });
 
 
