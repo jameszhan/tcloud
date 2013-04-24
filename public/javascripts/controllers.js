@@ -45,13 +45,16 @@ function HostCtrl($scope, $routeParams, Host) {
 }
 
 function VMCtrl($scope, $routeParams, VMService) {
+  $scope.selected = {};
   VMService.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
+    $scope.selected[vm.id] = true;
+    $scope.vms = [vm]; //Here is compatible with action_bar.
   });
 }
 
 function VMMgmtCtrl($scope){
-  $scope.selected = {};
+  $scope.selected || ($scope.selected = {});
 }
 
 function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {

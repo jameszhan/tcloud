@@ -1,4 +1,6 @@
-{ "cpu_count" : 2,
+{ 
+  "id": 2,
+  "cpu_count" : 2,
   "hard_disk_capacity" : 541,
   "memory_usage" : 21,
   "os_type" : "Windows 7",
