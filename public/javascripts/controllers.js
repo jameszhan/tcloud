@@ -12,38 +12,59 @@ var flatten = function(arr, target){
   return ret;
 };
 
-function DataCenterCtrl($scope, $routeParams, DataCenter) {
-  DataCenter.get({id: $routeParams.id}, function(datacenter){
-    $scope.datacenter = datacenter;
-    $scope.hosts = flatten($scope.datacenter.clusters, 'hosts');
-    $scope.vms = flatten($scope.hosts, 'virtual_machines');
-  });  
-}
-
 function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
   DataCenterEvent.query({data_center_id: $routeParams.id}, function(events, headersFn){
     $scope.events = events;
   });
 }
 
-function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster) {
+
+function DataCenterCtrl($scope, $routeParams, DataCenter, VMService, $pollingPool, Util) {
+  DataCenter.get({id: $routeParams.id}, function(datacenter){
+    $scope.datacenter = datacenter;
+    $scope.hosts = Util.flatten($scope.datacenter.clusters, 'hosts');
+    $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
+    
+    $pollingPool.add(function(){
+      var ids = $scope.vms.map(function(vm){return vm.id});
+      VMService.status({ids: ids}, function(data){
+        Util.update($scope.vms, data);
+      });
+    });
+  });  
+}
+
+
+function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, VMService, $pollingPool, Util) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
     currentCluster.set(cluster);
     $scope.hosts = cluster.hosts;
     $scope.vmSetupModal = true;
-    $scope.vms = flatten($scope.hosts, 'virtual_machines');
+    $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
+    
+    $pollingPool.add(function(){
+      var ids = $scope.vms.map(function(vm){return vm.id});
+      VMService.status({ids: ids}, function(data){
+        Util.update($scope.vms, data);
+      });
+    });
   });
 }
 
-function HostCtrl($scope, $routeParams, Host) {
+function HostCtrl($scope, $routeParams, Host, VMService, $pollingPool, Util) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
     $scope.vms = $scope.host.virtual_machines;
+    
+    $pollingPool.add(function(){
+      var ids = $scope.vms.map(function(vm){return vm.id});
+      VMService.status({ids: ids}, function(data){
+        Util.update($scope.vms, data);
+      });
+    });
   });
 }
-
-
 
 function VMCtrl($scope, $routeParams, VMService) {
   $scope.selected = {};

@@ -55,6 +55,31 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
     }
   };
+}).factory("Util", function(){
+  return {
+    update: function(dst, update_data){
+      angular.forEach(dst, function(vm){
+        angular.forEach(update_data, function(data){            
+          if(data.id == vm.id){
+            angular.extend(vm, data);
+          }
+        });
+      });
+    },
+    flatten: function(arr, target){
+      var ret = [];
+      for(var i = 0; i < arr.length; i++){
+        if(arr[i][target] instanceof Array){
+          for(var j = 0; j < arr[i][target].length; j++){
+            ret.push(arr[i][target][j]);
+          }
+        }else{
+          ret.push(arr[i][target]);
+        }      
+      }      
+      return ret;
+    }    
+  };
 });
 
 

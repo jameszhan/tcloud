@@ -58,6 +58,13 @@ exports.snapshot = function(req, res){
   res.json({success: true});  
 }
 
+exports.status = function(req, res){  
+  res.set("ContentType", "application/json");
+  var ids = req.body.ids;
+  console.log("status for vms %a", ids);
+  res.render("templates/vms_status.json", {ids: ids});  
+}
+
 
 exports.show = function(req, res){
   res.set("ContentType", "application/json");

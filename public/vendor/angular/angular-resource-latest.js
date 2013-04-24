@@ -454,7 +454,7 @@ angular.module('ngResource', ['ng']).
           value.$then = promise.then(function(response) {
             var data = response.data;
             var then = value.$then, resolved = value.$resolved;
-
+            
             if (data) {
               if (action.isArray) {
                 value.length = 0;

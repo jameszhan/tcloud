@@ -24,8 +24,17 @@ ejs.filters.sample = function(arr) {
   return arr[rand];
 };
 
+
+ejs.filters.range = function(start, end) {
+  var arr = [];
+  for(var i = start; i < end; i++){
+    arr.push(i);
+  }
+  return arr;
+};
+
 ejs.filters.range_rand = function(range) {
-  var start = range[0] || 0, end = range[1] | 100;
+  var start = range[0] || 0, end = range[1] || 100;
   var rand = Math.floor(Math.random() * (end - start)) + start;
   return rand;
 };
@@ -76,6 +85,8 @@ app.post('/vms/start', vms.start);
 app.post('/vms/reboot', vms.reboot);
 app.post('/vms/shutdown', vms.shutdown);
 app.post('/vms/snapshot', vms.snapshot);
+
+app.post('/vms/status', vms.status);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
