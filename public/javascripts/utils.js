@@ -1,6 +1,6 @@
 angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fibonacci){
-  var current_delay = 0, fib = Fibonacci.instance(), key_generator = Fibonacci.instance(), next_delay = function(){
-    return current_delay >= 10000 ? current_delay : current_delay = fib() * 500;
+  var current_delay = 0, fib = Fibonacci.instance(), max_delay = 6000, next_delay = function(){
+    return current_delay >= max_delay ? current_delay : current_delay = fib() * 1000;
   }, tasks = [], started = false, run = function(){
     for(var i = 0; i < tasks.length; i++){
       tasks[i]();
@@ -9,20 +9,22 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     run();
     $timeout(schedule, next_delay());
   }, add = function(task, key){
-    var added = false;
-    task.key = (key || key_generator());
-    task.first = true;
-    for(var i = 0; i < tasks.length; i++){
-      if(tasks[i].key == task.key){
-        tasks[i] = task;
-        added = true;
-      }
-    }
-    if(!added){
-      tasks.push(task);
-    }
+    task.first_time = true;
+    key && (task.key = key);
+    tasks.push(task);
   }, clear = function(){
     tasks = [];
+  }, remove = function(key){
+    var index = -1;
+    for(var i = 0; i < tasks.length; i++){
+      if(tasks[i].key == key){
+        index = i;
+        break;
+      }
+    }
+    if(index > -1){
+      tasks.splice(index, 1);
+    }
   };  
   return {
     schedule: schedule,
@@ -30,11 +32,15 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     clear: clear,
     run: function(){
       for(var i = 0; i < tasks.length; i++){
-        if(tasks[i].first){
+        if(tasks[i].first_time){
           tasks[i]();
-          tasks[i].first = false;
+          tasks[i].first_time = false;
         }        
       }
+    },
+    remove: remove,
+    set_max_delay: function(delay){
+      max_delay = delay;
     }
   };
 }).factory("Fibonacci", function(){

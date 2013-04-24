@@ -54,8 +54,6 @@ function VMMgmtCtrl($scope){
 }
 
 function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
-  console.log(currentCluster);
-  console.log(selectedVM);
   $scope.cluster = currentCluster.get();
   
   $scope.current_step = 1;

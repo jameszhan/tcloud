@@ -65,7 +65,7 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
             $http.get(attrs.url).success(function(data){
               scope.tops = data;
             });
-          }, attrs.type);
+          });
         }).then(function(){
           $pollingPool.run();
         });
