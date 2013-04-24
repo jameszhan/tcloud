@@ -26,7 +26,7 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
   });
 }
 
-function ClusterCtrl($scope, $routeParams, $dialog, $templateCache, Cluster, currentCluster) {
+function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
     currentCluster.set(cluster);
@@ -44,71 +44,17 @@ function HostCtrl($scope, $routeParams, Host) {
   });
 }
 
-
-
 function VMCtrl($scope, $routeParams, VM) {
   VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
   });
 }
 
-function VMMgmtCtrl($scope, $templateCache, $dialog, VMService, selectedVM){
-  var d = $dialog.dialog({
-    backdrop: true,
-    keyboard: true,
-    backdropClick: true,
-    templateUrl: "vm_workflow.html",
-    controller: 'VMWorkflowCtrl'
-  });
-  
-  
-  var safe_do = function(min, max, fn){
-    var vms = $.grep($scope.vms, function(vm) {
-      return $scope.selected[vm.id];
-    });
-    if(vms.length < min){
-      alert("你至少应该选择" + min + "台虚拟机.");
-      return false;
-    }
-    if(vms.length > min){
-      alert("你不能选择超过" + max + "台虚拟机.");
-      return false;
-    }
-    fn(vms);
-  }
-  
-  $scope.do_create = function(){
-    selectedVM.set(null);
-    d.open().then(function(result){
-      if(result){
-        alert('dialog closed with result: ' + result);
-      }
-    });
-  };
-  
+function VMMgmtCtrl($scope){
   $scope.selected = {};
-
-  $scope.do_edit = function() {
-    safe_do(1, 1, function(vms){
-      selectedVM.set(vms[0]);
-      d.open().then(function(result){
-        if(result) {
-          alert('dialog closed with result: ' + result);
-        }
-      });
-    });
-  };
-  
-  $scope.do_delete = function(){
-    safe_do(1, 100, function(vms){
-      if(window.confirm("你确定要删除它们吗，此操作将无法恢复!")){
-        
-      }
-    });    
-  };
 }
 
-function VMWorkflowCtrl($scope, $templateCache, dialog, currentCluster, selectedVM) {
+function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
   $scope.cluster = currentCluster.get();
   
   $scope.current_step = 1;
@@ -171,4 +117,139 @@ function VMWorkflowCtrl($scope, $templateCache, dialog, currentCluster, selected
     dialog.close(result)
   };
   load_step();
+}
+
+function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "vm_workflow.html",
+    controller: 'VMWorkflowCtrl'
+  });
+  
+  var do_check = function(min, max){
+    var vms = $.grep($scope.vms, function(vm) {
+      return $scope.selected[vm.id];
+    }), ok = true;
+    if(vms.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      ok = false;
+    }
+    if(vms.length > max){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      ok = false;
+    }
+    return {
+      then: function(fn){ ok && (fn || angular.noop)(vms); }
+    };
+  };
+
+  $scope.do_create = function(){
+    selectedVM.set(null);
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+  
+  $scope.do_edit = function() {
+    do_check(1, 1).then(function(vms){
+      selectedVM.set(vms[0]);
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+  
+  $scope.do_delete = function(){
+    do_check(1, 100).then(function(vms){
+      if(window.confirm("你确定要删除它们吗，此操作将无法恢复!")){
+        var vm_ids = vms.map(function(vm){return vm.id;});
+        console.log("DELETE ALL VMS " + vm_ids);
+        new VMService({ids: vm_ids}).$delete_all(function(data){
+          if(data.success){
+            $.each(vms, function(i, vm){
+              var index = $scope.vms.indexOf(vm);
+              $scope.vms.splice(index, 1);
+            });
+          }
+        });
+      }
+    }); 
+  };
+
+  $scope.do_template = function(){
+    do_check(1, 100).then(function(vms){
+      if(window.confirm("确定要存为模版？")){
+        var vm_ids = vms.map(function(vm){ return vm.id; });
+        console.log("Save Template for VMS " + vm_ids);
+        new VMService({ids: vm_ids}).$save_template();
+      }
+    }); 
+  };
+  
+  $scope.do_migrate = function(){
+    do_check(1, 100).then(function(vms){
+      if(window.confirm("你确定要迁移它(们)吗？")){
+        var vm_ids = vms.map(function(vm){ return vm.id; });        
+        console.log("Migration for VMS " + vm_ids);
+        new VMService({ids: vm_ids}).$migrate();
+      }
+    }); 
+  };
+  
+  $scope.do_suspend = function(){
+    do_check(1, 100).then(function(vms){
+      if(window.confirm("你确定要暂停它(们)吗!")){
+        var vm_ids = vms.map(function(vm){ return vm.id; });
+        console.log("Suspend VMS " + vm_ids);
+        new VMService({ids: vm_ids}).$suspend();
+      }
+    }); 
+  };
+  
+  $scope.do_start = function(){
+    do_check(1, 100).then(function(vms){
+      if(window.confirm("你确定要启动它(们)吗？")){
+        var vm_ids = vms.map(function(vm){ return vm.id; });
+        console.log("Start VMS " + vm_ids);
+        new VMService({ids: vm_ids}).$start();
+      }
+    }); 
+  };
+  
+  $scope.do_reboot = function(){
+    do_check(1, 100).then(function(vms){
+      if(window.confirm("你确定要删要重启它(们)吗？")){
+        var vm_ids = vms.map(function(vm){return vm.id});
+        console.log("Restart VMS " + vm_ids);
+        new VMService({ids: vm_ids}).$reboot();
+      }
+    }); 
+  };
+  
+  $scope.do_shutdown = function(){
+    do_check(1, 100).then(function(vms){
+      if(window.confirm("你确定要关闭它(们)吗")){
+        var vm_ids = vms.map(function(vm){return vm.id});
+        console.log("Shutdown VMS " + vm_ids);
+        new VMService({ids: vm_ids}).$shutdown();
+      }
+    }); 
+  };
+  
+  $scope.do_snapshot = function(){
+    do_check(1, 100).then(function(vms){
+      if(window.confirm("确定要创建快照吗？")){
+        var vm_ids = vms.map(function(vm){return vm.id});
+        console.log("Snapshot VMS " + vm_ids);
+        new VMService({ids: vm_ids}).$snapshot();
+      }
+    }); 
+  };
+
 }
