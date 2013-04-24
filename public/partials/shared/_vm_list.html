@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="m in vms">  
+      <tr ng-repeat="m in vms | startFrom:(current_page * page_size) | limitTo:page_size">  
         <td><input type="checkbox" value="{{m.id}}" ng-model="selected[m.id]" /></td>
         <td>{{m.name}}</td>
         <td><div class="progress progress-striped active">
@@ -51,5 +51,15 @@
       </tr>
     </tbody>
   </table>
+  
+  <div class="pagination">
+    <ul>
+      <li><a href="javascript:void(0);" ng-hide="vms.length <= page_size" ng-class="prev_class" ng-click="prev()">Prev</button></a></li>
+      <li ng-repeat="i in [] | range:page_count()">
+        <a href="javascript:void(0)"  ng-hide="vms.length <= page_size" ng-click="page(i)" ng-class="(i == current_page) && 'active'">{{i + 1}}</a>
+      </li>
+      <li><a href="javascript:void(0);" ng-hide="vms.length <= page_size" ng-class="next_class" ng-click="next()">Next</button></a></li>
+    </ul>
+  </div>
 
 </div>
