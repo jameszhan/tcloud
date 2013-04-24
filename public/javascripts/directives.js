@@ -1,28 +1,4 @@
-window.$polling = (function(){
-  var started = false;
-  var tasks = [], run = function(){
-    for(var i = 0; i < tasks.length; i++){
-      tasks[i]();
-    }      
-  }, schedule = function(){
-    if(!started){
-      run();
-      window.setTimeout(function(){
-        schedule();
-      }, 10000); 
-    }
-  };
-  return {
-    add: function(task, type, interval) {
-      tasks.push(task);
-    },
-    schedule: schedule
-  }
-})();
-
-
-
-angular.module('webvirtDirectives', []).
+angular.module('webvirtDirectives', ['webvirtUtils']).
   directive('searchtree', function($q, $http, $templateCache) {
     function _filter(data, text){
       var status = false;      
@@ -75,7 +51,7 @@ angular.module('webvirtDirectives', []).
         '</div>'
     };
   }).
-  directive('toplist', function($q, $http, $timeout) {    
+  directive('toplist', function($q, $http, $timeout, $pollingPool) {   
     return {
       restrict: 'E',
       scope: {
@@ -83,33 +59,20 @@ angular.module('webvirtDirectives', []).
       },
       transclude: true,
       link: function(scope, element, attrs){
-        var changed = false;
         var deferred = $q.defer();
         deferred.promise.then(function(){
-          $polling.add(function(){  
+          $pollingPool.add(function(){
             $http.get(attrs.url).success(function(data){
               scope.tops = data;
             });
-          }, scope);
+          }, attrs.type);
         }).then(function(){
-          $polling.schedule();
+          $pollingPool.run();
         });
+        
         $timeout(function(){
           deferred.resolve();
-        }, 1000);
-                
-        /*
-        scope.$watch('url', function(new_value, old_value){       
-          if(changed){
-            $polling.add(function(){
-              $http.get(new_value).success(function(data){
-                scope.tops = data;
-              });
-            }, scope);
-          } 
-          changed = true
-        });
-        */
+        }, 300);
       }, 
       templateUrl: '/partials/shared/_top.html'
     };

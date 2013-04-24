@@ -54,6 +54,8 @@ function VMMgmtCtrl($scope){
 }
 
 function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
+  console.log(currentCluster);
+  console.log(selectedVM);
   $scope.cluster = currentCluster.get();
   
   $scope.current_step = 1;
@@ -171,7 +173,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
         console.log("DELETE ALL VMS " + vm_ids);
         new VMService({ids: vm_ids}).$delete_all(function(data){
           if(data.success){
-            $.each(vms, function(i, vm){
+            angular.forEach(vms, function(vm){
               var index = $scope.vms.indexOf(vm);
               $scope.vms.splice(index, 1);
             });

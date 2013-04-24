@@ -1,4 +1,4 @@
-angular.module('webvirtServices', []).service('currentCluster', function() {
+angular.module('webvirtServices', []).factory('currentCluster', function() {
   var currentCluster = null;
   return {
     get: function(){
