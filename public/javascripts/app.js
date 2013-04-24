@@ -11,7 +11,7 @@ jQuery(document).ready(function($){
       spacing_open: 5
     },
     south: {
-        spacing_open: 5
+      spacing_open: 5
     }    
   });
 });
@@ -25,10 +25,12 @@ angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilte
       when('/clusters/:id', {templateUrl: '/partials/clusters/overview.html', controller: ClusterCtrl}).
       when('/hosts/:id', {templateUrl: '/partials/hosts/overview.html',   controller: HostCtrl}).
       when('/vms/:id', {templateUrl: '/partials/vms/overview.html', controller: VMCtrl}).
-      when('/vm_setup/step01', {
-        popup:{
-          templateUrl : 'workflow_step01.html'
-        }        
-      }).
       otherwise({redirectTo: '/'});
+}]).run(["$pollingPool", "$timeout", "$rootScope", function($pollingPool, $timeout, $rootScope){
+  $rootScope.$on('$routeChangeStart', function(e, route){
+    $pollingPool.clear();
+  });
+  $timeout(function(){
+    $pollingPool.schedule();
+  }, 3000);
 }]);

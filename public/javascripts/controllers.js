@@ -36,7 +36,6 @@ function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster) {
   });
 }
 
-
 function HostCtrl($scope, $routeParams, Host) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
@@ -44,14 +43,96 @@ function HostCtrl($scope, $routeParams, Host) {
   });
 }
 
-function VMCtrl($scope, $routeParams, VM) {
-  VM.get({id: $routeParams.id}, function(vm){
+
+
+function VMCtrl($scope, $routeParams, VMService) {
+  $scope.selected = {};
+  VMService.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
+    $scope.selected[vm.id] = true;
+    $scope.vms = [vm]; //Here is compatible with action_bar.
   });
 }
 
+function HostMgmtCtrl($scope){  
+  $scope.current_page = 0;
+  $scope.page_size = 10;
+  
+  $scope.$watch('current_page', function(current, old){    
+    if(current == 0){
+      $scope.prev_class = 'disabled';
+    }else{
+      $scope.next_class = 'active';
+    }
+    if(current == $scope.page_count - 1){
+      $scope.next_class = 'disabled';
+    }else{
+      $scope.next_class = 'active';
+    }
+  });
+  
+  $scope.page_count = function(){
+    if($scope.hosts){
+      return Math.ceil($scope.hosts.length/$scope.page_size);
+    }else{
+      return 0;
+    }
+  };
+  
+  $scope.prev = function(){
+    if($scope.current_page > 0){
+      $scope.current_page -= 1;
+    }
+  };
+  $scope.page = function(i){
+    $scope.current_page = i;
+  };
+  $scope.next = function(){
+    if($scope.current_page < $scope.page_count() - 1){
+      $scope.current_page += 1;
+    }
+  };  
+}
+
 function VMMgmtCtrl($scope){
-  $scope.selected = {};
+  $scope.selected || ($scope.selected = {});
+  $scope.current_page = 0;
+  $scope.page_size = 10;
+  
+  $scope.$watch('current_page', function(current, old){    
+    if(current == 0){
+      $scope.prev_class = 'disabled';
+    }else{
+      $scope.next_class = 'active';
+    }
+    if(current == $scope.page_count - 1){
+      $scope.next_class = 'disabled';
+    }else{
+      $scope.next_class = 'active';
+    }
+  });
+  
+  $scope.page_count = function(){
+    if($scope.vms){
+      return Math.ceil($scope.vms.length / $scope.page_size);
+    }else{
+      return 0;
+    }
+  };
+  
+  $scope.prev = function(){
+    if($scope.current_page > 0){
+      $scope.current_page -= 1;
+    }
+  };
+  $scope.page = function(i){
+    $scope.current_page = i;
+  };
+  $scope.next = function(){
+    if($scope.current_page < $scope.vms.length / $scope.page_size - 1){
+      $scope.current_page += 1;
+    }
+  };
 }
 
 function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
@@ -172,7 +253,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
         console.log("DELETE ALL VMS " + vm_ids);
         new VMService({ids: vm_ids}).$delete_all(function(data){
           if(data.success){
-            $.each(vms, function(i, vm){
+            angular.forEach(vms, function(vm){
               var index = $scope.vms.indexOf(vm);
               $scope.vms.splice(index, 1);
             });
