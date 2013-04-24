@@ -65,7 +65,7 @@ app.get('/clusters/:id', clusters.show);
 app.get('/clusters/:id/top_hosts', clusters.top_hosts);
 app.get('/clusters/:id/top_vms', clusters.top_vms);
 
-app.get('/virtual_machies/:id', vms.show);
+app.get('/vms/:id', vms.show);
 
 app.get('/hosts/:id', hosts.show);
 

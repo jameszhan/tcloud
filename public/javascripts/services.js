@@ -32,7 +32,7 @@ angular.module('webvirtServices', []).service('currentCluster', function() {
     'delete_all': {method: 'DELETE'}
   })
 }).factory('VM', function($resource){
-  return $resource('virtual_machies/:id', {id: '@id'}, {get: {method: 'GET'}});
+  return $resource('vms/:id', {id: '@id'}, {get: {method: 'GET'}});
 }).factory('Host', function($resource){
   return $resource('hosts/:id', {id: '@id'}, {get: {method: 'GET'}});
 });
