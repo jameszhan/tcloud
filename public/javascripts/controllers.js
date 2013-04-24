@@ -44,8 +44,8 @@ function HostCtrl($scope, $routeParams, Host) {
   });
 }
 
-function VMCtrl($scope, $routeParams, VM) {
-  VM.get({id: $routeParams.id}, function(vm){
+function VMCtrl($scope, $routeParams, VMService) {
+  VMService.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
   });
 }

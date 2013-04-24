@@ -38,8 +38,6 @@ angular.module('webvirtServices', []).factory('currentCluster', function() {
     'reboot': {method: 'POST', url: 'vms/reboot'},
     'snapshot': {method: 'POST', url: 'vms/snapshot'}
   })
-}).factory('VM', function($resource){
-  return $resource('vms/:id', {id: '@id'}, {get: {method: 'GET'}});
 }).factory('Host', function($resource){
   return $resource('hosts/:id', {id: '@id'}, {get: {method: 'GET'}});
 });
