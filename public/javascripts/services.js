@@ -40,7 +40,9 @@ angular.module('webvirtServices', []).factory('currentCluster', function() {
     'snapshot': {method: 'POST', url: 'vms/snapshot'}
   })
 }).factory('Host', function($resource){
-  return $resource('hosts/:id', {id: '@id'}, {get: {method: 'GET'}});
+  return $resource('hosts/:id', {id: '@id'}, {
+    'status': {method: 'POST', isArray: true, url: 'hosts/status'},
+  });
 });
 
 

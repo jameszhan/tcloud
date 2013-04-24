@@ -1,4 +1,6 @@
-{ "clusters" : [ { "hosts" : [ { "architect" : "x86_64",
+{ "clusters" : [ { "hosts" : [ { 
+              "id" : 11,
+              "architect" : "x86_64",
               "cpu_count" : 8,
               "cpu_usage" : 13,
               "memory_usage" : 93,
@@ -43,7 +45,9 @@
                   }
                 ]
             },
-            { "architect" : "x86_64",
+            { 
+              "id" : 12,
+              "architect" : "x86_64",
               "cpu_count" : 8,
               "cpu_usage" : 77,
               "memory_usage" : 62,
@@ -83,7 +87,9 @@
             "Unix" : 1
           }
       },
-      { "hosts" : [ { "architect" : "x86_64",
+      { "hosts" : [ { 
+              "id": 16,
+              "architect" : "x86_64",
               "cpu_count" : 8,
               "cpu_usage" : 56,
               "memory_usage" : 79,
@@ -152,7 +158,9 @@
                   }
                 ]
             },
-            { "architect" : "x86_64",
+            { 
+              "id": 18, 
+              "architect" : "x86_64",
               "cpu_count" : 8,
               "cpu_usage" : 23,
               "memory_usage" : 70,
@@ -172,7 +180,9 @@
                     "total_memory" : 17179869184
                   } ]
             },
-            { "architect" : "x86_64",
+            { 
+              "id" : 19,
+              "architect" : "x86_64",
               "cpu_count" : 8,
               "cpu_usage" : 95,
               "memory_usage" : 43,

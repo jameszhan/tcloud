@@ -19,23 +19,27 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
 }
 
 
-function DataCenterCtrl($scope, $routeParams, DataCenter, VMService, $pollingPool, Util) {
+function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VMService, $pollingPool, Util) {
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
     $scope.hosts = Util.flatten($scope.datacenter.clusters, 'hosts');
     $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
     
     $pollingPool.add(function(){
-      var ids = $scope.vms.map(function(vm){return vm.id});
-      VMService.status({ids: ids}, function(data){
+      var vm_ids = $scope.vms.map(function(vm){return vm.id});
+      VMService.status({ids: vm_ids}, function(data){
         Util.update($scope.vms, data);
+      });
+      var host_ids = $scope.hosts.map(function(host){return host.id});
+      Host.status({ids: host_ids}, function(data){
+        Util.update($scope.hosts, data);
       });
     });
   });  
 }
 
 
-function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, VMService, $pollingPool, Util) {
+function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, Host, VMService, $pollingPool, Util) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
     currentCluster.set(cluster);
@@ -44,9 +48,13 @@ function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, VMS
     $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
     
     $pollingPool.add(function(){
-      var ids = $scope.vms.map(function(vm){return vm.id});
-      VMService.status({ids: ids}, function(data){
+      var vm_ids = $scope.vms.map(function(vm){return vm.id});
+      VMService.status({ids: vm_ids}, function(data){
         Util.update($scope.vms, data);
+      });
+      var host_ids = $scope.hosts.map(function(host){return host.id});
+      Host.status({ids: host_ids}, function(data){
+        Util.update($scope.hosts, data);
       });
     });
   });

@@ -1,4 +1,6 @@
-{ "hosts" : [ { "architect" : "x86_64",
+{ "hosts" : [ { 
+        "id": 1,
+        "architect" : "x86_64",
         "cpu_count" : 8,
         "cpu_usage" : 2,
         "memory_usage" : 53,
@@ -67,7 +69,9 @@
             }
           ]
       },
-      { "architect" : "x86_64",
+      { 
+        "id" : 2,
+        "architect" : "x86_64",
         "cpu_count" : 8,
         "cpu_usage" : 1,
         "memory_usage" : 84,

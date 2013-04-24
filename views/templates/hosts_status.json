@@ -1,0 +1,13 @@
+[ 
+<% for(var i = 0; i < ids.length; i++) { -%>    
+  <% if(i != 0){ -%>
+  ,
+  <% } -%>
+  { 
+    "cpu_usage": <%=: [0, 100] | range_rand %>,
+    "id": <%= ids[i] %>,
+    "memory_usage": <%=: [0, 100] | range_rand %>,
+    "status": "<%=: ['startup', 'running', 'shutdown'] | sample %>"
+  }
+<% } -%>
+]
