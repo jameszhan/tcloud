@@ -31,14 +31,4 @@ angular.module('webvirtFilters', []).filter('bytes', function() {
     }
     return input;
   };
-}).filter('os', function(){
-  return function(input,os_type){
-    var ret=[];
-    for (var i=0; i<input.length; i++){
-      if(input[i].os_type==os_type) {
-        ret.push(input[i]);
-      }
-    }
-    return ret;
-  }
 });

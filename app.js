@@ -90,7 +90,7 @@ app.post('/vms/shutdown', vms.shutdown);
 app.post('/vms/snapshot', vms.snapshot);
 app.post('/vms/status', vms.status);
 
-app.get('/template', templates.show);
+app.get('/templates', templates.index);
 
 app.get('/activities', activities.index);
 app.post('/activities/status', activities.status);

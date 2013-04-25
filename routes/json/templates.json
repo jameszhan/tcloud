@@ -2,7 +2,7 @@
   "templates":[
     {
       "id": "1",
-      "name": "WindowsXP",
+      "name": "WindowsXP1",
       "architect": "i386",
       "os_type": "windows",
       "os": "WindowsXP",
@@ -38,7 +38,7 @@
     },
     {
       "id": "4",
-      "name": "WindowsXP",
+      "name": "WindowsXP2",
       "architect": "i386",
       "os_type": "windows",
       "os": "Windows7",
@@ -50,7 +50,7 @@
     },
     {
       "id": "5",
-      "name": "WindowsXP",
+      "name": "WindowsXP3",
       "architect": "i386",
       "os_type": "windows",
       "os": "WindowsServer",
@@ -59,6 +59,78 @@
       "instance_count": "45",
       "relate_instance": [],
       "status": "ok"
-    }
+    },
+    {
+      "id": "6",
+      "name": "WindowsXP4",
+      "architect": "i386",
+      "os_type": "windows",
+      "os": "Windows7",
+      "size": "2GB",
+      "create_date": "",
+      "instance_count": "45",
+      "relate_instance": [],
+      "status": "ok"
+    },
+    {
+      "id": "7",
+      "name": "Windows2009",
+      "architect": "i386",
+      "os_type": "windows",
+      "os": "WindowsServer",
+      "size": "2GB",
+      "create_date": "",
+      "instance_count": "45",
+      "relate_instance": [],
+      "status": "ok"
+    },
+    {
+       "id": "8",
+       "name": "Windows2000",
+       "architect": "i386",
+       "os_type": "windows",
+       "os": "Windows7",
+       "size": "2GB",
+       "create_date": "",
+       "instance_count": "45",
+       "relate_instance": [],
+       "status": "ok"
+     },
+     {
+       "id": "9",
+       "name": "Windows2003",
+       "architect": "i386",
+       "os_type": "windows",
+       "os": "WindowsServer",
+       "size": "2GB",
+       "create_date": "",
+       "instance_count": "45",
+       "relate_instance": [],
+       "status": "ok"
+     },
+     {
+       "id": "10",
+       "name": "Windows2008",
+       "architect": "i386",
+       "os_type": "windows",
+       "os": "Windows7",
+       "size": "2GB",
+       "create_date": "",
+       "instance_count": "45",
+       "relate_instance": [],
+       "status": "ok"
+     },
+     {
+       "id": "11",
+       "name": "Widnows8",
+       "architect": "i386",
+       "os_type": "windows",
+       "os": "WindowsServer",
+       "size": "2GB",
+       "create_date": "",
+       "instance_count": "45",
+       "relate_instance": [],
+       "status": "ok"
+     }
   ]
 }
