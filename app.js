@@ -78,6 +78,12 @@ app.get('/clusters/:id/top_vms', clusters.top_vms);
 
 app.get('/hosts/:id', hosts.show);
 app.post('/hosts/status', hosts.status);
+app.post('/hosts/maintain', hosts.maintain);
+app.post('/hosts/activate', hosts.activate);
+app.post('/hosts/start', hosts.start);
+app.post('/hosts/reboot', hosts.reboot);
+app.post('/hosts/shutdown', hosts.shutdown);
+app.post('/hosts/remove_all', hosts.remove_all);
 
 app.get('/vms/:id', vms.show);
 app.post('/vms/delete_all', vms.delete_all);
