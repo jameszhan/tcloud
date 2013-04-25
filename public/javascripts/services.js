@@ -51,6 +51,9 @@ angular.module('webvirtServices', []).
       'status': {method: 'POST', isArray: true, url: 'hosts/status'},
     });
   })
+  .factory('Template', function($resource) {
+    return $resource('template', {get: {method: 'GET'}});
+  })
   .factory('Activity', function($resource){
     return $resource('activities/:id', {id: '@id'}, {
       'status': {method: 'POST', isArray: true, url: 'activities/status'},

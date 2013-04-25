@@ -368,5 +368,11 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
       }
     }); 
   };
+  
+}
 
+function TemplateListCtrl($scope, $routeParams, Template){
+  Template.get(function(templates){
+    $scope.templates = templates.templates;
+  }); 
 }
