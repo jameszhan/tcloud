@@ -44,7 +44,6 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool
   });  
 }
 
-
 function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, Host, VM, $pollingPool, Util) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
@@ -89,85 +88,14 @@ function VMCtrl($scope, $routeParams, VM) {
   });
 }
 
-function HostMgmtCtrl($scope){  
-  $scope.current_page = 0;
-  $scope.page_size = 10;
-  
-  $scope.$watch('current_page', function(current, old){    
-    if(current == 0){
-      $scope.prev_class = 'disabled';
-    }else{
-      $scope.next_class = 'active';
-    }
-    if(current == $scope.page_count - 1){
-      $scope.next_class = 'disabled';
-    }else{
-      $scope.next_class = 'active';
-    }
-  });
-  
-  $scope.page_count = function(){
-    if($scope.hosts){
-      return Math.ceil($scope.hosts.length/$scope.page_size);
-    }else{
-      return 0;
-    }
-  };
-  
-  $scope.prev = function(){
-    if($scope.current_page > 0){
-      $scope.current_page -= 1;
-    }
-  };
-  $scope.page = function(i){
-    $scope.current_page = i;
-  };
-  $scope.next = function(){
-    if($scope.current_page < $scope.page_count() - 1){
-      $scope.current_page += 1;
-    }
-  };  
+function HostMgmtCtrl($scope, Util){  
+  Util.pagination($scope, 'hosts', 5);
 }
 
-function VMMgmtCtrl($scope){
+function VMMgmtCtrl($scope, Util){
   $scope.selected || ($scope.selected = {});
-  $scope.current_page = 0;
-  $scope.page_size = 10;
   
-  $scope.$watch('current_page', function(current, old){    
-    if(current == 0){
-      $scope.prev_class = 'disabled';
-    }else{
-      $scope.next_class = 'active';
-    }
-    if(current == $scope.page_count - 1){
-      $scope.next_class = 'disabled';
-    }else{
-      $scope.next_class = 'active';
-    }
-  });
-  
-  $scope.page_count = function(){
-    if($scope.vms){
-      return Math.ceil($scope.vms.length / $scope.page_size);
-    }else{
-      return 0;
-    }
-  };
-  
-  $scope.prev = function(){
-    if($scope.current_page > 0){
-      $scope.current_page -= 1;
-    }
-  };
-  $scope.page = function(i){
-    $scope.current_page = i;
-  };
-  $scope.next = function(){
-    if($scope.current_page < $scope.vms.length / $scope.page_size - 1){
-      $scope.current_page += 1;
-    }
-  };
+  Util.pagination($scope, 'vms', 5);
 }
 
 function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
@@ -376,7 +304,7 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
   
   Template.get(function(templates){
     $scope.templates = templates.templates;
-    Util.pagination($scope, $scope.templates, 1);
+    Util.pagination($scope, 'templates', 5);
     $scope.page_count = function(){
       return Math.ceil($scope.templates.filter(function(t){return t.os_type == $scope.search.os_type}).length / $scope.page_size);
     }    

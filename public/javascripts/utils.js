@@ -85,8 +85,8 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
           $rootScope.activities.unshift(data.activities[i]);
         }
       }
-    }, 
-    pagination: function($scope, target, page_size){
+    },
+    pagination: function($scope, target_name, page_size){
       $scope.current_page = 0;
       $scope.page_size = page_size;
 
@@ -120,8 +120,8 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
       
       $scope.page_count = function(){
-        if(target){
-          return Math.ceil(target.length / $scope.page_size);
+        if($scope[target_name]){
+          return Math.ceil($scope[target_name].length / $scope.page_size);
         }else{
           return 0;
         }
