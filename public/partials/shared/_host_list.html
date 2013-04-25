@@ -1,8 +1,10 @@
-<div class="row-fluid" ng-controller="HostMgmtCtrl">
+<div class="row-fluid" ng-controller="HostMgmtCtrl">    
   <div class="span8">
+  <div ng-include="'/partials/shared/_host_action_bar.html'" />
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
+        <th>ID</th>
         <th>名称</th>
         <th>CPU使用率</th>
         <th>内存使用率</th>
@@ -14,7 +16,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="m in hosts | startFrom:(current_page * page_size) | limitTo:page_size">  
+      <tr ng-repeat="m in hosts | startFrom:(current_page * page_size) | limitTo:page_size"> 
+        <td><input type="checkbox" value="{{m.id}}" ng-model="selected[m.id]" /></td> 
         <td>{{m.name}}</td>
         <td><div class="progress progress-striped active">
           <div class="bar" style="width: {{m.cpu_usage}}%;">{{m.cpu_usage}}%</div>

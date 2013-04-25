@@ -1,0 +1,20 @@
+<div ng-controller="HostActionBarCtrl">
+  <div class="input-append">
+    <button type="button" class="btn" ng-click="do_add()">添加</button>
+    <button type="button" class="btn" ng-click="do_edit()">修改</button>
+    <button type="button" class="btn" ng-click="do_remove()">移除</button>
+    <button type="button" class="btn" ng-click="do_maintain()">维护</button>
+    <button type="button" class="btn" ng-click="do_activate()">激活</button>
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        电源管理
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a ng-click="do_start()">开机</a></li>
+        <li><a ng-click="do_shutdown()">关机</a></li>
+        <li><a ng-click="do_reboot()">重启</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

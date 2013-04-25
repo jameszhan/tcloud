@@ -11,3 +11,98 @@ exports.status = function(req, res){
   res.render("templates/hosts_status.json", {ids: ids});  
 }
 
+exports.remove_all = function(req, res){
+  var ids = req.body.ids;
+  console.log("Remove all hosts %a", ids);
+  //Do your actual migrate operation here.
+  res.json({success: true, activities: [
+    {
+      id: 111, 
+      name: 'REMOVE', 
+      target: "host", 
+      target_type: "HOST", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+exports.maintain = function(req, res){
+  var ids = req.body.ids;
+  console.log("Maintain all hosts %a", ids);
+  //Do your actual migrate operation here.
+  res.json({success: true, activities: [
+    {
+      id: 111, 
+      name: 'MAINTAIN', 
+      target: "host", 
+      target_type: "HOST", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+exports.activate = function(req, res){
+  var ids = req.body.ids;
+  console.log("Migrate all hosts %a", ids);
+  //Do your actual migrate operation here.
+  res.json({success: true, activities: [
+    {
+      id: 115, 
+      name: 'ACTIVATE', 
+      target: "host", 
+      target_type: "HOST", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+exports.start = function(req, res){
+  var ids = req.body.ids;
+  console.log("Startup hosts %a", ids);
+  //Do your actual start operation here.
+  res.json({success: true, activities: [
+    {
+      id: 116, 
+      name: 'START', 
+      target: "HOST", 
+      target_type: "HOST", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+exports.shutdown = function(req, res){
+  var ids = req.body.ids;
+  console.log("Shutdown hosts %a", ids);
+  //Do your actual shutdown operation here.
+  res.json({success: true, activities: [
+    {
+      id: 117, 
+      name: 'SHUTDOWN', 
+      target: "HOST", 
+      target_type: "HOST", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+exports.reboot = function(req, res){
+  var ids = req.body.ids;
+  console.log("Reboot vms %a", ids);
+  //Do your actual reboot operation here.
+  res.json({success: true, activities: [
+    {
+      id: 118, 
+      name: 'REBOOT', 
+      target: "HOST", 
+      target_type: "HOST", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}

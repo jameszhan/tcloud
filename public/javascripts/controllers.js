@@ -24,7 +24,6 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
   });
 }
 
-
 function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool, Util) {
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
@@ -79,6 +78,122 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
   });
 }
 
+function HostMgmtCtrl($scope, Util){  
+  $scope.selected || ($scope.selected = {});
+  
+  Util.pagination($scope, 'hosts', 5);
+}
+
+function HostActionBarCtrl($scope, Host, Util){  
+  var do_check = function(min, max){
+    var hosts = $.grep($scope.hosts, function(host) {
+      return $scope.selected[host.id];
+    }), ok = true;
+    if(hosts.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      ok = false;
+    }
+    if(hosts.length > max){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      ok = false;
+    }
+    return {
+      then: function(fn){ ok && (fn || angular.noop)(hosts); }
+    };
+  };    
+  
+  $scope.do_add = function(){
+/*    
+    selectedVM.set(null);
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+*/  
+  };
+  
+  $scope.do_edit = function() {
+    do_check(1, 1).then(function(vms){
+      selectedVM.set(vms[0]);
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+  
+  $scope.do_remove = function(){
+    do_check(1, 100).then(function(hosts){
+      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
+        var host_ids = hosts.map(function(host){return host.id;});
+        console.log("REMOVE ALL HOSTS " + host_ids);
+        new Host({ids: host_ids}).$remove_all(function(data){
+          if(data.success){
+            angular.forEach(hosts, function(host){
+              var index = $scope.hosts.indexOf(host);
+              $scope.hosts.splice(index, 1);
+            });
+            Util.update_activities(data);
+          }
+        });
+      }
+    }); 
+  };
+
+  $scope.do_maintain = function(){
+    do_check(1, 100).then(function(hosts){
+      if(window.confirm("确定要进行维护操作？")){
+        var host_ids = hosts.map(function(host){ return host.id; });
+        console.log("Maintain the hosts " + host_ids);
+        new Host({ids: host_ids}).$maintain(Util.update_activities);
+      }
+    }); 
+  };
+  
+  $scope.do_activate = function(){
+    do_check(1, 100).then(function(hosts){
+      if(window.confirm("确定要进行激活操作？")){
+        var host_ids = hosts.map(function(host){ return host.id; });
+        console.log("Activate the hosts " + host_ids);
+        new Host({ids: host_ids}).$activate(Util.update_activities);
+      }
+    });
+  };  
+
+  $scope.do_start = function(){
+    do_check(1, 100).then(function(hosts){
+      if(window.confirm("确定要进行启动操作？")){
+        var host_ids = hosts.map(function(host){ return host.id; });
+        console.log("Start the hosts " + host_ids);
+        new Host({ids: host_ids}).$start(Util.update_activities);
+      }
+    });
+  };
+  
+  $scope.do_shutdown = function(){
+    do_check(1, 100).then(function(hosts){
+      if(window.confirm("确定要进行关机操作？")){
+        var host_ids = hosts.map(function(host){ return host.id; });
+        console.log("Shutdown the hosts " + host_ids);
+        new Host({ids: host_ids}).$shutdown(Util.update_activities);
+      }
+    });
+  };
+  
+  $scope.do_reboot = function(){
+    do_check(1, 100).then(function(hosts){
+      if(window.confirm("确定要进行重启操作？")){
+        var host_ids = hosts.map(function(host){ return host.id; });
+        console.log("Reboot the hosts " + host_ids);
+        new Host({ids: host_ids}).$reboot(Util.update_activities);
+      }
+    });
+  };
+  
+}
+
 function VMCtrl($scope, $routeParams, VM) {
   $scope.selected = {};
   VM.get({id: $routeParams.id}, function(vm){
@@ -86,10 +201,6 @@ function VMCtrl($scope, $routeParams, VM) {
     $scope.selected[vm.id] = true;
     $scope.vms = [vm]; //Here is compatible with action_bar.
   });
-}
-
-function HostMgmtCtrl($scope, Util){  
-  Util.pagination($scope, 'hosts', 5);
 }
 
 function VMMgmtCtrl($scope, Util){
@@ -155,8 +266,7 @@ function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
   };
   $scope.create = function(){
     console.log($scope.vm);
-  };
-  
+  };  
   $scope.close = function(result){
     dialog.close(result)
   };
