@@ -85,7 +85,48 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
           $rootScope.activities.unshift(data.activities[i]);
         }
       }
-    }  
+    }, 
+    pagination: function($scope, target, page_size){
+      $scope.current_page = 0;
+      $scope.page_size = page_size;
+
+      $scope.$watch('current_page', function(current, old){    
+        if(current == 0){
+          $scope.prev_class = 'disabled';
+        }else{
+          $scope.next_class = 'active';
+        }
+        if(current == $scope.page_count - 1){
+          $scope.next_class = 'disabled';
+        }else{
+          $scope.next_class = 'active';
+        }
+      });
+      
+      $scope.prev = function(){
+        if($scope.current_page > 0){
+          $scope.current_page -= 1;
+        }
+      };
+      
+      $scope.page = function(i){
+        $scope.current_page = i;
+      };
+      
+      $scope.next = function(){
+        if($scope.current_page < $scope.page_count() - 1){
+          $scope.current_page += 1;
+        }
+      };
+      
+      $scope.page_count = function(){
+        if(target){
+          return Math.ceil(target.length / $scope.page_size);
+        }else{
+          return 0;
+        }
+      };
+    } 
   };
 });
 

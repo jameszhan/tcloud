@@ -1,4 +1,4 @@
-<div ng-controller="TemplateListCtrl">
+<div>
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="template in templates|os:'windows'">  
+      <tr ng-repeat="template in templates | filter:search | startFrom:(current_page * page_size) | limitTo:page_size">  
         <td><input type="checkbox" value="{{template.id}}"/></td>
         <td>{{template.name}}</td>
         <td>{{template.architect}}</td>  
@@ -39,5 +39,4 @@
       <li><a href="javascript:void(0);" ng-hide="templates.length <= page_size" ng-class="next_class" ng-click="next()">Next</button></a></li>
     </ul>
   </div>
-
 </div>

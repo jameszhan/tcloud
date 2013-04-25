@@ -19,11 +19,11 @@ jQuery(document).ready(function($){
 angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilters', "ui.bootstrap.dialog", "ngResource"]).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.
-      when('/datacenters/:id', {templateUrl: '/partials/datacenters/overview.html', controller: DataCenterCtrl}).
-      when('/clusters/:id', {templateUrl: '/partials/clusters/overview.html', controller: ClusterCtrl}).
-      when('/hosts/:id', {templateUrl: '/partials/hosts/overview.html',   controller: HostCtrl}).
-      when('/vms/:id', {templateUrl: '/partials/vms/overview.html', controller: VMCtrl}).
-      when('/template', {templateUrl: '/partials/templates/overview.html', controller: TemplateListCtrl}).
+      when('/datacenters/:id', {templateUrl: '/partials/datacenters/index.html', controller: DataCenterCtrl}).
+      when('/clusters/:id', {templateUrl: '/partials/clusters/index.html', controller: ClusterCtrl}).
+      when('/hosts/:id', {templateUrl: '/partials/hosts/index.html',   controller: HostCtrl}).
+      when('/vms/:id', {templateUrl: '/partials/vms/index.html', controller: VMCtrl}).
+      when('/templates', {templateUrl: '/partials/templates/index.html', controller: TemplateCtrl}).
       otherwise({redirectTo: '/'});
 }]).run(["$pollingPool", "$timeout", "$rootScope", "Util", "Activity", function($pollingPool, $timeout, $rootScope, Util, Activity){
   $rootScope.$on('$routeChangeStart', function(e, route){

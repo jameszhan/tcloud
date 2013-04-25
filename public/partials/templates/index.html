@@ -7,18 +7,17 @@
   </div>
   <div class="span3" style="padding:0px 10px">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#windows" data-toggle="tab">windows</a></li>
-      <li><a href="#linux" data-toggle="tab">linux</a></li>
+      <li class="active"><a href="#windows" data-toggle="tab" ng-click="search.os_type='windows'; current_page=0">windows</a></li>
+      <li><a href="#linux" data-toggle="tab" ng-click="search.os_type='linux'; current_page=0">linux</a></li>
     </ul>
   </div>
-
 </div>
 <div class="tab-content">
-    <div id="windows" class="tab-pane active" style="padding:0px 10px">
-      <ng:include src="'/partials/shared/_template_list.html'"/>
-    </div>
-    <div id="linux" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/shared/_template_list.html'" />
-    </div>
-  </div> 
+  <div id="windows" class="tab-pane active" style="padding:0px 10px">
+    <ng:include src="'/partials/templates/_template_list.html'"/>
+  </div>
+  <div id="linux" class="tab-pane" style="padding:0px 10px">
+    <ng:include src="'/partials/templates/_template_list.html'" />
+  </div>
+</div> 
 

@@ -371,8 +371,15 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
   
 }
 
-function TemplateListCtrl($scope, $routeParams, Template){
+function TemplateCtrl($scope, $routeParams, Template, Util){
+  $scope.search = {os_type: 'windows'};
+  
   Template.get(function(templates){
     $scope.templates = templates.templates;
-  }); 
+    Util.pagination($scope, $scope.templates, 1);
+    $scope.page_count = function(){
+      return Math.ceil($scope.templates.filter(function(t){return t.os_type == $scope.search.os_type}).length / $scope.page_size);
+    }    
+  });
 }
+

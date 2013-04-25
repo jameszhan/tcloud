@@ -144,7 +144,7 @@
    {
        "name": "模板",
        "icon": "/images/host.png",
-       "url": "#/template"
+       "url": "#/templates"
    },
    {
        "name": "基础架构",

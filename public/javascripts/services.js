@@ -52,7 +52,7 @@ angular.module('webvirtServices', []).
     });
   })
   .factory('Template', function($resource) {
-    return $resource('template', {get: {method: 'GET'}});
+    return $resource('templates/:id', {id: '@id'});
   })
   .factory('Activity', function($resource){
     return $resource('activities/:id', {id: '@id'}, {
