@@ -33,7 +33,7 @@ angular.module('webvirtServices', []).
   .factory('Cluster', function($resource){
     return $resource('clusters/:id', {id: '@id'}, {get: {method: 'GET'}});
   })
-  .factory('VMService', function($resource){
+  .factory('VM', function($resource){
     return $resource('vms/:id', {id: '@id'}, {    
       'status': {method: 'POST', isArray: true, url: 'vms/status'},
       'delete_all': {method: 'POST', url: 'vms/delete_all'}, 

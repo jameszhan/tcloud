@@ -16,8 +16,6 @@ jQuery(document).ready(function($){
   });
 });
 
-
-
 angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilters', "ui.bootstrap.dialog", "ngResource"]).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.

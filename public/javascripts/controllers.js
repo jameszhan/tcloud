@@ -25,7 +25,7 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
 }
 
 
-function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VMService, $pollingPool, Util) {
+function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool, Util) {
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
     $scope.hosts = Util.flatten($scope.datacenter.clusters, 'hosts');
@@ -33,7 +33,7 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VMService, $poll
     
     $pollingPool.add(function(){
       var vm_ids = $scope.vms.map(function(vm){return vm.id});
-      VMService.status({ids: vm_ids}, function(data){
+      VM.status({ids: vm_ids}, function(data){
         Util.update($scope.vms, data);
       });
       var host_ids = $scope.hosts.map(function(host){return host.id});
@@ -45,7 +45,7 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VMService, $poll
 }
 
 
-function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, Host, VMService, $pollingPool, Util) {
+function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, Host, VM, $pollingPool, Util) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
     currentCluster.set(cluster);
@@ -55,7 +55,7 @@ function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, Hos
     
     $pollingPool.add(function(){
       var vm_ids = $scope.vms.map(function(vm){return vm.id});
-      VMService.status({ids: vm_ids}, function(data){
+      VM.status({ids: vm_ids}, function(data){
         Util.update($scope.vms, data);
       });
       var host_ids = $scope.hosts.map(function(host){return host.id});
@@ -66,23 +66,23 @@ function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, Hos
   });
 }
 
-function HostCtrl($scope, $routeParams, Host, VMService, $pollingPool, Util) {
+function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
     $scope.vms = $scope.host.virtual_machines;
     
     $pollingPool.add(function(){
       var ids = $scope.vms.map(function(vm){return vm.id});
-      VMService.status({ids: ids}, function(data){
+      VM.status({ids: ids}, function(data){
         Util.update($scope.vms, data);
       });
     });
   });
 }
 
-function VMCtrl($scope, $routeParams, VMService) {
+function VMCtrl($scope, $routeParams, VM) {
   $scope.selected = {};
-  VMService.get({id: $routeParams.id}, function(vm){
+  VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
     $scope.selected[vm.id] = true;
     $scope.vms = [vm]; //Here is compatible with action_bar.
@@ -235,7 +235,7 @@ function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
   load_step();
 }
 
-function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
+function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
   var d = $dialog.dialog({
     backdrop: true,
     keyboard: true,
@@ -286,7 +286,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
       if(window.confirm("你确定要删除它们吗，此操作将无法恢复!")){
         var vm_ids = vms.map(function(vm){return vm.id;});
         console.log("DELETE ALL VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$delete_all(function(data){
+        new VM({ids: vm_ids}).$delete_all(function(data){
           if(data.success){
             angular.forEach(vms, function(vm){
               var index = $scope.vms.indexOf(vm);
@@ -304,7 +304,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
       if(window.confirm("确定要存为模版？")){
         var vm_ids = vms.map(function(vm){ return vm.id; });
         console.log("Save Template for VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$save_template(Util.update_activities);
+        new VM({ids: vm_ids}).$save_template(Util.update_activities);
       }
     }); 
   };
@@ -314,7 +314,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
       if(window.confirm("你确定要迁移它(们)吗？")){
         var vm_ids = vms.map(function(vm){ return vm.id; });        
         console.log("Migration for VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$migrate(Util.update_activities);
+        new VM({ids: vm_ids}).$migrate(Util.update_activities);
       }
     }); 
   };
@@ -324,7 +324,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
       if(window.confirm("你确定要暂停它(们)吗!")){
         var vm_ids = vms.map(function(vm){ return vm.id; });
         console.log("Suspend VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$suspend(Util.update_activities);
+        new VM({ids: vm_ids}).$suspend(Util.update_activities);
       }
     }); 
   };
@@ -334,7 +334,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
       if(window.confirm("你确定要启动它(们)吗？")){
         var vm_ids = vms.map(function(vm){ return vm.id; });
         console.log("Start VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$start(Util.update_activities);
+        new VM({ids: vm_ids}).$start(Util.update_activities);
       }
     }); 
   };
@@ -344,7 +344,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
       if(window.confirm("你确定要删要重启它(们)吗？")){
         var vm_ids = vms.map(function(vm){return vm.id});
         console.log("Restart VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$reboot(Util.update_activities);
+        new VM({ids: vm_ids}).$reboot(Util.update_activities);
       }
     }); 
   };
@@ -354,7 +354,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
       if(window.confirm("你确定要关闭它(们)吗")){
         var vm_ids = vms.map(function(vm){return vm.id});
         console.log("Shutdown VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$shutdown(Util.update_activities);
+        new VM({ids: vm_ids}).$shutdown(Util.update_activities);
       }
     }); 
   };
@@ -364,7 +364,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
       if(window.confirm("确定要创建快照吗？")){
         var vm_ids = vms.map(function(vm){return vm.id});
         console.log("Snapshot VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$snapshot(Util.update_activities);
+        new VM({ids: vm_ids}).$snapshot(Util.update_activities);
       }
     }); 
   };
