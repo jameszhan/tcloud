@@ -142,6 +142,11 @@
       ]
    },
    {
+       "name": "模板",
+       "icon": "/images/host.png",
+       "url": "#/template"
+   },
+   {
        "name": "基础架构",
        "icon": "/images/host.png",
        "url": "#architect"

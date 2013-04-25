@@ -1,0 +1,43 @@
+<div ng-controller="TemplateListCtrl">
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th></th>
+        <th>模板名称</th>
+        <th>模板架构</th>
+        <th>操作系统</th>
+        <th>大小</th>
+        <th>创建时间</th>
+        <th>实例个数</th>
+        <th>相关实例</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="template in templates|os:'windows'">  
+        <td><input type="checkbox" value="{{template.id}}"/></td>
+        <td>{{template.name}}</td>
+        <td>{{template.architect}}</td>  
+        <td>{{template.os}}</td>  
+        <td>{{template.size}}</td> 
+        <td>{{template.create_date}}</td> 
+        <td>{{template.instance_count}}</td> 
+        <td>{{template.relate_instance}}</td> 
+        <td><span class="label label-success">{{template.status}}</span></td>
+        <td><button class="btn btn-danger">删除</button></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="pagination">
+    <ul>
+      <li><a href="javascript:void(0);" ng-hide="templates.length <= page_size" ng-class="prev_class" ng-click="prev()">Prev</button></a></li>
+      <li ng-repeat="i in [] | range:page_count()">
+        <a href="javascript:void(0)"  ng-hide="templates.length <= page_size" ng-click="page(i)" ng-class="(i == current_page) && 'active'">{{i + 1}}</a>
+      </li>
+      <li><a href="javascript:void(0);" ng-hide="templates.length <= page_size" ng-class="next_class" ng-click="next()">Next</button></a></li>
+    </ul>
+  </div>
+
+</div>
