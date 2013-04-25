@@ -12,6 +12,7 @@ var express = require('express')
   , vms = require('./routes/vms')
   , hosts = require('./routes/hosts')
   , templates = require('./routes/templates')
+  , activities = require('./routes/activities')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs');
@@ -90,6 +91,9 @@ app.post('/vms/snapshot', vms.snapshot);
 app.post('/vms/status', vms.status);
 
 app.get('/template', templates.show);
+
+app.get('/activities', activities.index);
+app.post('/activities/status', activities.status);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

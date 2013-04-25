@@ -33,7 +33,7 @@ angular.module('webvirtServices', []).
   .factory('Cluster', function($resource){
     return $resource('clusters/:id', {id: '@id'}, {get: {method: 'GET'}});
   })
-  .factory('VMService', function($resource){
+  .factory('VM', function($resource){
     return $resource('vms/:id', {id: '@id'}, {    
       'status': {method: 'POST', isArray: true, url: 'vms/status'},
       'delete_all': {method: 'POST', url: 'vms/delete_all'}, 
@@ -53,18 +53,9 @@ angular.module('webvirtServices', []).
   })
   .factory('Template', function($resource) {
     return $resource('template', {get: {method: 'GET'}});
+  })
+  .factory('Activity', function($resource){
+    return $resource('activities/:id', {id: '@id'}, {
+      'status': {method: 'POST', isArray: true, url: 'activities/status'},
+    });
   });
-
-
-
-
-/*
-.angular.service('VM', function($resource) {
-   return $resource('vms/:id', {}, { 
-     'save': { method: 'POST' },
-     'get': { method: 'GET' },
-     'query': { method: 'GET', isArray: true },
-     'update': { method: 'PUT' },
-     'delete': { method: 'DELETE' }});
-});
-*/

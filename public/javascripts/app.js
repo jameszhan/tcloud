@@ -16,8 +16,6 @@ jQuery(document).ready(function($){
   });
 });
 
-
-
 angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilters', "ui.bootstrap.dialog", "ngResource"]).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.
@@ -27,9 +25,17 @@ angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilte
       when('/vms/:id', {templateUrl: '/partials/vms/overview.html', controller: VMCtrl}).
       when('/template', {templateUrl: '/partials/templates/overview.html', controller: TemplateListCtrl}).
       otherwise({redirectTo: '/'});
-}]).run(["$pollingPool", "$timeout", "$rootScope", function($pollingPool, $timeout, $rootScope){
+}]).run(["$pollingPool", "$timeout", "$rootScope", "Util", "Activity", function($pollingPool, $timeout, $rootScope, Util, Activity){
   $rootScope.$on('$routeChangeStart', function(e, route){
     $pollingPool.clear();
+    $pollingPool.add(function(){
+      if($rootScope.activities){
+        var activity_ids = $rootScope.activities.map(function(activity){return activity.id});
+        Activity.status({ids: activity_ids}, function(data){          
+          Util.update($rootScope.activities, data);
+        });
+      }
+    });
   });
   $timeout(function(){
     $pollingPool.schedule();

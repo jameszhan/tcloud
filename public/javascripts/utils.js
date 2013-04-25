@@ -1,5 +1,5 @@
 angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fibonacci){
-  var current_delay = 0, fib = Fibonacci.instance(), max_delay = 5000, next_delay = function(){
+  var current_delay = 0, fib = Fibonacci.instance(), max_delay = 10000, next_delay = function(){
     return current_delay >= max_delay ? current_delay : current_delay = fib() * 1000;
   }, tasks = [], started = false, run = function(){
     for(var i = 0; i < tasks.length; i++){
@@ -55,7 +55,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
     }
   };
-}).factory("Util", function(){
+}).factory("Util", function($rootScope){
   return {
     update: function(dst, update_data){
       angular.forEach(dst, function(vm){
@@ -78,7 +78,14 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         }      
       }      
       return ret;
-    }    
+    },
+    update_activities: function(data){
+      if(data.activities){
+        for(var i = 0; i < data.activities.length; i++){  
+          $rootScope.activities.unshift(data.activities[i]);
+        }
+      }
+    }  
   };
 });
 
