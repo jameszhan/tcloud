@@ -1,0 +1,16 @@
+[ 
+<% for(var i = ids.length -1; i >= 0; i--) { -%>    
+  { 
+    "id": <%= ids[i] %>,
+    "name": "<%=: ['启动', '关闭', '迁移', '删除', '重启'] | sample %>",    
+    "target": "<%=: ['vm-01', 'host-02', 'vm-02', 'host-01', 'vm-03'] | sample %>",
+    "target_type": "<%=: ['VM', 'HOST'] | sample %>",
+    "start_time": "<%=: new Date().toISOString() %>",
+    "end_time": "<%=: new Date().toISOString() %>",
+    "status": "<%=: ['prepare', 'queued', 'process', 'success', 'failure', 'cancelled'] | sample %>"
+  }
+  <% if(i != 0){ -%>
+  ,
+  <% } -%>
+<% } -%>
+]

@@ -12,6 +12,12 @@ var flatten = function(arr, target){
   return ret;
 };
 
+function ActivityCtrl($rootScope, Activity){
+  Activity.query({}, function(data){    
+    $rootScope.activities = data;
+  });
+}
+
 function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
   DataCenterEvent.query({data_center_id: $routeParams.id}, function(events, headersFn){
     $scope.events = events;
@@ -229,7 +235,7 @@ function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
   load_step();
 }
 
-function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
+function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM, Util){
   var d = $dialog.dialog({
     backdrop: true,
     keyboard: true,
@@ -254,7 +260,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
       then: function(fn){ ok && (fn || angular.noop)(vms); }
     };
   };
-
+  
   $scope.do_create = function(){
     selectedVM.set(null);
     d.open().then(function(result){
@@ -286,6 +292,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
               var index = $scope.vms.indexOf(vm);
               $scope.vms.splice(index, 1);
             });
+            Util.update_activities(data);
           }
         });
       }
@@ -297,7 +304,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
       if(window.confirm("确定要存为模版？")){
         var vm_ids = vms.map(function(vm){ return vm.id; });
         console.log("Save Template for VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$save_template();
+        new VMService({ids: vm_ids}).$save_template(Util.update_activities);
       }
     }); 
   };
@@ -307,7 +314,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
       if(window.confirm("你确定要迁移它(们)吗？")){
         var vm_ids = vms.map(function(vm){ return vm.id; });        
         console.log("Migration for VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$migrate();
+        new VMService({ids: vm_ids}).$migrate(Util.update_activities);
       }
     }); 
   };
@@ -317,7 +324,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
       if(window.confirm("你确定要暂停它(们)吗!")){
         var vm_ids = vms.map(function(vm){ return vm.id; });
         console.log("Suspend VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$suspend();
+        new VMService({ids: vm_ids}).$suspend(Util.update_activities);
       }
     }); 
   };
@@ -327,7 +334,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
       if(window.confirm("你确定要启动它(们)吗？")){
         var vm_ids = vms.map(function(vm){ return vm.id; });
         console.log("Start VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$start();
+        new VMService({ids: vm_ids}).$start(Util.update_activities);
       }
     }); 
   };
@@ -337,7 +344,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
       if(window.confirm("你确定要删要重启它(们)吗？")){
         var vm_ids = vms.map(function(vm){return vm.id});
         console.log("Restart VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$reboot();
+        new VMService({ids: vm_ids}).$reboot(Util.update_activities);
       }
     }); 
   };
@@ -347,7 +354,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
       if(window.confirm("你确定要关闭它(们)吗")){
         var vm_ids = vms.map(function(vm){return vm.id});
         console.log("Shutdown VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$shutdown();
+        new VMService({ids: vm_ids}).$shutdown(Util.update_activities);
       }
     }); 
   };
@@ -357,7 +364,7 @@ function ActionBarCtrl($scope, $q, $dialog, VMService, selectedVM){
       if(window.confirm("确定要创建快照吗？")){
         var vm_ids = vms.map(function(vm){return vm.id});
         console.log("Snapshot VMS " + vm_ids);
-        new VMService({ids: vm_ids}).$snapshot();
+        new VMService({ids: vm_ids}).$snapshot(Util.update_activities);
       }
     }); 
   };

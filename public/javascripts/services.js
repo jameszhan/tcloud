@@ -50,18 +50,9 @@ angular.module('webvirtServices', []).
     return $resource('hosts/:id', {id: '@id'}, {
       'status': {method: 'POST', isArray: true, url: 'hosts/status'},
     });
+  })
+  .factory('Activity', function($resource){
+    return $resource('activities/:id', {id: '@id'}, {
+      'status': {method: 'POST', isArray: true, url: 'activities/status'},
+    });
   });
-
-
-
-
-/*
-.angular.service('VM', function($resource) {
-   return $resource('vms/:id', {}, { 
-     'save': { method: 'POST' },
-     'get': { method: 'GET' },
-     'query': { method: 'GET', isArray: true },
-     'update': { method: 'PUT' },
-     'delete': { method: 'DELETE' }});
-});
-*/
