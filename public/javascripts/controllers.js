@@ -307,7 +307,11 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
     Util.pagination($scope, 'templates', 5);
     $scope.page_count = function(){
       return Math.ceil($scope.templates.filter(function(t){return t.os_type == $scope.search.os_type}).length / $scope.page_size);
-    }    
+    };   
+    
+    $scope.should_hide = function(){
+      return $scope.templates.filter(function(t){return t.os_type == $scope.search.os_type}).length <= $scope.page_size;
+    };
   });
 }
 
