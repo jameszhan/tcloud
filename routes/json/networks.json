@@ -1,0 +1,70 @@
+{
+  "networks":[
+    {
+      "id": "1",
+      "name": "应用网络",
+      "type": "NAT",
+      "ip_range": "172.16.10.0/24",
+      "dhcp": "是",
+      "dhcp_begin": "172.16.10.10",
+      "dhcp_end": "172.16.10.96",
+      "relate_instance": "65",
+      "status": "停用"
+    },
+    {
+      "id": "2",
+      "name": "应用网络",
+      "type": "NAT",
+      "ip_range": "172.16.10.0/24",
+      "dhcp": "是",
+      "dhcp_begin": "172.16.10.10",
+      "dhcp_end": "172.16.10.96",
+      "relate_instance": "65",
+      "status": "禁用"
+    },
+    {
+      "id": "3",
+      "name": "应用网络",
+      "type": "NAT",
+      "ip_range": "172.16.10.0/24",
+      "dhcp": "是",
+      "dhcp_begin": "172.16.10.10",
+      "dhcp_end": "172.16.10.96",
+      "relate_instance": "65",
+      "status": "启动"
+    },
+    {
+      "id": "4",
+      "name": "应用网络",
+      "type": "NAT",
+      "ip_range": "172.16.10.0/24",
+      "dhcp": "是",
+      "dhcp_begin": "172.16.10.10",
+      "dhcp_end": "172.16.10.96",
+      "relate_instance": "65",
+      "status": "停用"
+    },
+    {
+      "id": "5",
+      "name": "应用网络",
+      "type": "NAT",
+      "ip_range": "172.16.10.0/24",
+      "dhcp": "是",
+      "dhcp_begin": "172.16.10.10",
+      "dhcp_end": "172.16.10.96",
+      "relate_instance": "65",
+      "status": "禁用"
+    },
+    {
+      "id": "6",
+      "name": "应用网络",
+      "type": "NAT",
+      "ip_range": "172.16.10.0/24",
+      "dhcp": "是",
+      "dhcp_begin": "172.16.10.10",
+      "dhcp_end": "172.16.10.96",
+      "relate_instance": "65",
+      "status": "启动"
+    }
+  ]
+}
