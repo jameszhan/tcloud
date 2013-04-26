@@ -149,7 +149,7 @@
    {
        "name": "基础架构",
        "icon": "/images/host.png",
-       "url": "#architect"
+       "url": "#/architects"
    },
    {
        "name": "全局配置",
