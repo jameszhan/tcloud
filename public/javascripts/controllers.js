@@ -439,3 +439,6 @@ function NetWorkCtrl($scope, $routeParams, NetWork, Util){
     };
   });
 }
+
+function ArchitectCtrl($scope){
+}
