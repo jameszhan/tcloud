@@ -147,6 +147,11 @@
        "url": "#/storages"
    },
    {
+       "name": "网络",
+       "icon": "/images/host.png",
+       "url": "#/networks"
+   },
+   {
        "name": "模板",
        "icon": "/images/host.png",
        "url": "#/templates"
