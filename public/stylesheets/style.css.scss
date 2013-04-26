@@ -251,18 +251,6 @@ ul#rMenu a {
   } 
 }
 
-.chart-container {
-  width: 350px;
-  height: 160px;
-}
-
-.chart-placeholder {
-  width: 100%;
-  height: 100%;
-  font-size: 14px;
-  line-height: 1.2em;
-}
-
 .step-pos {
   margin: 5px 5px;  
 }
@@ -277,4 +265,8 @@ ul#rMenu a {
 .well-layout {
   padding-left: 10px;
   text-align: center;
+}
+
+.switch-width {
+  width: 190px;
 }
