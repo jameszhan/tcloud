@@ -432,6 +432,11 @@ function NetWorkCtrl($scope, $routeParams, NetWork, Util){
     $scope.should_hide = function(){
       return $scope.networks.length <= $scope.page_size;
     };
+    $scope.ports = networks.ports;
+    Util.pagination($scope, 'ports', 5);
+    $scope.should_hide = function(){
+      return $scope.ports.length <= $scope.page_size;
+    };
   });
 }
 

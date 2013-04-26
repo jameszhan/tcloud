@@ -1,0 +1,19 @@
+<div class="row-fluid">
+  <div class="span9 tab-layout">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#ip" data-toggle="tab">IP</a></li>
+      <li><a href="#port" data-toggle="tab">端口</a></li>
+    </ul>
+  </div>
+  <div class="span3 tab-layout">
+    <button class="btn btn-info">存为书签</button>
+  </div>
+</div>
+<div class="tab-content">
+  <div id="ip" class="tab-pane active" style="padding:0px 10px">
+    <ng:include src="'/partials/shared/_networks.html'" />
+  </div>
+  <div id="port" class="tab-pane" style="padding:0px 10px">
+    <ng:include src="'/partials/shared/_networks_port.html'" />
+  </div>
+</div>
