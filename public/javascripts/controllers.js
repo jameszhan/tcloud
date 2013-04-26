@@ -447,3 +447,13 @@ function StorageCtrl($scope, $routeParams, Storage, Util){
     };
   });
 }
+
+function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
+  ShortCut.get(function(shortcuts){
+    $scope.shortcuts = shortcuts.shortcuts;
+    Util.pagination($scope, 'shortcuts', 5);
+    $scope.should_hide = function(){
+      return $scope.shortcuts.length <= $scope.page_size;
+    };
+  });
+}
