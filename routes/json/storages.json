@@ -1,0 +1,102 @@
+{
+  "storages":[
+    {
+      "id": "1",
+      "name": "中央存储",
+      "type": "SAN",
+      "server": "SAN",
+      "cluster": "开发",
+      "apn": "xxxxxx",
+      "storage_size": "56TB",
+      "rate_storage": "10%",
+      "desrc": "中央存储",
+      "idle_storage": "545GB",
+      "usage_storage": "45222GB",
+      "status": "停用"
+    },
+    {
+      "id": "2",
+      "name": "中央存储",
+      "type": "SAN",
+      "server": "SAN",
+      "cluster": "开发",
+      "apn": "xxxxxx",
+      "storage_size": "56TB",
+      "rate_storage": "10%",
+      "desrc": "中央存储",
+      "idle_storage": "545GB",
+      "usage_storage": "45222GB",
+      "status": "不可用"
+    },
+    {
+      "id": "3",
+      "name": "中央存储",
+      "type": "SAN",
+      "server": "SAN",
+      "cluster": "开发",
+      "apn": "xxxxxx",
+      "storage_size": "56TB",
+      "rate_storage": "10%",
+      "desrc": "中央存储",
+      "idle_storage": "545GB",
+      "usage_storage": "45222GB",
+      "status": "正常"
+    },
+    {
+      "id": "4",
+      "name": "中央存储",
+      "type": "SAN",
+      "server": "SAN",
+      "cluster": "开发",
+      "apn": "xxxxxx",
+      "storage_size": "56TB",
+      "rate_storage": "10%",
+      "desrc": "中央存储",
+      "idle_storage": "545GB",
+      "usage_storage": "45222GB",
+      "status": "正常"
+    },
+    {
+      "id": "5",
+      "name": "中央存储",
+      "type": "SAN",
+      "server": "SAN",
+      "cluster": "开发",
+      "apn": "xxxxxx",
+      "storage_size": "56TB",
+      "rate_storage": "10%",
+      "desrc": "中央存储",
+      "idle_storage": "545GB",
+      "usage_storage": "45222GB",
+      "status": "停用"
+    },
+    {
+      "id": "6",
+      "name": "中央存储",
+      "type": "SAN",
+      "server": "SAN",
+      "cluster": "开发",
+      "apn": "xxxxxx",
+      "storage_size": "56TB",
+      "rate_storage": "10%",
+      "desrc": "中央存储",
+      "idle_storage": "545GB",
+      "usage_storage": "45222GB",
+      "status": "正常"
+    },
+    {
+      "id": "7",
+      "name": "中央存储",
+      "type": "SAN",
+      "server": "SAN",
+      "cluster": "开发",
+      "apn": "xxxxxx",
+      "storage_size": "56TB",
+      "rate_storage": "10%",
+      "desrc": "中央存储",
+      "idle_storage": "545GB",
+      "usage_storage": "45222GB",
+      "status": "正常"
+    }
+  ]
+}

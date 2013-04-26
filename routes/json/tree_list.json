@@ -142,6 +142,11 @@
       ]
    },
    {
+       "name": "存储",
+       "icon": "/images/host.png",
+       "url": "#/storages"
+   },
+   {
        "name": "模板",
        "icon": "/images/host.png",
        "url": "#/templates"

@@ -67,4 +67,7 @@ angular.module('webvirtServices', []).
   })
   .factory('NetWork', function($resource){
     return $resource('networks/:id', {id: '@id'});
+  })
+  .factory('Storage', function($resource){
+    return $resource('storages/:id', {id: '@id'});
   });
