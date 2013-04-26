@@ -64,4 +64,7 @@ angular.module('webvirtServices', []).
     return $resource('activities/:id', {id: '@id'}, {
       'status': {method: 'POST', isArray: true, url: 'activities/status'},
     });
+  })
+  .factory('NetWork', function($resource){
+    return $resource('networks/:id', {id: '@id'});
   });

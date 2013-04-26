@@ -12,6 +12,7 @@ var express = require('express')
   , vms = require('./routes/vms')
   , hosts = require('./routes/hosts')
   , templates = require('./routes/templates')
+  , networks = require('./routes/networks')
   , activities = require('./routes/activities')
   , http = require('http')
   , path = require('path')
@@ -100,6 +101,8 @@ app.get('/templates', templates.index);
 
 app.get('/activities', activities.index);
 app.post('/activities/status', activities.status);
+
+app.get('/networks', networks.index);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

@@ -425,3 +425,12 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
   });
 }
 
+function NetWorkCtrl($scope, $routeParams, NetWork, Util){
+  NetWork.get(function(networks){
+    $scope.networks = networks.networks;
+    Util.pagination($scope, 'networks', 5);
+    $scope.should_hide = function(){
+      return $scope.networks.length <= $scope.page_size;
+    };
+  });
+}
