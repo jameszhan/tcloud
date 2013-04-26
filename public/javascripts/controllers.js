@@ -425,3 +425,6 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
   });
 }
 
+function ArchitectCtrl($scope){
+  
+}
