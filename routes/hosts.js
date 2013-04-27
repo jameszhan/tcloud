@@ -3,6 +3,20 @@ exports.show = function(req, res){
   res.sendfile(__dirname + '/json/hosts/0' + req.params.id + '.json');  
 }
 
+exports.save = function(req, res){
+  res.set("ContentType", "application/json");
+  console.log("save host", req.body);
+  res.json({success: true, activities: [
+    {
+      id: 111, 
+      name: 'ADD', 
+      target: "host", 
+      target_type: "HOST", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});
+}
 
 exports.status = function(req, res){  
   res.set("ContentType", "application/json");
