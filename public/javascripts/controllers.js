@@ -442,3 +442,23 @@ function NetWorkCtrl($scope, $routeParams, NetWork, Util){
 
 function ArchitectCtrl($scope){
 }
+
+function StorageCtrl($scope, $routeParams, Storage, Util){
+  Storage.get(function(storages){
+    $scope.storages = storages.storages;
+    Util.pagination($scope, 'storages', 5);
+    $scope.should_hide = function(){
+      return $scope.storages.length <= $scope.page_size;
+    };
+  });
+}
+
+function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
+  ShortCut.get(function(shortcuts){
+    $scope.shortcuts = shortcuts.shortcuts;
+    Util.pagination($scope, 'shortcuts', 5);
+    $scope.should_hide = function(){
+      return $scope.shortcuts.length <= $scope.page_size;
+    };
+  });
+}

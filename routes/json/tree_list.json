@@ -2,7 +2,7 @@
    {
        "name": "书签管理",
        "icon": "/images/host.png",
-       "url": "#shortcuts"
+       "url": "#/shortcuts"
    },
    {
       "name":"数据中心",
@@ -142,9 +142,14 @@
       ]
    },
    {
+       "name": "存储",
+       "icon": "/images/host.png",
+       "url": "#/storages"
+   },
+   {
        "name": "网络",
        "icon": "/images/host.png",
-       "url": "#/networks" 
+       "url": "#/networks"
    },
    {
        "name": "模板",
