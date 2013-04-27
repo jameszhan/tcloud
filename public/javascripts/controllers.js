@@ -135,6 +135,7 @@ function HostActionBarCtrl($scope, Host, Util){
               var index = $scope.hosts.indexOf(host);
               $scope.hosts.splice(index, 1);
             });
+            $scope.unselected_all();
             Util.update_activities(data);
           }
         });
@@ -205,7 +206,7 @@ function VMCtrl($scope, $routeParams, VM) {
 
 function VMMgmtCtrl($scope, Util){
   $scope.selected || ($scope.selected = {});
-  
+    
   Util.pagination($scope, 'vms', 5);
 }
 
@@ -330,6 +331,7 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
               var index = $scope.vms.indexOf(vm);
               $scope.vms.splice(index, 1);
             });
+            $scope.unselected_all();
             Util.update_activities(data);
           }
         });

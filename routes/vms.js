@@ -142,3 +142,17 @@ exports.show = function(req, res){
   res.set("ContentType", "application/json");
   res.sendfile(__dirname + '/json/vms/0' + req.params.id + '.json');  
 }
+
+
+
+exports.current_cpu = function(req, res){
+  res.render("templates/current_cpu.json");  
+}
+
+exports.current_memory = function(req, res){
+  res.render("templates/current_memory.json");  
+}
+
+exports.current_traffic = function(req, res){
+  res.render("templates/current_traffic.json");  
+}

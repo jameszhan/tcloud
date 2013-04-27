@@ -1,5 +1,5 @@
 angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fibonacci){
-  var current_delay = 0, fib = Fibonacci.instance(), max_delay = 10000, next_delay = function(){
+  var current_delay = 0, fib = Fibonacci.instance(), max_delay = 1000, next_delay = function(){
     return current_delay >= max_delay ? current_delay : current_delay = fib() * 1000;
   }, tasks = [], started = false, run = function(){
     for(var i = 0; i < tasks.length; i++){
@@ -129,6 +129,10 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       
       $scope.should_hide = function(){
         return $scope[target_name].length <= $scope.page_size;
+      };
+      
+      $scope.unselected_all = function(){
+        $scope.selected_all = false;
       };
       
       $scope.$watch('selected_all', function(new_value, old_value){
