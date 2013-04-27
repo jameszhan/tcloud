@@ -727,6 +727,12 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
   };
 }
 
+function DialogCtrl($scope, dialog){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+}
+
 function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
   $scope.selected || ($scope.selected = {});
   
