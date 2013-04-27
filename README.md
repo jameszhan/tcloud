@@ -7,8 +7,13 @@ You need setup node and npm in your local environment first.
 Startup
 --------
 
-    npm start
+```
+    npm install
+```
 
+```
+    npm start
+```
 
 Description of Contents
 ------------------------
@@ -26,7 +31,6 @@ The default directory structure:
     |-- views
     |   |-- partials
     |   `-- tempaltes
-    |-- node_modules
     |-- app.js
     |-- package.json
     |-- README.md
