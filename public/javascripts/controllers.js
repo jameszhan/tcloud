@@ -82,6 +82,13 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
 function HostMgmtCtrl($scope, Util){  
   $scope.selected || ($scope.selected = {});
   
+  $scope.show_details = function(){
+    var hosts = $.grep($scope.hosts, function(host) {
+      return $scope.selected[host.id];
+    });
+    $scope.selected_host = hosts[0];
+  };
+  
   Util.pagination($scope, 'hosts', 5);
 }
 
