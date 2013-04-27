@@ -131,6 +131,10 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         return $scope[target_name].length <= $scope.page_size;
       };
       
+      $scope.unselected_all = function(){
+        $scope.selected_all = false;
+      };
+      
       $scope.$watch('selected_all', function(new_value, old_value){
         if(new_value != undefined){
           $scope[target_name].filter(function(target, i){
