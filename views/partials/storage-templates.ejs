@@ -1,0 +1,64 @@
+<script type="text/ng-template" id="storage_new.html">
+<div class="modal-header">
+  <a class="close" ng-click="close()">&times;</a>
+  <div class="input-prepend input-append">
+    <h4>存储配置</h4>       
+  </div>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal">
+    <div class="control-group">
+      <label for="name" class="control-label">名称:</label>
+      <div class="controls">
+        <input type="text" ng-model="network.name" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">类型:</label>
+      <div class="controls">
+        <select ng-model="vm.host" ng-options="h.name for h in cluster.hosts" class="span2">
+          <option value="">SAN</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">服务器:</label>
+      <div class="controls">
+        <select ng-model="vm.host" ng-options="h.name for h in cluster.hosts" class="span2">
+          <option value="">SAN</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">所属集群:</label>
+      <div class="controls">
+        <select ng-model="vm.host" ng-options="h.name for h in cluster.hosts" class="span2">
+          <option value="">开发</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">接入点:</label>
+      <div class="controls">
+        <input type="text" ng-model="network.name" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">空间:</label>
+      <div class="controls">
+        <input type="text" ng-model="network.name" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">描述:</label>
+      <div class="controls">
+        <textarea ng-model="desc"></textarea>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
+  <a data-dismiss="modal" class="btn btn-primary">保存</a>
+</div>
+</script>

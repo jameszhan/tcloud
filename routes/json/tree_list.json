@@ -142,19 +142,19 @@
       ]
    },
    {
-       "name": "存储",
+       "name": "模板",
        "icon": "/images/host.png",
-       "url": "#/storages"
+       "url": "#/templates"
    },
    {
-       "name": "网络",
+       "name": "网络安全",
        "icon": "/images/host.png",
        "url": "#/networks"
    },
    {
-       "name": "模板",
+       "name": "方案管理",
        "icon": "/images/host.png",
-       "url": "#/templates"
+       "url": "#projects"
    },
    {
        "name": "基础架构",

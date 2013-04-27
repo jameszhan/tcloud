@@ -115,6 +115,8 @@ app.post('/networks/status', networks.status);
 app.post('/networks/delete_all', networks.delete_all);
 
 app.get('/storages', storages.index);
+app.post('/storages/status', storages.status);
+app.post('/storages/delete_all', storages.delete_all);
 
 app.get('/shortcuts', shortcuts.index);
 

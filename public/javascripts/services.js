@@ -32,6 +32,17 @@ angular.module('webvirtServices', []).
       }
     };
   })
+  .factory("selectedStorage", function(){
+    var selectedStorage =null;
+    return {
+      get: function(){
+        return selectedStorage;
+      },
+      set: function(storage){
+        selectedStorage = storage;
+      }
+    };
+  })
   .factory('DataCenter', function($resource) {
     return $resource('datacenters/:id', {id: '@id'}, {get: {method: 'GET'}});
   })
@@ -84,7 +95,10 @@ angular.module('webvirtServices', []).
     });
   })
   .factory('Storage', function($resource){
-    return $resource('storages/:id', {id: '@id'});
+    return $resource('storages/:id', {id: '@id'}, {
+      'status': {method: 'POST', isArray: true, url: 'storages/status'},
+      'delete_all': {method: 'POST', url: 'storages/delete_all'}
+    });
   })
   .factory('ShortCut', function($resource){
     return $resource('shortcuts/:id', {id: '@id'});

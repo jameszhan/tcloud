@@ -587,13 +587,76 @@ function NetWorkPortCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork
 function ArchitectCtrl($scope){
 }
 
-function StorageCtrl($scope, $routeParams, Storage, Util){
+function StorageCtrl($scope, $dialog, $routeParams, Storage, selectedStorage, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "storage_new.html",
+    controller: 'DialogCtrl'
+  });
+
   $scope.selected || ($scope.selected = {});
   
   Storage.get(function(storages){
     $scope.storages = storages.storages;
     Util.pagination($scope, 'storages', 5);
   });
+
+  var do_check = function(min, max){
+    var storages = $.grep($scope.storages, function(storage) {
+      return $scope.selected[storage.id];
+    }), ok = true;
+    if(storages.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      ok = false;
+    }
+    if(storages.length > max){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      ok = false;
+    }
+    return {
+      then: function(fn){ ok && (fn || angular.noop)(storages); }
+    };
+  };
+
+  $scope.do_delete = function(){
+    do_check(1, 100).then(function(storages){
+      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
+        var storage_ids = storages.map(function(storage){return storage.id;});
+        console.log("REMOVE ALL storages " + storage_ids);
+        new Storage({ids: storage_ids}).$delete_all(function(data){
+          if(data.success){
+            angular.forEach(storages, function(storage){
+              var index = $scope.storages.indexOf(storage);
+              $scope.storages.splice(index, 1);
+            });
+            Util.update_activities(data);
+          }
+        });
+      }
+    });
+  }
+
+  $scope.do_create = function(){
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+
+  $scope.do_edit = function(){
+    do_check(1, 1).then(function(storages){
+      selectedStorage.set(storages[0]);
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
 }
 
 function ShortCutCtrl($scope, $routeParams, ShortCut, Util){

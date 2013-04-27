@@ -2,6 +2,7 @@
   <ul class="nav nav-tabs" style="background-color:#F2F2F2;">
     <li class="active"><a href="#overview" data-toggle="tab">概览</a></li>
     <li><a href="#vms" data-toggle="tab">虚拟机</a></li>
+    <li><a href="#storages" data-toggle="tab">磁盘</a></li>
   </ul>
   <div class="tab-content">
     <div id="overview" class="tab-pane active" style="padding:0px 10px">
@@ -9,6 +10,9 @@
     </div>
     <div id="vms" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/shared/_vm_list.html'" />
-    </div>  
+    </div> 
+    <div id="storages" class="tab-pane" style="padding:0px 10px">
+      <ng:include src="'/partials/shared/_storage_list.html'" />
+    </div> 
   </div>
 </div>
