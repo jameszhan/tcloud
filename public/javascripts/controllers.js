@@ -437,6 +437,41 @@ function NetWorkTypeCtrl($scope, $routeParams, NetWork, Util){
     $scope.networks = networks.networks;
     Util.pagination($scope, 'networks', 5);
   });
+  
+  var do_check = function(min, max){
+    var networks = $.grep($scope.networks, function(network) {
+      return $scope.selected[network.id];
+    }), ok = true;
+    if(networks.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      ok = false;
+    }
+    if(networks.length > max){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      ok = false;
+    }
+    return {
+      then: function(fn){ ok && (fn || angular.noop)(networks); }
+    };
+  };
+
+  $scope.do_delete = function(){
+    do_check(1, 100).then(function(networks){
+      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
+        var network_ids = networks.map(function(network){return network.id;});
+        console.log("REMOVE ALL networks " + network_ids);
+        new NetWork({ids: network_ids}).$delete_network_all(function(data){
+          if(data.success){
+            angular.forEach(networks, function(network){
+              var index = $scope.networks.indexOf(network);
+              $scope.networks.splice(index, 1);
+            });
+            Util.update_activities(data);
+          }
+        });
+      }
+    });
+  }
 }
 
 function NetWorkPortCtrl($scope, $routeParams, NetWork, Util){
@@ -445,6 +480,41 @@ function NetWorkPortCtrl($scope, $routeParams, NetWork, Util){
     $scope.ports = networks.ports;
     Util.pagination($scope, 'ports', 5);
   });
+
+  var do_check = function(min, max){
+    var ports = $.grep($scope.ports, function(port) {
+      return $scope.selected[port.id];
+    }), ok = true;
+    if(ports.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      ok = false;
+    }
+    if(ports.length > max){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      ok = false;
+    }
+    return {
+      then: function(fn){ ok && (fn || angular.noop)(ports); }
+    };
+  };
+
+  $scope.do_delete = function(){
+    do_check(1, 100).then(function(ports){
+      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
+        var port_ids = ports.map(function(port){return port.id;});
+        console.log("REMOVE ALL networks " + port_ids);
+        new NetWork({ids: port_ids}).$delete_port_all(function(data){
+          if(data.success){
+            angular.forEach(ports, function(port){
+              var index = $scope.ports.indexOf(port);
+              $scope.ports.splice(index, 1);
+            });
+            Util.update_activities(data);
+          }
+        });
+      }
+    });
+  }
 }
 
 

@@ -105,6 +105,8 @@ app.get('/activities', activities.index);
 app.post('/activities/status', activities.status);
 
 app.get('/networks', networks.index);
+app.post('/networks/status', networks.status);
+app.post('/networks/delete_all', networks.delete_all);
 
 app.get('/storages', storages.index);
 

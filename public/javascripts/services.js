@@ -66,7 +66,11 @@ angular.module('webvirtServices', []).
     });
   })
   .factory('NetWork', function($resource){
-    return $resource('networks/:id', {id: '@id'});
+    return $resource('networks/:id', {id: '@id'}, {
+      'status': {method: 'POST', isArray: true, url: 'networks/status'},
+      'delete_network_all': {method: 'POST', url: 'networks/delete_all'},
+      'delete_port_all': {method: 'POST', url: 'networks/delete_all'}
+    });
   })
   .factory('Storage', function($resource){
     return $resource('storages/:id', {id: '@id'});
