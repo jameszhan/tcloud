@@ -84,7 +84,7 @@ function HostMgmtCtrl($scope, Util){
   Util.pagination($scope, 'hosts', 5);
 }
 
-function HostActionBarCtrl($scope, Host, Util){  
+function HostActionBarCtrl($scope, $dialog, Host, Util){  
   var do_check = function(min, max){
     var hosts = $.grep($scope.hosts, function(host) {
       return $scope.selected[host.id];
@@ -101,6 +101,14 @@ function HostActionBarCtrl($scope, Host, Util){
       then: function(fn){ ok && (fn || angular.noop)(hosts); }
     };
   };    
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "vm_workflow.html",
+    controller: 'VMWorkflowCtrl'
+  });
   
   $scope.do_add = function(){
 /*    
@@ -278,7 +286,7 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
   var d = $dialog.dialog({
     backdrop: true,
     keyboard: true,
-    backdropClick: true,
+    backdropClick: false,
     templateUrl: "vm_workflow.html",
     controller: 'VMWorkflowCtrl'
   });
