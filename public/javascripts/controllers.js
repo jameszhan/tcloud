@@ -426,19 +426,28 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
 }
 
 function NetWorkCtrl($scope, $routeParams, NetWork, Util){
+
+}
+
+function NetWorkTypeCtrl($scope, $routeParams, NetWork, Util){
+  $scope.selected || ($scope.selected = {});
+
   NetWork.get(function(networks){
     $scope.networks = networks.networks;
     Util.pagination($scope, 'networks', 5);
-    $scope.should_hide = function(){
-      return $scope.networks.length <= $scope.page_size;
-    };
-    $scope.ports = networks.ports;
-    Util.pagination($scope, 'ports', 5);
-    $scope.should_hide = function(){
-      return $scope.ports.length <= $scope.page_size;
-    };
   });
 }
+
+function NetWorkPortCtrl($scope, $routeParams, NetWork, Util){
+  $scope.selected || ($scope.selected = {});
+  
+  NetWork.get(function(networks){
+    $scope.ports = networks.ports;
+    Util.pagination($scope, 'ports', 5);
+  });
+}
+
+
 
 function ArchitectCtrl($scope){
 }
@@ -447,9 +456,6 @@ function StorageCtrl($scope, $routeParams, Storage, Util){
   Storage.get(function(storages){
     $scope.storages = storages.storages;
     Util.pagination($scope, 'storages', 5);
-    $scope.should_hide = function(){
-      return $scope.storages.length <= $scope.page_size;
-    };
   });
 }
 
@@ -457,8 +463,5 @@ function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
   ShortCut.get(function(shortcuts){
     $scope.shortcuts = shortcuts.shortcuts;
     Util.pagination($scope, 'shortcuts', 5);
-    $scope.should_hide = function(){
-      return $scope.shortcuts.length <= $scope.page_size;
-    };
   });
 }

@@ -126,6 +126,20 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
           return 0;
         }
       };
+      
+      $scope.should_hide = function(){
+        return $scope[target_name].length <= $scope.page_size;
+      };
+      
+      $scope.$watch('selected_all', function(new_value, old_value){
+        if(new_value != undefined){
+          $scope[target_name].filter(function(target, i){
+            if(i >= $scope.current_page * $scope.page_size && i < $scope.current_page * $scope.page_size + $scope.page_size){
+              $scope.selected[target.id] = new_value;
+            }
+          });
+        }
+      });      
     } 
   };
 });
