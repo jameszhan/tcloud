@@ -9,50 +9,7 @@
   </ul>
   <div class="tab-content">
     <div id="overview" class="tab-pane active" style="padding:0px 10px">
-      <div class="row-fluid">
-        <div class="span2 well">
-          <div>
-          集群<span class="label label-success">{{datacenter.clusters.length}}</span>
-          </div>
-          <div>
-          主机<span class="label label-success">{{hosts.length}}</span>
-          虚拟机<span class="label label-success">{{vms.length}}</span>
-          </div>
-        </div>
-        <div class="span2 well">
-          <div>
-          主机<span class="label label-success">{{hosts.length}}</span>
-          </div>
-          <div>
-          虚拟机<span class="label label-success">{{vms.length}}</span>
-          </div>
-        </div>
-        <div class="span2 well">
-          <div>
-            虚拟机<span class="label label-success">{{vms.length}}</span>
-          </div>
-          <div>        
-          </div>
-        </div>
-        <div class="span3 well">
-        <!-- {{datacenter.os_info}}
-        {{datacenter.memory_info}} -->
-        </div>
-        <div class="span3">
-          <script src="/javascripts/graphs/pie.js" type="text/javascript"></script>
-          <div id="datacenter-pie" class="pie-container"></div>
-        </div>
-      </div>
-      <div class="row-fluid">
-        <div class="span6">
-          主机负荷TOP{{top_count}} 
-          <toplist url="/datacenters/{{datacenter.id}}/top_hosts"></toplist>
-        </div>
-        <div class="span6">
-          虚拟机负荷TOP{{top_count}}
-          <toplist url="/datacenters/{{datacenter.id}}/top_vms"></toplist>
-        </div>
-      </div>      
+      <ng:include src="'/partials/datacenters/_overview.html'" />
     </div>
     <div id="events" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/datacenters/_events.html'" />

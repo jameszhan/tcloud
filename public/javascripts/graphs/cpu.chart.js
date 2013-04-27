@@ -1,7 +1,7 @@
 $(function() {
 
   var data = [],
-    totalPoints = 200;
+    totalPoints = 60;
 
   function getRandomData() {
 
@@ -24,7 +24,7 @@ $(function() {
 
     var res = [];
     for (var i = 0; i < data.length; ++i) {
-      res.push([i, data[i]])
+      res.push([i * 10, data[i]])
     }
     return res;
   }
@@ -35,6 +35,7 @@ $(function() {
       max: 100
     },
     xaxis: {
+      ticks: [[0, "0"], [60, "1"], [120, "2"], [180, "3"], [240, "4"], [300, "5"], [360, "6"], [420, "7"], [480, "8"], [540, "9"]],
       show: true
     }
   });
@@ -42,7 +43,7 @@ $(function() {
   function update() {
     plot.setData([getRandomData()]);
     plot.draw();
-    setTimeout(update, 30);
+    setTimeout(update, 1000);
   }
   update();
 });

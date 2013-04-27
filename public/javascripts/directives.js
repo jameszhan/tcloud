@@ -50,8 +50,8 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
           '<ul id="search-tree" class="{{classname}}" ng-transclude></ul>' +
         '</div>'
     };
-  }).
-  directive('toplist', function($q, $http, $timeout, $pollingPool) {   
+  })
+  .directive('toplist', function($q, $http, $timeout, $pollingPool) {   
     return {
       restrict: 'E',
       scope: {
@@ -75,5 +75,32 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
         }, 300);
       }, 
       templateUrl: '/partials/shared/_top.html'
+    };
+  })
+  .directive('curvegraph', function($pollingPool){
+    return {
+      restrict: 'E',
+      scope: {
+        url: '@'
+      },
+      link: function(scope, element, attrs){
+        var plot = $.plot(element, [], {
+          yaxis: {
+            min: 0,
+            max: 100
+          },
+          xaxis: {
+            ticks: [[0, "0"], [60, "1"], [120, "2"], [180, "3"], [240, "4"], [300, "5"], [360, "6"], [420, "7"], [480, "8"], [540, "9"]],
+            show: true
+          }
+        });
+        
+        $pollingPool.add(function(){
+          $http.get(attrs.url).success(function(data){
+            plot.setData([data]);
+            plot.draw();
+          });
+        });
+      }
     };
   });
