@@ -106,3 +106,16 @@ exports.reboot = function(req, res){
       status: 'requested'
     }]});  
 }
+
+
+exports.current_cpu = function(req, res){
+  res.render("templates/current_cpu.json");  
+}
+
+exports.current_memory = function(req, res){
+  res.render("templates/current_memory.json");  
+}
+
+exports.current_traffic = function(req, res){
+  res.render("templates/current_traffic.json");  
+}

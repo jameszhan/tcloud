@@ -80,6 +80,9 @@ app.get('/clusters/:id/top_hosts', clusters.top_hosts);
 app.get('/clusters/:id/top_vms', clusters.top_vms);
 
 app.get('/hosts/:id', hosts.show);
+app.get('/hosts/:id/current_cpu', hosts.current_cpu);
+app.get('/hosts/:id/current_memory', hosts.current_memory);
+app.get('/hosts/:id/current_traffic', hosts.current_traffic);
 app.post('/hosts/status', hosts.status);
 app.post('/hosts/maintain', hosts.maintain);
 app.post('/hosts/activate', hosts.activate);
@@ -89,6 +92,9 @@ app.post('/hosts/shutdown', hosts.shutdown);
 app.post('/hosts/remove_all', hosts.remove_all);
 
 app.get('/vms/:id', vms.show);
+app.get('/vms/:id/current_cpu', vms.current_cpu);
+app.get('/vms/:id/current_memory', vms.current_memory);
+app.get('/vms/:id/current_traffic', vms.current_traffic);
 app.post('/vms/delete_all', vms.delete_all);
 app.post('/vms/save_template', vms.save_template);
 app.post('/vms/migrate', vms.migrate);

@@ -1,4 +1,6 @@
-{ "cpu_count" : 8,
+{
+  "id" : 1,
+  "cpu_count" : 8,
   "memory_usage" : 30,
   "hard_disk_capacity" : 541,
   "name" : "DELL",

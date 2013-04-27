@@ -24,12 +24,12 @@ $(function() {
 
     var res = [];
     for (var i = 0; i < data.length; ++i) {
-      res.push([i * 10, data[i]])
+      res.push([i * 60, data[i]])
     }
     return res;
   }
-
-  var plot = $.plot("#cpuplaceholder", [ getRandomData() ], {
+  var random_data = getRandomData();
+  var plot = $.plot("#cpuplaceholder", [ random_data ], {
     yaxis: {
       min: 0,
       max: 100
@@ -39,11 +39,17 @@ $(function() {
       show: true
     }
   });
-
+  var last = [], i = 0;
   function update() {
-    plot.setData([getRandomData()]);
+    console.log(angular.toJson(random_data));
+    random_data = getRandomData();
+    console.log(angular.toJson(random_data));
+    plot.setData([random_data]);
     plot.draw();
-    setTimeout(update, 1000);
+    i++;
+    if(i < 5){
+      setTimeout(update, 1000);
+    }
   }
   update();
 });

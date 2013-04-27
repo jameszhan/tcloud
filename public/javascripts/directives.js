@@ -77,30 +77,67 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
       templateUrl: '/partials/shared/_top.html'
     };
   })
-  .directive('curvegraph', function($pollingPool){
+  .directive('curvegraph', function($q, $http, $timeout, $pollingPool){
     return {
       restrict: 'E',
       scope: {
-        url: '@'
+        url: '@',
+        width: '@',
+        height: '@',
+        max: '@',
+        min: '@'
       },
       link: function(scope, element, attrs){
-        var plot = $.plot(element, [], {
-          yaxis: {
-            min: 0,
-            max: 100
-          },
-          xaxis: {
-            ticks: [[0, "0"], [60, "1"], [120, "2"], [180, "3"], [240, "4"], [300, "5"], [360, "6"], [420, "7"], [480, "8"], [540, "9"]],
-            show: true
+        var usage = [], ticks = [];
+        for(var i = 0; i < 10; i++){
+          usage.push(50);
+          ticks.push([i * 60, i]);
+        }
+        
+        var build_line = function(){
+          var line = [];
+          for(var i = 0; i < usage.length; i++){
+            line.push([i * 60, usage[i]]);
+          }
+          return line;
+        };
+        
+        scope.$watch('width', function(new_value, old_value){
+          if(new_value != undefined){            
+            deferred.resolve();
           }
         });
-        
-        $pollingPool.add(function(){
-          $http.get(attrs.url).success(function(data){
-            plot.setData([data]);
-            plot.draw();
+
+        var deferred = $q.defer();
+        deferred.promise.then(function(){
+          //var plot = element.find(".graph").plot([line], {
+          var min = parseInt(attrs.min) || 0, max = parseInt(attrs.max) || 100;
+          var plot = $.plot(element.find(".graph"), [build_line()], {
+            yaxis: {
+              min: min,
+              max: max
+            },
+            xaxis: {
+              ticks: ticks,
+              show: true
+            }
           });
+        
+          $pollingPool.add(function(){
+            $http.get(attrs.url).success(function(data){
+              usage.shift();              
+              usage.push(data.value);
+              
+              plot.setData([build_line()]);
+              plot.draw();
+            });            
+          });
+          
+        }).then(function(){
+          $pollingPool.run();
         });
-      }
+        
+      },
+      template: '<div class="graph" width="{{width}}" height="{{height}}" style="width:{{width}}px; height:{{height}}px"></div>'
     };
   });
