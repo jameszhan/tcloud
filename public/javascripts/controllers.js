@@ -431,7 +431,16 @@ function NetWorkCtrl($scope, $routeParams, NetWork, Util){
 
 }
 
-function NetWorkTypeCtrl($scope, $routeParams, NetWork, Util){
+function NetWorkTypeCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "networktype_new.html",
+    controller: 'DialogCtrl'
+  });
+
   $scope.selected || ($scope.selected = {});
   NetWork.get(function(networks){
     $scope.networks = networks.networks;
@@ -471,10 +480,44 @@ function NetWorkTypeCtrl($scope, $routeParams, NetWork, Util){
         });
       }
     });
+  };
+
+  $scope.do_create = function(){
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+
+  $scope.do_edit = function(){
+    do_check(1, 1).then(function(networks){
+      selectedNetWork.set(networks[0]);
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogCtrl($scope, dialog){
+  $scope.close = function(result){
+    dialog.close(result);
   }
 }
 
-function NetWorkPortCtrl($scope, $routeParams, NetWork, Util){
+function NetWorkPortCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "networkport_new.html",
+    controller: 'DialogCtrl'
+  });
+
   $scope.selected || ($scope.selected = {});  
   NetWork.get(function(networks){
     $scope.ports = networks.ports;
@@ -515,6 +558,26 @@ function NetWorkPortCtrl($scope, $routeParams, NetWork, Util){
       }
     });
   }
+
+  $scope.do_create = function(){
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+
+  $scope.do_edit = function(){
+    do_check(1, 1).then(function(networks){
+      selectedNetWork.set(networks[0]);
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+
 }
 
 

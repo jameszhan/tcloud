@@ -200,7 +200,7 @@ ul#rMenu a {
     margin-top: 10px;
 }
 .form-horizontal .control-group {
-    margin-bottom: 10px;
+    margin-bottom: 3px;
 }
 
 #add_host .form-horizontal .controls {
@@ -269,4 +269,10 @@ ul#rMenu a {
 
 .switch-width {
   width: 190px;
+}
+
+.controls {
+  .radio:first-child {
+    padding-top: 0px;
+  }
 }

@@ -21,6 +21,17 @@ angular.module('webvirtServices', []).
       }
     };
   })
+  .factory("selectedNetWork", function(){
+    var selectedNetWork =null;
+    return {
+      get: function(){
+        return selectedNetWork;
+      },
+      set: function(network){
+        selectedNetWork = network;
+      }
+    };
+  })
   .factory('DataCenter', function($resource) {
     return $resource('datacenters/:id', {id: '@id'}, {get: {method: 'GET'}});
   })
