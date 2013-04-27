@@ -14,6 +14,8 @@ var express = require('express')
   , templates = require('./routes/templates')
   , networks = require('./routes/networks')
   , activities = require('./routes/activities')
+  , storages = require('./routes/storages')
+  , shortcuts = require('./routes/shortcuts')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs');
@@ -103,6 +105,10 @@ app.get('/activities', activities.index);
 app.post('/activities/status', activities.status);
 
 app.get('/networks', networks.index);
+
+app.get('/storages', storages.index);
+
+app.get('/shortcuts', shortcuts.index);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
