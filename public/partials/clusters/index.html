@@ -8,46 +8,7 @@
   </ul>
   <div class="tab-content">
     <div id="overview" class="tab-pane active" style="padding:0px 10px">
-      <div class="row-fluid">
-        <div class="span2 well">
-          <div>
-          集群<span class="label label-success"></span>
-          </div>
-          <div>
-          主机<span class="label label-success">{{hosts.length}}</span>
-          虚拟机<span class="label label-success">{{vms.length}}</span>
-          </div>
-        </div>
-        <div class="span2 well">
-          <div>
-          主机<span class="label label-success">{{hosts.length}}</span>
-          </div>
-          <div>
-          虚拟机<span class="label label-success">{{vms.length}}</span>
-          </div>
-        </div>
-        <div class="span2 well">
-          <div>
-            虚拟机<span class="label label-success">{{vms.length}}</span>
-          </div>
-          <div>        
-          </div>
-        </div>
-        <div class="span6 well">
-        {{cluster.os_info}}
-        {{cluster.memory_info}}
-        </div>
-      </div>
-      <div class="row-fluid">
-        <div class="span6">
-          主机负荷TOP{{top_count}} 
-          <toplist url="/clusters/{{cluster.id}}/top_hosts"></toplist>
-        </div>
-        <div class="span6">
-          虚拟机负荷TOP{{top_count}}
-          <toplist url="/clusters/{{cluster.id}}/top_vms"></toplist>
-        </div>
-      </div>
+      <ng:include src="'/partials/clusters/_overview.html'" />
     </div>
     <div id="host" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/shared/_host_list.html'" />
@@ -56,7 +17,7 @@
       <ng:include src="'/partials/shared/_vm_list.html'" />
     </div>    
     <div id="networks" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/shared/_networks.html'" />
+      <ng:include src="'/partials/networks/_network_types.html'" />
     </div>
     <div id="storage" class="tab-pane" style="padding:0px 10px">    
       <ng:include src="'/partials/storages/_storage_list.html'"/>

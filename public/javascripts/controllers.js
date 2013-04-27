@@ -410,6 +410,8 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
 }
 
 function TemplateCtrl($scope, $routeParams, Template, Util){
+  $scope.selected || ($scope.selected = {});
+  $scope.selected_all = false;
   $scope.search = {os_type: 'windows'};
   
   Template.get(function(templates){
@@ -431,7 +433,6 @@ function NetWorkCtrl($scope, $routeParams, NetWork, Util){
 
 function NetWorkTypeCtrl($scope, $routeParams, NetWork, Util){
   $scope.selected || ($scope.selected = {});
-
   NetWork.get(function(networks){
     $scope.networks = networks.networks;
     Util.pagination($scope, 'networks', 5);
@@ -439,8 +440,7 @@ function NetWorkTypeCtrl($scope, $routeParams, NetWork, Util){
 }
 
 function NetWorkPortCtrl($scope, $routeParams, NetWork, Util){
-  $scope.selected || ($scope.selected = {});
-  
+  $scope.selected || ($scope.selected = {});  
   NetWork.get(function(networks){
     $scope.ports = networks.ports;
     Util.pagination($scope, 'ports', 5);
@@ -453,6 +453,8 @@ function ArchitectCtrl($scope){
 }
 
 function StorageCtrl($scope, $routeParams, Storage, Util){
+  $scope.selected || ($scope.selected = {});
+  
   Storage.get(function(storages){
     $scope.storages = storages.storages;
     Util.pagination($scope, 'storages', 5);
@@ -460,6 +462,8 @@ function StorageCtrl($scope, $routeParams, Storage, Util){
 }
 
 function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
+  $scope.selected || ($scope.selected = {});
+  
   ShortCut.get(function(shortcuts){
     $scope.shortcuts = shortcuts.shortcuts;
     Util.pagination($scope, 'shortcuts', 5);
