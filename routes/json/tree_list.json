@@ -152,6 +152,11 @@
        "url": "#/networks"
    },
    {
+       "name": "备份策略",
+       "icon": "/images/host.png",
+       "url": "#backups"
+   },
+   {
        "name": "方案管理",
        "icon": "/images/host.png",
        "url": "#projects"
