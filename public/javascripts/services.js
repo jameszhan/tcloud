@@ -70,6 +70,7 @@ angular.module('webvirtServices', []).
   })
   .factory('Host', function($resource){
     return $resource('hosts/:id', {id: '@id'}, {
+      'update': {method: 'PUT'},
       'status': {method: 'POST', isArray: true, url: 'hosts/status'},
       "remove_all": {method: 'POST', url: "hosts/remove_all"},
       "start": {method: 'POST', url: "hosts/start"},

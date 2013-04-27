@@ -80,6 +80,8 @@ app.get('/clusters/:id/top_hosts', clusters.top_hosts);
 app.get('/clusters/:id/top_vms', clusters.top_vms);
 
 app.get('/hosts/:id', hosts.show);
+app.post('/hosts', hosts.save);
+app.put('/hosts/:id', hosts.update);
 app.get('/hosts/:id/current_cpu', hosts.current_cpu);
 app.get('/hosts/:id/current_memory', hosts.current_memory);
 app.get('/hosts/:id/current_traffic', hosts.current_traffic);

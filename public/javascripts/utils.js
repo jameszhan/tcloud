@@ -1,5 +1,5 @@
 angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fibonacci){
-  var current_delay = 0, fib = Fibonacci.instance(), max_delay = 1000, next_delay = function(){
+  var current_delay = 0, fib = Fibonacci.instance(), max_delay = 100000, next_delay = function(){
     return current_delay >= max_delay ? current_delay : current_delay = fib() * 1000;
   }, tasks = [], started = false, run = function(){
     for(var i = 0; i < tasks.length; i++){

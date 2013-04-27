@@ -27,7 +27,8 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
 function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool, Util) {
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
-    $scope.hosts = Util.flatten($scope.datacenter.clusters, 'hosts');
+    $scope.clusters = $scope.datacenter.clusters;
+    $scope.hosts = Util.flatten($scope.clusters, 'hosts');
     $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
     
     $pollingPool.add(function(){
@@ -84,7 +85,49 @@ function HostMgmtCtrl($scope, Util){
   Util.pagination($scope, 'hosts', 5);
 }
 
-function HostActionBarCtrl($scope, Host, Util){  
+function HostFormCtrl($scope, dialog, Util, Host){
+  $scope.close = function(result){
+    dialog.close(result)
+  };
+    
+  $scope.do_upsert = function(){
+    if($scope.host){
+      new Host($scope.host)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+  
+  var selected_host = dialog.context_scope.selected_host;  
+  if(selected_host){
+    $scope.title = "编辑主机";
+    $scope.action = "$update";
+    $scope.host = selected_host;
+  } else {
+    $scope.title = "添加主机";
+    $scope.action = "$save";
+    $scope.host = {};    
+  }  
+  
+  var cluster = dialog.context_scope.cluster;
+  if(cluster){
+    $scope.clusters = [
+      {name: cluster.name, id: cluster.id}
+    ];   
+    $scope.host.cluster = $scope.clusters[0];  
+  }else{
+    $scope.clusters = [];
+    angular.forEach(dialog.context_scope.clusters, function(cluster){
+      $scope.clusters.push({name: cluster.name, id: cluster.id});
+    });
+    $scope.host.cluster = $scope.clusters[0];
+  }
+}
+
+function HostActionBarCtrl($scope, $dialog, Host, Util){  
   var do_check = function(min, max){
     var hosts = $.grep($scope.hosts, function(host) {
       return $scope.selected[host.id];
@@ -102,23 +145,30 @@ function HostActionBarCtrl($scope, Host, Util){
     };
   };    
   
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: false,
+    templateUrl: "/partials/hosts/_form.html",
+    controller: 'HostFormCtrl'
+  });
+  
   $scope.do_add = function(){
-/*    
-    selectedVM.set(null);
+    d.context_scope = $scope;
     d.open().then(function(result){
       if(result){
         alert('dialog closed with result: ' + result);
       }
-    });
-*/  
+    }); 
   };
   
   $scope.do_edit = function() {
-    do_check(1, 1).then(function(vms){
-      selectedVM.set(vms[0]);
+    d.context_scope = $scope;
+    do_check(1, 1).then(function(hosts){
+      d.context_scope.selected_host = hosts[0];
       d.open().then(function(result){
         if(result) {
-          alert('dialog closed with result: ' + result);
+          alert('closed: ' + result);
         }
       });
     });
@@ -217,7 +267,7 @@ function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
   $scope.steps = ["虚拟机设置", "操作系统类型", "选择计算方案", "选择存储方案", "选择网络方案", "确认创建"];
   $scope.view_types = ['vnc'];
   
-  selected_vm = selectedVM.get();
+  var selected_vm = selectedVM.get();
   if(selected_vm){
     console.log("Edit VM.");
     $scope.vm = selected_vm;
@@ -278,7 +328,7 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
   var d = $dialog.dialog({
     backdrop: true,
     keyboard: true,
-    backdropClick: true,
+    backdropClick: false,
     templateUrl: "vm_workflow.html",
     controller: 'VMWorkflowCtrl'
   });
@@ -314,7 +364,7 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
       selectedVM.set(vms[0]);
       d.open().then(function(result){
         if(result) {
-          alert('dialog closed with result: ' + result);
+          alert('' + result);
         }
       });
     });
