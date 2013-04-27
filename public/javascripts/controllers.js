@@ -92,7 +92,7 @@ function HostFormCtrl($scope, dialog, Util, Host){
     
   $scope.do_upsert = function(){
     if($scope.host){
-      new Host($scope.host).$save(function(data){
+      new Host($scope.host)[$scope.action](function(data){
         if(data.success){
           Util.update_activities(data);
           dialog.close("Save Successful!");
@@ -104,12 +104,11 @@ function HostFormCtrl($scope, dialog, Util, Host){
   var selected_host = dialog.context_scope.selected_host;  
   if(selected_host){
     $scope.title = "编辑主机";
-    console.log("Edit Host.");
+    $scope.action = "$update";
     $scope.host = selected_host;
-    console.log("selected ", selected_host);
   } else {
     $scope.title = "添加主机";
-    console.log("Add Host.");
+    $scope.action = "$save";
     $scope.host = {};    
   }  
   
