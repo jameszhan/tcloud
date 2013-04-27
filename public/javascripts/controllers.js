@@ -486,11 +486,11 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
   });
 }
 
-function NetWorkCtrl($scope, $routeParams, NetWork, Util){
+function NetworkCtrl($scope, $routeParams, Network, Util){
 
 }
 
-function NetWorkTypeCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork, Util){
+function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
   
   var d = $dialog.dialog({
     backdrop: true,
@@ -501,7 +501,7 @@ function NetWorkTypeCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork
   });
 
   $scope.selected || ($scope.selected = {});
-  NetWork.get(function(networks){
+  Network.get(function(networks){
     $scope.networks = networks.networks;
     Util.pagination($scope, 'networks', 5);
   });
@@ -528,7 +528,7 @@ function NetWorkTypeCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork
       if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
         var network_ids = networks.map(function(network){return network.id;});
         console.log("REMOVE ALL networks " + network_ids);
-        new NetWork({ids: network_ids}).$delete_network_all(function(data){
+        new Network({ids: network_ids}).$delete_network_all(function(data){
           if(data.success){
             angular.forEach(networks, function(network){
               var index = $scope.networks.indexOf(network);
@@ -551,7 +551,6 @@ function NetWorkTypeCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork
 
   $scope.do_edit = function(){
     do_check(1, 1).then(function(networks){
-      selectedNetWork.set(networks[0]);
       d.open().then(function(result){
         if(result) {
           alert('dialog closed with result: ' + result);
@@ -567,7 +566,7 @@ function DialogCtrl($scope, dialog){
   }
 }
 
-function NetWorkPortCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork, Util){
+function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
   
   var d = $dialog.dialog({
     backdrop: true,
@@ -578,7 +577,7 @@ function NetWorkPortCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork
   });
 
   $scope.selected || ($scope.selected = {});  
-  NetWork.get(function(networks){
+  Network.get(function(networks){
     $scope.ports = networks.ports;
     Util.pagination($scope, 'ports', 5);
   });
@@ -605,7 +604,7 @@ function NetWorkPortCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork
       if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
         var port_ids = ports.map(function(port){return port.id;});
         console.log("REMOVE ALL networks " + port_ids);
-        new NetWork({ids: port_ids}).$delete_port_all(function(data){
+        new Network({ids: port_ids}).$delete_port_all(function(data){
           if(data.success){
             angular.forEach(ports, function(port){
               var index = $scope.ports.indexOf(port);
@@ -628,7 +627,6 @@ function NetWorkPortCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork
 
   $scope.do_edit = function(){
     do_check(1, 1).then(function(networks){
-      selectedNetWork.set(networks[0]);
       d.open().then(function(result){
         if(result) {
           alert('dialog closed with result: ' + result);
@@ -644,7 +642,7 @@ function NetWorkPortCtrl($scope, $dialog, $routeParams, NetWork, selectedNetWork
 function ArchitectCtrl($scope){
 }
 
-function StorageCtrl($scope, $dialog, $routeParams, Storage, selectedStorage, Util){
+function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
   
   var d = $dialog.dialog({
     backdrop: true,
@@ -706,7 +704,6 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, selectedStorage, Ut
 
   $scope.do_edit = function(){
     do_check(1, 1).then(function(storages){
-      selectedStorage.set(storages[0]);
       d.open().then(function(result){
         if(result) {
           alert('dialog closed with result: ' + result);

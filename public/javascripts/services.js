@@ -21,28 +21,6 @@ angular.module('webvirtServices', []).
       }
     };
   })
-  .factory("selectedNetWork", function(){
-    var selectedNetWork =null;
-    return {
-      get: function(){
-        return selectedNetWork;
-      },
-      set: function(network){
-        selectedNetWork = network;
-      }
-    };
-  })
-  .factory("selectedStorage", function(){
-    var selectedStorage =null;
-    return {
-      get: function(){
-        return selectedStorage;
-      },
-      set: function(storage){
-        selectedStorage = storage;
-      }
-    };
-  })
   .factory('DataCenter', function($resource) {
     return $resource('datacenters/:id', {id: '@id'}, {get: {method: 'GET'}});
   })
@@ -88,7 +66,7 @@ angular.module('webvirtServices', []).
       'status': {method: 'POST', isArray: true, url: 'activities/status'},
     });
   })
-  .factory('NetWork', function($resource){
+  .factory('Network', function($resource){
     return $resource('networks/:id', {id: '@id'}, {
       'status': {method: 'POST', isArray: true, url: 'networks/status'},
       'delete_network_all': {method: 'POST', url: 'networks/delete_all'},
