@@ -496,8 +496,8 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
     backdrop: true,
     keyboard: true,
     backdropClick: true,
-    templateUrl: "networktype_new.html",
-    controller: 'DialogCtrl'
+    templateUrl: "network_new.html",
+    controller: 'DialogTypeCtrl'
   });
 
   $scope.selected || ($scope.selected = {});
@@ -560,7 +560,12 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
   };
 }
 
-function DialogCtrl($scope, dialog){
+function DialogTypeCtrl($scope, dialog){
+  
+  $scope.template = {
+    url: "/partials/networks/_network_new.html"
+  };
+
   $scope.close = function(result){
     dialog.close(result);
   }
@@ -572,8 +577,8 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
     backdrop: true,
     keyboard: true,
     backdropClick: true,
-    templateUrl: "networkport_new.html",
-    controller: 'DialogCtrl'
+    templateUrl: "network_new.html",
+    controller: 'DialogPortCtrl'
   });
 
   $scope.selected || ($scope.selected = {});  
@@ -637,7 +642,16 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
 
 }
 
+function DialogPortCtrl($scope, dialog){
+  
+  $scope.template = {
+    url: "/partials/networks/_networkport_new.html"
+  };
 
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+}
 
 function ArchitectCtrl($scope){
 }
