@@ -1,26 +1,4 @@
-angular.module('webvirtServices', []).
-  factory('currentCluster', function() {
-    var currentCluster = null;
-    return {
-      get: function(){
-        return currentCluster;
-      },
-      set: function(cluster){
-       currentCluster = cluster;
-      }
-    };
-  })
-  .factory("selectedVM", function(){
-    var selectedVM = null;
-    return {
-      get: function(){
-        return selectedVM;
-      },
-      set: function(vm){
-       selectedVM = vm;
-      }
-    };
-  })
+angular.module('webvirtServices', [])
   .factory('DataCenter', function($resource) {
     return $resource('datacenters/:id', {id: '@id'}, {get: {method: 'GET'}});
   })

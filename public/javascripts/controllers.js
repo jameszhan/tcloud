@@ -44,12 +44,10 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool
   });  
 }
 
-function ClusterCtrl($scope, $routeParams, $dialog, Cluster, currentCluster, Host, VM, $pollingPool, Util) {
+function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
-    currentCluster.set(cluster);
     $scope.hosts = cluster.hosts;
-    $scope.vmSetupModal = true;
     $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
     
     $pollingPool.add(function(){
@@ -162,6 +160,7 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
   
   $scope.do_add = function(){
     d.context_scope = $scope;
+    d.context_scope.selected_host = null;
     d.open().then(function(result){
       if(result){
         alert('dialog closed with result: ' + result);
@@ -267,26 +266,33 @@ function VMMgmtCtrl($scope, Util){
   Util.pagination($scope, 'vms', 5);
 }
 
-function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
-  $scope.cluster = currentCluster.get();
-  
+function VMWorkflowCtrl($scope, dialog) {  
   $scope.current_step = 1;
   $scope.steps = ["虚拟机设置", "操作系统类型", "选择计算方案", "选择存储方案", "选择网络方案", "确认创建"];
   $scope.view_types = ['vnc'];
   
-  var selected_vm = selectedVM.get();
+  var selected_vm = dialog.context_scope.selected_vm;  
   if(selected_vm){
-    console.log("Edit VM.");
+    $scope.action = "$update";
     $scope.vm = selected_vm;
   } else {
-    console.log("Add VM.");
-    $scope.vm = {
-      cluster_id: currentCluster.id,
-      view_type: 'vnc',
-      usb_redirect: true,
-      startup_with_host: true
-    };    
-  } 
+    $scope.action = "$save";
+    $scope.vm = {};    
+  }  
+  
+  var cluster = dialog.context_scope.cluster;
+  if(cluster){
+    $scope.clusters = [
+      {name: cluster.name, id: cluster.id}
+    ];   
+    $scope.vm.cluster = $scope.clusters[0];  
+  }else{
+    $scope.clusters = [];
+    angular.forEach(dialog.context_scope.clusters, function(cluster){
+      $scope.clusters.push({name: cluster.name, id: cluster.id});
+    });
+    $scope.vm.cluster = $scope.clusters[0];
+  }
   
   $scope.template = {
     url: "/partials/vms/step_0" + $scope.current_step + ".html"
@@ -331,7 +337,7 @@ function VMWorkflowCtrl($scope, dialog, currentCluster, selectedVM) {
   load_step();
 }
 
-function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
+function ActionBarCtrl($scope, $q, $dialog, VM, Util){
   var d = $dialog.dialog({
     backdrop: true,
     keyboard: true,
@@ -358,7 +364,8 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
   };
   
   $scope.do_create = function(){
-    selectedVM.set(null);
+    d.context_scope = $scope;
+    d.context_scope.selected_vm = null;
     d.open().then(function(result){
       if(result){
         alert('dialog closed with result: ' + result);
@@ -367,8 +374,9 @@ function ActionBarCtrl($scope, $q, $dialog, VM, selectedVM, Util){
   };
   
   $scope.do_edit = function() {
+    d.context_scope = $scope;
     do_check(1, 1).then(function(vms){
-      selectedVM.set(vms[0]);
+     d.context_scope.selected_vm = vms[0];
       d.open().then(function(result){
         if(result) {
           alert('' + result);

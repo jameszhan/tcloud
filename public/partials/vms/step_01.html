@@ -6,8 +6,7 @@
       <div class="control-group">
         <label for="cluster" class="control-label">集群：</label>
         <div class="controls">
-            <select disabled="disabled" class="span5">
-              <option value="{{cluster.id}}" selected="selected">{{cluster.name}}</option>
+           <select ng-options="c.name for c in clusters" class="span5" ng-model="vm.cluster">
             </select>
         </div>
       </div>
