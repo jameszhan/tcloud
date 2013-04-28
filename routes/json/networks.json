@@ -70,47 +70,47 @@
   "ports":[
     { 
       "id": "1",
-      "cluster": "开发",
+      "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
       "port_end": "22",
-      "group": "系统组",
+      "data_direction": {"key":"in"},
       "created_at": ""
     },
     {
       "id": "2",
-      "cluster": "开发",
+      "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
       "port_end": "22",
-      "group": "系统组",
+      "data_direction": {"key":"in"},
       "created_at": ""
     },
     {
       "id": "3",
-      "cluster": "开发",
+      "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
       "port_end": "22",
-      "group": "系统组",
+      "data_direction": {"key":"out"},
       "created_at": ""
     },
     {
       "id": "4",
-      "cluster": "开发",
+      "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
       "port_end": "22",
-      "group": "自定义",
+      "data_direction": {"key":"inout"},
       "created_at": ""
     },
     {
       "id": "5",
-      "cluster": "开发",
+      "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
       "port_end": "22",
-      "group": "系统组",
+      "data_direction": {"key":"out"},
       "created_at": ""
     },
     {
@@ -119,7 +119,7 @@
       "protocol": "tcp",
       "port_begin": "22",
       "port_end": "22",
-      "group": "自定义",
+      "data_direction": {"key":"in"},
       "created_at": ""
     }
   ]

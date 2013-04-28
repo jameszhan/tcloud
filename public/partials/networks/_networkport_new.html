@@ -1,37 +1,45 @@
-<form class="form-horizontal">
-  <div class="control-group">
-    <label for="name" class="control-label">所属集群</label>
-    <div class="controls">
-      <select ng-model="vm.host" ng-options="h.name for h in cluster.hosts" class="span2">
-        <option value="">开发</option>
-      </select>
+<form class="form-horizontal" name="port_form" ng-submit="do_upsert()">
+  <div class="modal-header">
+    <a class="close" ng-click="close()">&times;</a>
+    <div class="input-prepend input-append">
+      <h4>{{title}}</h4>       
     </div>
   </div>
-  <div class="control-group">
-    <label for="name" class="control-label">协议：</label>
-    <div class="controls">
-      <input type="text" ng-model="network.name" class="input"/>
+  <div class="modal-body">
+    <div class="control-group">
+      <label class="control-label">名称</label>
+      <div class="controls">
+        <input type="text" ng-model="network.name" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">协议：</label>
+      <div class="controls">
+        <input type="text" ng-model="network.protocol" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">起始端口：</label>
+      <div class="controls">
+        <input type="text" ng-model="network.port_begin" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">终止端口：</label>
+      <div class="controls">
+        <input type="text" ng-model="network.port_end" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">数据流向</label>
+      <div class="controls">
+        <select ng-model="network.data_direction" ng-options="dd.key for dd in data_directions" class="span2">
+        </select>
+      </div>
     </div>
   </div>
-  <div class="control-group">
-    <label for="name" class="control-label">起始端口：</label>
-    <div class="controls">
-      <input type="text" ng-model="network.name" class="input"/>
-    </div>
-  </div>
-  <div class="control-group">
-    <label for="name" class="control-label">终止端口：</label>
-    <div class="controls">
-      <input type="text" ng-model="network.name" class="input"/>
-    </div>
-  </div>
-  <div class="control-group">
-    <label for="name" class="control-label">组</label>
-    <div class="controls">
-      <select ng-model="vm.host" ng-options="h.name for h in cluster.hosts" class="span2">
-        <option value="">系统组</option>
-        <option value="">自定义</option>
-      </select>
-    </div>
+  <div class="modal-footer">
+    <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
+    <button type="submit" ng-disabled="!port_form.$valid" class="btn btn-primary">保存</button>
   </div>
 </form>
