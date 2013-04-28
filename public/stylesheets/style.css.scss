@@ -145,7 +145,6 @@ ul#rMenu a {
 }
 
 
-/*百分比*/
 .progressBar {
     height: 10px;
     width: 100%;
@@ -173,71 +172,67 @@ ul#rMenu a {
 }
 
 .progressBardefault div {
-    background-color: #468847;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#468847), to(#468847));
-    background: -webkit-linear-gradient(top, #468847, #468847);
-    background: -moz-linear-gradient(top, #468847, #468847);
-    background: -ms-linear-gradient(top, #468847, #468847);
-    background: -o-linear-gradient(top, #468847, #468847);
+  background-color: #468847;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#468847), to(#468847));
+  background: -webkit-linear-gradient(top, #468847, #468847);
+  background: -moz-linear-gradient(top, #468847, #468847);
+  background: -ms-linear-gradient(top, #468847, #468847);
+  background: -o-linear-gradient(top, #468847, #468847);
 }
 
 
-/*表单相关*/
 #inst_define form {
-    margin: 13px 36px 19px;
+  margin: 13px 36px 19px;
 }
 
 .add_host_modal{
-    left: 55%;
-    width: 350px;
+  left: 55%;
+  width: 350px;
 }
 .instmodal {
-    left:45%;
-    width: 677px;
+  left:45%;
+  width: 677px;
 }
 
 .form-top{
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .form-horizontal .control-group {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 #add_host .form-horizontal .controls {
-    margin-left: 127px;
+  margin-left: 127px;
 }
 
 #add_host .form-horizontal .control-label {
-    width: 102px;
+  width: 102px;
 }
 
 #inst_define .form-horizontal .controls {
-    margin-left: 100px;
+  margin-left: 100px;
 }
 #inst_define .form-horizontal .control-label {
-    text-align: left;
-    width: 100px;
-
+  text-align: left;
+  width: 100px;
 }
 
 
-
-/*启动顺序*/
 #bootorder{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 .ui-state-default {
-    border: 1px solid #D3D3D3;
-    padding-top: 5px;
-    background-color: #E9E9E9;
+  border: 1px solid #D3D3D3;
+  padding-top: 5px;
+  background-color: #E9E9E9;
 }
 .ui-state-disabled {
     opacity: 0.35;
 }
 
-/*table选择样式*/
+
 .selectable .ui-selecting { background: #b8dce0; }
 .selectable .ui-selected { background: #C3D0E0; color: white; }
 

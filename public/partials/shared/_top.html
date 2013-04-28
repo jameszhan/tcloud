@@ -8,14 +8,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="m in tops | orderBy:'-cpu' | limitTo:5">  
+    <tr ng-repeat="m in tops | orderBy:'-cpu_usage' | limitTo:5">  
       <td>{{m.name}}</td>
       <td><div class="progress progress-striped active">
         <div class="bar" style="width: {{m.cpu_usage}}%;">{{m.cpu_usage}}%</div>
       </div>
       </td>
       <td>
-        <div class="progress progress-success">
+        <div class="progress progress-success progress-striped active">
           <div class="bar" style="width: {{m.memory_usage}}%;">{{m.memory_usage}}%</div>
         </div>
       </td>  
