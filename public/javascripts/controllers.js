@@ -585,7 +585,7 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
     backdrop: true,
     keyboard: true,
     backdropClick: true,
-    templateUrl: "network_new.html",
+    templateUrl: "/partials/networks/_network_dialog.html",
     controller: 'DialogPortCtrl'
   });
 
@@ -670,7 +670,7 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
     backdrop: true,
     keyboard: true,
     backdropClick: true,
-    templateUrl: "storage_new.html",
+    templateUrl: "/partials/storages/_storage_dialog.html",
     controller: 'DialogCtrl'
   });
 
