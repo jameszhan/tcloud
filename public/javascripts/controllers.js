@@ -573,10 +573,6 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
 }
 
 function DialogTypeCtrl($scope, dialog, Util, Network){
-  
-  $scope.template = {
-    url: "/partials/networks/_network_new.html"
-  };
 
   $scope.close = function(result){
     dialog.close(result);
@@ -611,7 +607,7 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
     backdrop: true,
     keyboard: true,
     backdropClick: true,
-    templateUrl: "/partials/networks/_network_dialog.html",
+    templateUrl: "/partials/networks/_networkport_dialog.html",
     controller: 'DialogPortCtrl'
   });
 
@@ -681,11 +677,6 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
 }
 
 function DialogPortCtrl($scope, dialog, Util, Network){
-  
-  $scope.template = {
-    url: "/partials/networks/_networkport_new.html"
-  };
-
   $scope.close = function(result){
     dialog.close(result);
   }
