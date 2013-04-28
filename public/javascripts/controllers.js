@@ -494,38 +494,251 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
   });
 }
 
-function NetWorkCtrl($scope, $routeParams, NetWork, Util){
+function NetworkCtrl($scope, $routeParams, Network, Util){
 
 }
 
-function NetWorkTypeCtrl($scope, $routeParams, NetWork, Util){
+function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "network_new.html",
+    controller: 'DialogTypeCtrl'
+  });
+
   $scope.selected || ($scope.selected = {});
-  NetWork.get(function(networks){
+  Network.get(function(networks){
     $scope.networks = networks.networks;
     Util.pagination($scope, 'networks', 5);
   });
+  
+  var do_check = function(min, max){
+    var networks = $.grep($scope.networks, function(network) {
+      return $scope.selected[network.id];
+    }), ok = true;
+    if(networks.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      ok = false;
+    }
+    if(networks.length > max){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      ok = false;
+    }
+    return {
+      then: function(fn){ ok && (fn || angular.noop)(networks); }
+    };
+  };
+
+  $scope.do_delete = function(){
+    do_check(1, 100).then(function(networks){
+      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
+        var network_ids = networks.map(function(network){return network.id;});
+        console.log("REMOVE ALL networks " + network_ids);
+        new Network({ids: network_ids}).$delete_network_all(function(data){
+          if(data.success){
+            angular.forEach(networks, function(network){
+              var index = $scope.networks.indexOf(network);
+              $scope.networks.splice(index, 1);
+            });
+            Util.update_activities(data);
+          }
+        });
+      }
+    });
+  };
+
+  $scope.do_create = function(){
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+
+  $scope.do_edit = function(){
+    do_check(1, 1).then(function(networks){
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
 }
 
-function NetWorkPortCtrl($scope, $routeParams, NetWork, Util){
+function DialogTypeCtrl($scope, dialog){
+  
+  $scope.template = {
+    url: "/partials/networks/_network_new.html"
+  };
+
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+}
+
+function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "network_new.html",
+    controller: 'DialogPortCtrl'
+  });
+
   $scope.selected || ($scope.selected = {});  
-  NetWork.get(function(networks){
+  Network.get(function(networks){
     $scope.ports = networks.ports;
     Util.pagination($scope, 'ports', 5);
   });
+
+  var do_check = function(min, max){
+    var ports = $.grep($scope.ports, function(port) {
+      return $scope.selected[port.id];
+    }), ok = true;
+    if(ports.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      ok = false;
+    }
+    if(ports.length > max){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      ok = false;
+    }
+    return {
+      then: function(fn){ ok && (fn || angular.noop)(ports); }
+    };
+  };
+
+  $scope.do_delete = function(){
+    do_check(1, 100).then(function(ports){
+      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
+        var port_ids = ports.map(function(port){return port.id;});
+        console.log("REMOVE ALL networks " + port_ids);
+        new Network({ids: port_ids}).$delete_port_all(function(data){
+          if(data.success){
+            angular.forEach(ports, function(port){
+              var index = $scope.ports.indexOf(port);
+              $scope.ports.splice(index, 1);
+            });
+            Util.update_activities(data);
+          }
+        });
+      }
+    });
+  }
+
+  $scope.do_create = function(){
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+
+  $scope.do_edit = function(){
+    do_check(1, 1).then(function(networks){
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+
 }
 
+function DialogPortCtrl($scope, dialog){
+  
+  $scope.template = {
+    url: "/partials/networks/_networkport_new.html"
+  };
 
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+}
 
 function ArchitectCtrl($scope){
 }
 
-function StorageCtrl($scope, $routeParams, Storage, Util){
+function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "storage_new.html",
+    controller: 'DialogCtrl'
+  });
+
   $scope.selected || ($scope.selected = {});
   
   Storage.get(function(storages){
     $scope.storages = storages.storages;
     Util.pagination($scope, 'storages', 5);
   });
+
+  var do_check = function(min, max){
+    var storages = $.grep($scope.storages, function(storage) {
+      return $scope.selected[storage.id];
+    }), ok = true;
+    if(storages.length < min){
+      alert("你至少应该选择" + min + "台虚拟机.");
+      ok = false;
+    }
+    if(storages.length > max){
+      alert("你不能选择超过" + max + "台虚拟机.");
+      ok = false;
+    }
+    return {
+      then: function(fn){ ok && (fn || angular.noop)(storages); }
+    };
+  };
+
+  $scope.do_delete = function(){
+    do_check(1, 100).then(function(storages){
+      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
+        var storage_ids = storages.map(function(storage){return storage.id;});
+        console.log("REMOVE ALL storages " + storage_ids);
+        new Storage({ids: storage_ids}).$delete_all(function(data){
+          if(data.success){
+            angular.forEach(storages, function(storage){
+              var index = $scope.storages.indexOf(storage);
+              $scope.storages.splice(index, 1);
+            });
+            Util.update_activities(data);
+          }
+        });
+      }
+    });
+  }
+
+  $scope.do_create = function(){
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+
+  $scope.do_edit = function(){
+    do_check(1, 1).then(function(storages){
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogCtrl($scope, dialog){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
 }
 
 function ShortCutCtrl($scope, $routeParams, ShortCut, Util){

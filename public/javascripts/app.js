@@ -24,9 +24,8 @@ angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilte
       when('/hosts/:id', {templateUrl: '/partials/hosts/index.html',   controller: HostCtrl}).
       when('/vms/:id', {templateUrl: '/partials/vms/index.html', controller: VMCtrl}).
       when('/templates', {templateUrl: '/partials/templates/index.html', controller: TemplateCtrl}).
-      when('/networks', {templateUrl: '/partials/networks/index.html', controller: NetWorkCtrl}).
+      when('/networks', {templateUrl: '/partials/networks/index.html', controller: NetworkCtrl}).
       when('/architects', {templateUrl: '/partials/architects/index.html', controller: ArchitectCtrl}).
-      when('/storages', {templateUrl: '/partials/storages/index.html', controller: StorageCtrl}).
       when('/shortcuts', {templateUrl: '/partials/shortcuts/index.html', controller: ShortCutCtrl}).
       otherwise({redirectTo: '/'});
 }]).run(["$pollingPool", "$timeout", "$rootScope", "Util", "Activity", function($pollingPool, $timeout, $rootScope, Util, Activity){

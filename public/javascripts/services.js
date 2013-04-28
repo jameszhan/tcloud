@@ -44,11 +44,18 @@ angular.module('webvirtServices', [])
       'status': {method: 'POST', isArray: true, url: 'activities/status'},
     });
   })
-  .factory('NetWork', function($resource){
-    return $resource('networks/:id', {id: '@id'});
+  .factory('Network', function($resource){
+    return $resource('networks/:id', {id: '@id'}, {
+      'status': {method: 'POST', isArray: true, url: 'networks/status'},
+      'delete_network_all': {method: 'POST', url: 'networks/delete_all'},
+      'delete_port_all': {method: 'POST', url: 'networks/delete_all'}
+    });
   })
   .factory('Storage', function($resource){
-    return $resource('storages/:id', {id: '@id'});
+    return $resource('storages/:id', {id: '@id'}, {
+      'status': {method: 'POST', isArray: true, url: 'storages/status'},
+      'delete_all': {method: 'POST', url: 'storages/delete_all'}
+    });
   })
   .factory('ShortCut', function($resource){
     return $resource('shortcuts/:id', {id: '@id'});
