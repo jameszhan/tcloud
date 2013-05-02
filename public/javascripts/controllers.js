@@ -67,6 +67,14 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
     $scope.vms = $scope.host.virtual_machines;
+    $scope.os_info = $scope.vms.reduce(function(ret, vm){
+      if(ret[vm.os_type] != undefined){
+        ret[vm.os_type] += 1;
+      }else{
+        ret[vm.os_type] = 1;
+      }
+      return ret;
+    }, {});    
     
     $pollingPool.add(function(){
       var ids = $scope.vms.map(function(vm){return vm.id});
