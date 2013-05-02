@@ -12,8 +12,8 @@ exports.delete_all = function(req, res){
     {
       id: 112, 
       name: 'DELETE', 
-      target: "NetWorks", 
-      target_type: "NetWork", 
+      target: "networks", 
+      target_type: "network", 
       start_time: new Date().toISOString(), 
       end_time: new Date().toISOString(),
       status: 'requested'
@@ -25,4 +25,34 @@ exports.status = function(req, res){
   var ids = req.body.ids;
   console.log("status for networks %a", ids);
   res.render("templates/networks_status.json", {ids: ids});  
+}
+
+exports.save = function(req, res){
+  res.set("ContentType", "application/json");
+  console.log("save network", req.body);
+  res.json({success: true, activities: [
+    {
+      id: 114, 
+      name: 'ADD', 
+      target: "network", 
+      target_type: "Network", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});
+}
+
+exports.update = function(req, res){
+  res.set("ContentType", "application/json");
+  console.log("update host", req.body);
+  res.json({success: true, activities: [
+    {
+      id: 116, 
+      name: 'UPDATE', 
+      target: "network", 
+      target_type: "Network", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});
 }

@@ -504,7 +504,7 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
     backdrop: true,
     keyboard: true,
     backdropClick: true,
-    templateUrl: "network_new.html",
+    templateUrl: "/partials/networks/_network_dialog.html",
     controller: 'DialogTypeCtrl'
   });
 
@@ -549,7 +549,9 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
     });
   };
 
-  $scope.do_create = function(){
+  $scope.do_add = function(){
+    d.context_scope = $scope;
+    d.context_scope.selected_type = null;
     d.open().then(function(result){
       if(result){
         alert('dialog closed with result: ' + result);
@@ -558,7 +560,9 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
   };
 
   $scope.do_edit = function(){
+    d.context_scope = $scope;
     do_check(1, 1).then(function(networks){
+      d.context_scope.selected_type = networks[0];
       d.open().then(function(result){
         if(result) {
           alert('dialog closed with result: ' + result);
@@ -568,14 +572,32 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
   };
 }
 
-function DialogTypeCtrl($scope, dialog){
-  
-  $scope.template = {
-    url: "/partials/networks/_network_new.html"
-  };
+function DialogTypeCtrl($scope, dialog, Util, Network){
 
   $scope.close = function(result){
     dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.network){
+      new Network($scope.network)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_type = dialog.context_scope.selected_type;  
+  if(selected_type){
+    $scope.title = "编辑配置网络";
+    $scope.action = "$update";
+    $scope.network = selected_type;
+  } else {
+    $scope.title = "配置网络";
+    $scope.action = "$save";
+    $scope.network = {};   
   }
 }
 
@@ -585,7 +607,7 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
     backdrop: true,
     keyboard: true,
     backdropClick: true,
-    templateUrl: "/partials/networks/_network_dialog.html",
+    templateUrl: "/partials/networks/_networkport_dialog.html",
     controller: 'DialogPortCtrl'
   });
 
@@ -628,9 +650,11 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
         });
       }
     });
-  }
+  };
 
-  $scope.do_create = function(){
+  $scope.do_add = function(){
+    d.context_scope = $scope;
+    d.context_scope.selected_port = null;
     d.open().then(function(result){
       if(result){
         alert('dialog closed with result: ' + result);
@@ -639,7 +663,9 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
   };
 
   $scope.do_edit = function(){
+    d.context_scope = $scope;
     do_check(1, 1).then(function(networks){
+      d.context_scope.selected_port = networks[0]
       d.open().then(function(result){
         if(result) {
           alert('dialog closed with result: ' + result);
@@ -650,14 +676,34 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
 
 }
 
-function DialogPortCtrl($scope, dialog){
-  
-  $scope.template = {
-    url: "/partials/networks/_networkport_new.html"
-  };
-
+function DialogPortCtrl($scope, dialog, Util, Network){
   $scope.close = function(result){
     dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.network){
+      new Network($scope.network)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_port = dialog.context_scope.selected_port;
+  $scope.data_directions = [{"key":"in"},{"key":"out"},{"key":"inout"}];  
+  if(selected_port){
+    $scope.title = "编辑配置网络";
+    $scope.action = "$update";
+    $scope.network = selected_port;
+    $scope.network.data_direction = $scope.data_directions[0];
+  } else {
+    $scope.title = "配置网络";
+    $scope.action = "$save";
+    $scope.network = {};
+    $scope.network.data_direction = $scope.data_directions[0];    
   }
 }
 
