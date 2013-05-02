@@ -26,3 +26,35 @@ exports.status = function(req, res){
   console.log("status for storages %a", ids);
   res.render("templates/storages_status.json", {ids: ids});  
 }
+
+exports.save = function(req, res){
+  res.set("ContentType", "application/json");
+  console.log("save storage", req.body);
+  res.json({success: true, activities: [
+    {
+      id: 118, 
+      name: 'ADD', 
+      target: "storage", 
+      target_type: "Storage", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]
+  });
+}
+
+exports.update = function(req, res){
+  res.set("ContentType", "application/json");
+  console.log("update storage", req.body);
+  res.json({success: true, activities: [
+    {
+      id: 116, 
+      name: 'UPDATE', 
+      target: "storage", 
+      target_type: "Storage", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]
+  });
+}

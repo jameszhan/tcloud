@@ -9,7 +9,7 @@
       "apn": "xxxxxx",
       "storage_size": "56TB",
       "rate_storage": "10%",
-      "desrc": "中央存储",
+      "desc": "中央存储",
       "idle_storage": "545GB",
       "usage_storage": "45222GB",
       "status": "停用"
@@ -23,7 +23,7 @@
       "apn": "xxxxxx",
       "storage_size": "56TB",
       "rate_storage": "10%",
-      "desrc": "中央存储",
+      "desc": "中央存储",
       "idle_storage": "545GB",
       "usage_storage": "45222GB",
       "status": "不可用"
@@ -37,7 +37,7 @@
       "apn": "xxxxxx",
       "storage_size": "56TB",
       "rate_storage": "10%",
-      "desrc": "中央存储",
+      "desc": "中央存储",
       "idle_storage": "545GB",
       "usage_storage": "45222GB",
       "status": "正常"
@@ -51,7 +51,7 @@
       "apn": "xxxxxx",
       "storage_size": "56TB",
       "rate_storage": "10%",
-      "desrc": "中央存储",
+      "desc": "中央存储",
       "idle_storage": "545GB",
       "usage_storage": "45222GB",
       "status": "正常"
@@ -65,7 +65,7 @@
       "apn": "xxxxxx",
       "storage_size": "56TB",
       "rate_storage": "10%",
-      "desrc": "中央存储",
+      "desc": "中央存储",
       "idle_storage": "545GB",
       "usage_storage": "45222GB",
       "status": "停用"
@@ -79,7 +79,7 @@
       "apn": "xxxxxx",
       "storage_size": "56TB",
       "rate_storage": "10%",
-      "desrc": "中央存储",
+      "desc": "中央存储",
       "idle_storage": "545GB",
       "usage_storage": "45222GB",
       "status": "正常"
@@ -93,7 +93,7 @@
       "apn": "xxxxxx",
       "storage_size": "56TB",
       "rate_storage": "10%",
-      "desrc": "中央存储",
+      "desc": "中央存储",
       "idle_storage": "545GB",
       "usage_storage": "45222GB",
       "status": "正常"

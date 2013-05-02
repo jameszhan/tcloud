@@ -1,6 +1,6 @@
 <div ng-controller="StorageCtrl">
   <div class="input-prepend input-append">
-    <button type="button" class="btn btn-mini" ng-click="do_create()">添加</button>
+    <button type="button" class="btn btn-mini" ng-click="do_add()">添加</button>
     <button type="button" class="btn btn-mini" ng-click="do_edit()">修改</button>
     <button type="button" class="btn btn-danger btn-mini" ng-click="do_delete()">删除</button>
   </div>
@@ -32,7 +32,7 @@
           <td>{{storage.apn}}</td>
           <td>{{storage.storage_size}}</td>
           <td>{{storage.rate_storage}}</td> 
-          <td>{{storage.desrc}}</td> 
+          <td>{{storage.desc}}</td> 
           <td>{{storage.idle_storage}}</td>
           <td>{{storage.usage_storage}}</td> 
           <td>{{storage.status}}</td>
