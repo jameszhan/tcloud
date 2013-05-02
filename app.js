@@ -106,6 +106,7 @@ app.post('/vms/reboot', vms.reboot);
 app.post('/vms/shutdown', vms.shutdown);
 app.post('/vms/snapshot', vms.snapshot);
 app.post('/vms/status', vms.status);
+app.post('/vms/operate', vms.operate);
 
 app.get('/templates', templates.index);
 
