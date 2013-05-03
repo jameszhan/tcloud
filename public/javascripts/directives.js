@@ -77,6 +77,54 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
       templateUrl: '/partials/shared/_top.html'
     };
   })
+  .directive('piechart', function($q){
+    return {
+      restrict: 'E',
+      scope: {
+        initial: '@',
+        width: '@',
+        height: '@',
+      },
+      transclude: true,
+      link: function(scope, element, attrs) {
+        var draw_pie_chart = function(data){
+          element.find(".chart").plot(data, { 
+            series: {
+              pie: { 
+                show: true,
+                radius: 1,
+                label: {
+                  show: true,
+                  radius: 3/5,
+                  formatter: function(label, series){
+                    return '<div style="font-size:10px;text-align:center;padding:2px;color:white;">'+label+'<br/>'+Math.round(series.percent)+'%</div>';
+                  },
+                  background: { opacity: 0.1 }
+                }
+              }
+            },
+            legend: {
+              show: false
+            }
+          });
+        };
+        
+        scope.$watch('initial', function(new_value, old_value){
+          data = [];
+          if(new_value != undefined){   
+            angular.forEach(new_value, function(val, key){
+              data.push({label: key, data: val});
+            });  
+            draw_pie_chart(data);
+          }
+        });
+      }, 
+      template: '<div>' 
+        + '<div class="chart" width="{{width}}" height="{{height}}" style="width:{{width}}px; height:{{height}}px"></div>' 
+        + '<div class="hide" ng-transclude></div>'
+        + '</div>'
+    };
+  })
   .directive('curvegraph', function($q, $http, $timeout, $pollingPool){
     return {
       restrict: 'E',
