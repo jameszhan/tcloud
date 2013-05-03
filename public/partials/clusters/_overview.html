@@ -24,9 +24,7 @@
     </div>
   </div>
   <div class="span6">
-  <piechart width="160" height="160" initial="{{cluster.os_info}}">
-    <i ng-repeat="(key, value) in cluster.os_info" data-label="{{key}}" data-value="{{value}}" />
-  </piechart>
+  <piechart width="200" height="200" initial="{{cluster.os_info}}" />
   {{cluster.memory_info}}
   </div>
 </div>
