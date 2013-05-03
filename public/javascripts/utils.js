@@ -1,3 +1,10 @@
+String.format = function(formatter){
+  var _args = [].slice.apply(arguments, [1]);
+  return formatter.replace(/\{(\d+)\}/g, function(match, g1, position, str){
+    return (_args[g1] || match);
+  });
+};
+
 angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fibonacci){
   var current_delay = 0, fib = Fibonacci.instance(), max_delay = 3000, next_delay = function(){
     return current_delay >= max_delay ? current_delay : current_delay = fib() * 1000;
@@ -83,6 +90,36 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       if(data.activities){
         for(var i = 0; i < data.activities.length; i++){  
           $rootScope.activities.unshift(data.activities[i]);
+        }
+      }
+    },
+    bind: function($scope, target_name){
+      $scope.min_msg = ($scope.min_msg || "你至少应该选择{0}个");
+      $scope.max_msg = ($scope.max_msg || "你不能选择超过{0}个");
+      var items = $.grep($scope[target_name], function(item) {
+        return $scope.selected[item.id];
+      }), ok = true;
+      return {
+        select: function(min, max){          
+          if(items.length < min){
+            alert(String.format($scope.min_msg, min));
+            ok = false;
+          }
+          if(items.length > max){
+            alert(String.format($scope.max_msg, min));
+            ok = false;
+          }
+          return {
+            confirm: function(msg){
+              if(!ok || !window.confirm(msg)){
+                ok = false;
+              }
+              return {
+                then: function(fn){ ok && (fn || angular.noop)(items); }
+              };
+            },
+            then: function(fn){ ok && (fn || angular.noop)(items); }
+          };
         }
       }
     },

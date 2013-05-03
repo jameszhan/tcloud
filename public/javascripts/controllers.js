@@ -140,23 +140,9 @@ function HostFormCtrl($scope, dialog, Util, Host){
   }
 }
 
-function HostActionBarCtrl($scope, $dialog, Host, Util){  
-  var do_check = function(min, max){
-    var hosts = $.grep($scope.hosts, function(host) {
-      return $scope.selected[host.id];
-    }), ok = true;
-    if(hosts.length < min){
-      alert("你至少应该选择" + min + "台虚拟机.");
-      ok = false;
-    }
-    if(hosts.length > max){
-      alert("你不能选择超过" + max + "台虚拟机.");
-      ok = false;
-    }
-    return {
-      then: function(fn){ ok && (fn || angular.noop)(hosts); }
-    };
-  };    
+function HostActionBarCtrl($scope, $dialog, Host, Util){    
+  $scope.min_msg = "你至少应该选择{0}台主机."
+  $scope.max_msg = "你不能选择超过{0}台主机."
   
   var d = $dialog.dialog({
     backdrop: true,
@@ -164,7 +150,7 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
     backdropClick: false,
     templateUrl: "/partials/hosts/_form.html",
     controller: 'HostFormCtrl'
-  });
+  });  
   
   $scope.do_add = function(){
     d.context_scope = $scope;
@@ -178,7 +164,7 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
   
   $scope.do_edit = function() {
     d.context_scope = $scope;
-    do_check(1, 1).then(function(hosts){
+    Util.bind($scope, 'hosts').select(1, 1).then(function(hosts){
       d.context_scope.selected_host = hosts[0];
       d.open().then(function(result){
         if(result) {
@@ -189,71 +175,59 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
   };
   
   $scope.do_remove = function(){
-    do_check(1, 100).then(function(hosts){
-      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
-        var host_ids = hosts.map(function(host){return host.id;});
-        console.log("REMOVE ALL HOSTS " + host_ids);
-        new Host({ids: host_ids}).$remove_all(function(data){
-          if(data.success){
-            angular.forEach(hosts, function(host){
-              var index = $scope.hosts.indexOf(host);
-              $scope.hosts.splice(index, 1);
-            });
-            $scope.unselected_all();
-            Util.update_activities(data);
-          }
-        });
-      }
-    }); 
+    Util.bind($scope, 'hosts').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(hosts){
+      var host_ids = hosts.map(function(host){return host.id;});
+      console.log("REMOVE ALL HOSTS " + host_ids);
+      new Host({ids: host_ids}).$remove_all(function(data){
+        if(data.success){
+          angular.forEach(hosts, function(host){
+            var index = $scope.hosts.indexOf(host);
+            $scope.hosts.splice(index, 1);
+          });
+          $scope.unselected_all();
+          Util.update_activities(data);
+        }
+      });
+    });
   };
 
   $scope.do_maintain = function(){
-    do_check(1, 100).then(function(hosts){
-      if(window.confirm("确定要进行维护操作？")){
-        var host_ids = hosts.map(function(host){ return host.id; });
-        console.log("Maintain the hosts " + host_ids);
-        new Host({ids: host_ids}).$maintain(Util.update_activities);
-      }
-    }); 
+    Util.bind($scope, 'hosts').select(1, 100).confirm('确定要进行维护操作？').then(function(hosts){
+      var host_ids = hosts.map(function(host){ return host.id; });
+      console.log("Maintain the hosts " + host_ids);
+      new Host({ids: host_ids}).$maintain(Util.update_activities);
+    });
   };
   
   $scope.do_activate = function(){
-    do_check(1, 100).then(function(hosts){
-      if(window.confirm("确定要进行激活操作？")){
-        var host_ids = hosts.map(function(host){ return host.id; });
-        console.log("Activate the hosts " + host_ids);
-        new Host({ids: host_ids}).$activate(Util.update_activities);
-      }
+    Util.bind($scope, 'hosts').select(1, 100).confirm('确定要进行激活操作？').then(function(hosts){
+      var host_ids = hosts.map(function(host){ return host.id; });
+      console.log("Activate the hosts " + host_ids);
+      new Host({ids: host_ids}).$activate(Util.update_activities);
     });
   };  
 
   $scope.do_start = function(){
-    do_check(1, 100).then(function(hosts){
-      if(window.confirm("确定要进行启动操作？")){
-        var host_ids = hosts.map(function(host){ return host.id; });
-        console.log("Start the hosts " + host_ids);
-        new Host({ids: host_ids}).$start(Util.update_activities);
-      }
+    Util.bind($scope, 'hosts').select(1, 100).confirm('确定要进行启动操作？').then(function(hosts){
+      var host_ids = hosts.map(function(host){ return host.id; });
+      console.log("Start the hosts " + host_ids);
+      new Host({ids: host_ids}).$start(Util.update_activities);
     });
   };
   
   $scope.do_shutdown = function(){
-    do_check(1, 100).then(function(hosts){
-      if(window.confirm("确定要进行关机操作？")){
-        var host_ids = hosts.map(function(host){ return host.id; });
-        console.log("Shutdown the hosts " + host_ids);
-        new Host({ids: host_ids}).$shutdown(Util.update_activities);
-      }
+    Util.bind($scope, 'hosts').select(1, 100).confirm('确定要进行关机操作？').then(function(hosts){
+      var host_ids = hosts.map(function(host){ return host.id; });
+      console.log("Shutdown the hosts " + host_ids);
+      new Host({ids: host_ids}).$shutdown(Util.update_activities);
     });
   };
   
   $scope.do_reboot = function(){
-    do_check(1, 100).then(function(hosts){
-      if(window.confirm("确定要进行重启操作？")){
-        var host_ids = hosts.map(function(host){ return host.id; });
-        console.log("Reboot the hosts " + host_ids);
-        new Host({ids: host_ids}).$reboot(Util.update_activities);
-      }
+    Util.bind($scope, 'hosts').select(1, 100).confirm('确定要进行重启操作？').then(function(hosts){
+      var host_ids = hosts.map(function(host){ return host.id; });
+      console.log("Reboot the hosts " + host_ids);
+      new Host({ids: host_ids}).$reboot(Util.update_activities);
     });
   };
   
@@ -354,22 +328,8 @@ function ActionBarCtrl($scope, $q, $dialog, VM, Util){
     controller: 'VMWorkflowCtrl'
   });
   
-  var do_check = function(min, max){
-    var vms = $.grep($scope.vms, function(vm) {
-      return $scope.selected[vm.id];
-    }), ok = true;
-    if(vms.length < min){
-      alert("你至少应该选择" + min + "台虚拟机.");
-      ok = false;
-    }
-    if(vms.length > max){
-      alert("你不能选择超过" + max + "台虚拟机.");
-      ok = false;
-    }
-    return {
-      then: function(fn){ ok && (fn || angular.noop)(vms); }
-    };
-  };
+  $scope.min_msg = "你至少应该选择{0}台虚拟机."
+  $scope.max_msg = "你不能选择超过{0}台虚拟机."
   
   $scope.do_create = function(){
     d.context_scope = $scope;
@@ -383,8 +343,8 @@ function ActionBarCtrl($scope, $q, $dialog, VM, Util){
   
   $scope.do_edit = function() {
     d.context_scope = $scope;
-    do_check(1, 1).then(function(vms){
-     d.context_scope.selected_vm = vms[0];
+    Util.bind($scope, 'vms').select(1, 1).then(function(vms){
+      d.context_scope.selected_vm = vms[0];
       d.open().then(function(result){
         if(result) {
           alert('' + result);
@@ -394,101 +354,83 @@ function ActionBarCtrl($scope, $q, $dialog, VM, Util){
   };
   
   $scope.do_delete = function(){
-    do_check(1, 100).then(function(vms){
-      if(window.confirm("你确定要删除它们吗，此操作将无法恢复!")){
-        var vm_ids = vms.map(function(vm){return vm.id;});
-        console.log("DELETE ALL VMS " + vm_ids);
-        new VM({ids: vm_ids}).$delete_all(function(data){
-          if(data.success){
-            angular.forEach(vms, function(vm){
-              var index = $scope.vms.indexOf(vm);
-              $scope.vms.splice(index, 1);
-            });
-            $scope.unselected_all();
-            Util.update_activities(data);
-          }
-        });
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("你确定要删除它们吗，此操作将无法恢复!").then(function(vms){
+      var vm_ids = vms.map(function(vm){return vm.id;});
+      console.log("DELETE ALL VMS " + vm_ids);
+      new VM({ids: vm_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(vms, function(vm){
+            var index = $scope.vms.indexOf(vm);
+            $scope.vms.splice(index, 1);
+          });
+          $scope.unselected_all();
+          Util.update_activities(data);
+        }
+      });
     }); 
   };
 
   $scope.do_template = function(){
-    do_check(1, 100).then(function(vms){
-      if(window.confirm("确定要存为模版？")){
-        var vm_ids = vms.map(function(vm){ return vm.id; });
-        console.log("Save Template for VMS " + vm_ids);
-        new VM({ids: vm_ids}).$save_template(Util.update_activities);
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("确定要存为模版？").then(function(vms){
+      var vm_ids = vms.map(function(vm){ return vm.id; });
+      console.log("Save Template for VMS " + vm_ids);
+      new VM({ids: vm_ids}).$save_template(Util.update_activities);
     }); 
   };
   
   $scope.do_migrate = function(){
-    do_check(1, 100).then(function(vms){
-      if(window.confirm("你确定要迁移它(们)吗？")){
-        var vm_ids = vms.map(function(vm){ return vm.id; });        
-        console.log("Migration for VMS " + vm_ids);
-        new VM({ids: vm_ids}).$migrate(Util.update_activities);
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("你确定要迁移它(们)吗？").then(function(vms){
+      var vm_ids = vms.map(function(vm){ return vm.id; });        
+      console.log("Migration for VMS " + vm_ids);
+      new VM({ids: vm_ids}).$migrate(Util.update_activities);
     }); 
   };
   
   $scope.do_suspend = function(){
-    do_check(1, 100).then(function(vms){
-      if(window.confirm("你确定要暂停它(们)吗!")){
-        var vm_ids = vms.map(function(vm){ return vm.id; });
-        console.log("Suspend VMS " + vm_ids);
-        new VM({ids: vm_ids}).$suspend(Util.update_activities);
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("你确定要暂停它(们)吗!").then(function(vms){
+      var vm_ids = vms.map(function(vm){ return vm.id; });
+      console.log("Suspend VMS " + vm_ids);
+      new VM({ids: vm_ids}).$suspend(Util.update_activities);
     }); 
   };
   
   $scope.do_start = function(){
-    do_check(1, 100).then(function(vms){
-      if(window.confirm("你确定要启动它(们)吗？")){
-        var vm_ids = vms.map(function(vm){ return vm.id; });
-        console.log("Start VMS " + vm_ids);
-        new VM({ids: vm_ids}).$start(Util.update_activities);
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("你确定要启动它(们)吗？").then(function(vms){
+      var vm_ids = vms.map(function(vm){ return vm.id; });
+      console.log("Start VMS " + vm_ids);
+      new VM({ids: vm_ids}).$start(Util.update_activities);
     }); 
   };
   
   $scope.do_reboot = function(){
-    do_check(1, 100).then(function(vms){
-      if(window.confirm("你确定要删要重启它(们)吗？")){
-        var vm_ids = vms.map(function(vm){return vm.id});
-        console.log("Restart VMS " + vm_ids);
-        new VM({ids: vm_ids}).$reboot(Util.update_activities);
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("你确定要删要重启它(们)吗？").then(function(vms){
+      var vm_ids = vms.map(function(vm){return vm.id});
+      console.log("Restart VMS " + vm_ids);
+      new VM({ids: vm_ids}).$reboot(Util.update_activities);
     }); 
   };
   
   $scope.do_shutdown = function(){
-    do_check(1, 100).then(function(vms){
-      if(window.confirm("你确定要关闭它(们)吗")){
-        var vm_ids = vms.map(function(vm){return vm.id});
-        console.log("Shutdown VMS " + vm_ids);
-        new VM({ids: vm_ids}).$shutdown(Util.update_activities);
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("你确定要关闭它(们)吗").then(function(vms){
+      var vm_ids = vms.map(function(vm){return vm.id});
+      console.log("Shutdown VMS " + vm_ids);
+      new VM({ids: vm_ids}).$shutdown(Util.update_activities);
     }); 
   };
   
   $scope.do_snapshot = function(){
-    do_check(1, 100).then(function(vms){
-      if(window.confirm("确定要创建快照吗？")){
-        var vm_ids = vms.map(function(vm){return vm.id});
-        console.log("Snapshot VMS " + vm_ids);
-        new VM({ids: vm_ids}).$snapshot(Util.update_activities);
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("确定要创建快照吗？").then(function(vms){
+      var vm_ids = vms.map(function(vm){return vm.id});
+      console.log("Snapshot VMS " + vm_ids);
+      new VM({ids: vm_ids}).$snapshot(Util.update_activities);
     }); 
   };
   
   $scope.do_operate = function(){
-    do_check(1,100).then(function(vms){
-      if(window.confirm("运营管理?")){
-        var vm_ids = vms.map(function(vm){return vm.id});
-        console.log("operation VMS " + vm_ids);
-        new VM({ids: vm_ids}).$operate(Util.update_activities);
-      }
+    Util.bind($scope, 'vms').select(1, 100).confirm("运营管理?").then(function(vms){
+      var vm_ids = vms.map(function(vm){return vm.id});
+      console.log("operation VMS " + vm_ids);
+      new VM({ids: vm_ids}).$operate(Util.update_activities);
     });
   };
 }
@@ -530,39 +472,20 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
     $scope.networks = networks.networks;
     Util.pagination($scope, 'networks', 5);
   });
-  
-  var do_check = function(min, max){
-    var networks = $.grep($scope.networks, function(network) {
-      return $scope.selected[network.id];
-    }), ok = true;
-    if(networks.length < min){
-      alert("你至少应该选择" + min + "台虚拟机.");
-      ok = false;
-    }
-    if(networks.length > max){
-      alert("你不能选择超过" + max + "台虚拟机.");
-      ok = false;
-    }
-    return {
-      then: function(fn){ ok && (fn || angular.noop)(networks); }
-    };
-  };
 
   $scope.do_delete = function(){
-    do_check(1, 100).then(function(networks){
-      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
-        var network_ids = networks.map(function(network){return network.id;});
-        console.log("REMOVE ALL networks " + network_ids);
-        new Network({ids: network_ids}).$delete_network_all(function(data){
-          if(data.success){
-            angular.forEach(networks, function(network){
-              var index = $scope.networks.indexOf(network);
-              $scope.networks.splice(index, 1);
-            });
-            Util.update_activities(data);
-          }
-        });
-      }
+    Util.bind($scope, 'networks').select(1, 100).confirm("你确定要移除它们吗，此操作将无法恢复!").then(function(networks){
+      var network_ids = networks.map(function(network){return network.id;});
+      console.log("REMOVE ALL networks " + network_ids);
+      new Network({ids: network_ids}).$delete_network_all(function(data){
+        if(data.success){
+          angular.forEach(networks, function(network){
+            var index = $scope.networks.indexOf(network);
+            $scope.networks.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
     });
   };
 
@@ -578,7 +501,7 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
 
   $scope.do_edit = function(){
     d.context_scope = $scope;
-    do_check(1, 1).then(function(networks){
+    Util.bind($scope, 'networks').select(1, 1).then(function(networks){
       d.context_scope.selected_type = networks[0];
       d.open().then(function(result){
         if(result) {
@@ -618,8 +541,7 @@ function DialogTypeCtrl($scope, dialog, Util, Network){
   }
 }
 
-function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
-  
+function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){  
   var d = $dialog.dialog({
     backdrop: true,
     keyboard: true,
@@ -634,38 +556,19 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
     Util.pagination($scope, 'ports', 5);
   });
 
-  var do_check = function(min, max){
-    var ports = $.grep($scope.ports, function(port) {
-      return $scope.selected[port.id];
-    }), ok = true;
-    if(ports.length < min){
-      alert("你至少应该选择" + min + "台虚拟机.");
-      ok = false;
-    }
-    if(ports.length > max){
-      alert("你不能选择超过" + max + "台虚拟机.");
-      ok = false;
-    }
-    return {
-      then: function(fn){ ok && (fn || angular.noop)(ports); }
-    };
-  };
-
   $scope.do_delete = function(){
-    do_check(1, 100).then(function(ports){
-      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
-        var port_ids = ports.map(function(port){return port.id;});
-        console.log("REMOVE ALL networks " + port_ids);
-        new Network({ids: port_ids}).$delete_port_all(function(data){
-          if(data.success){
-            angular.forEach(ports, function(port){
-              var index = $scope.ports.indexOf(port);
-              $scope.ports.splice(index, 1);
-            });
-            Util.update_activities(data);
-          }
-        });
-      }
+    Util.bind($scope, 'ports').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(ports){
+      var port_ids = ports.map(function(port){return port.id;});
+      console.log("REMOVE ALL networks " + port_ids);
+      new Network({ids: port_ids}).$delete_port_all(function(data){
+        if(data.success){
+          angular.forEach(ports, function(port){
+            var index = $scope.ports.indexOf(port);
+            $scope.ports.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
     });
   };
 
@@ -681,8 +584,8 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
 
   $scope.do_edit = function(){
     d.context_scope = $scope;
-    do_check(1, 1).then(function(networks){
-      d.context_scope.selected_port = networks[0]
+    Util.bind($scope, 'ports').select(1, 1).then(function(ports){
+      d.context_scope.selected_port = ports[0]
       d.open().then(function(result){
         if(result) {
           alert('dialog closed with result: ' + result);
@@ -690,7 +593,6 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
       });
     });
   };
-
 }
 
 function DialogPortCtrl($scope, dialog, Util, Network){
@@ -745,38 +647,19 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
     Util.pagination($scope, 'storages', 5);
   });
 
-  var do_check = function(min, max){
-    var storages = $.grep($scope.storages, function(storage) {
-      return $scope.selected[storage.id];
-    }), ok = true;
-    if(storages.length < min){
-      alert("你至少应该选择" + min + "台虚拟机.");
-      ok = false;
-    }
-    if(storages.length > max){
-      alert("你不能选择超过" + max + "台虚拟机.");
-      ok = false;
-    }
-    return {
-      then: function(fn){ ok && (fn || angular.noop)(storages); }
-    };
-  };
-
   $scope.do_delete = function(){
-    do_check(1, 100).then(function(storages){
-      if(window.confirm("你确定要移除它们吗，此操作将无法恢复!")){
-        var storage_ids = storages.map(function(storage){return storage.id;});
-        console.log("REMOVE ALL storages " + storage_ids);
-        new Storage({ids: storage_ids}).$delete_all(function(data){
-          if(data.success){
-            angular.forEach(storages, function(storage){
-              var index = $scope.storages.indexOf(storage);
-              $scope.storages.splice(index, 1);
-            });
-            Util.update_activities(data);
-          }
-        });
-      }
+    Util.bind($scope, 'storages').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(storages){
+      var storage_ids = storages.map(function(storage){return storage.id;});
+      console.log("REMOVE ALL storages " + storage_ids);
+      new Storage({ids: storage_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(storages, function(storage){
+            var index = $scope.storages.indexOf(storage);
+            $scope.storages.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
     });
   }
 
@@ -792,7 +675,7 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
 
   $scope.do_edit = function(){
     d.context_scope = $scope;
-    do_check(1, 1).then(function(storages){
+    Util.bind($scope, 'storages').select(1, 1).then(function(storages){
       d.context_scope.selected_storage = storages[0];
       d.open().then(function(result){
         if(result) {
