@@ -7,45 +7,26 @@
   </div>
   <div class="modal-body">
     <div class="control-group">
-      <label class="control-label">名称:</label>
+      <label class="control-label">数据类型:</label>
       <div class="controls">
-        <input type="text" required ng-model="storage.name" class="input"/>
+        <select class="span2">
+          <option value="">数据</option>
+          <option value="">ISO</option>
+        </select>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">类型:</label>
       <div class="controls">
-        <select ng-model="storage.type" class="span2">
-          <option value="">SAN</option>
+        <select class="span2">
+          <option value="">NFS</option>
         </select>
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label">服务器:</label>
+      <label class="control-label">名称:</label>
       <div class="controls">
-        <select ng-model="storage.server" class="span2">
-          <option value="">SAN</option>
-        </select>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">所属集群:</label>
-      <div class="controls">
-        <select ng-model="storage.cluster" class="span2">
-          <option value="">开发</option>
-        </select>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">接入点:</label>
-      <div class="controls">
-        <input type="text" required ng-model="storage.apn" class="input"/>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">空间:</label>
-      <div class="controls">
-        <input type="text" required ng-model="storage.storage_size" class="input"/>
+        <input type="text" required ng-model="storage.name" class="input"/>
       </div>
     </div>
     <div class="control-group">
@@ -54,6 +35,33 @@
         <textarea required ng-model="storage.desc"></textarea>
       </div>
     </div>
+    <div class="control-group">
+      <label class="control-label">server:</label>
+      <div class="controls">
+        <input type="text" required ng-model="storage.server" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">路径:</label>
+      <div class="controls">
+        <input type="text" required ng-model="storage.pos" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">关联集群:</label>
+      <div class="controls">
+        <input type="checkbox" class="input-mini"/> qa
+        <input type="checkbox" class="input-mini"/> ceshi
+        <input type="checkbox" class="input-mini"/> dev
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">目标服务器:</label>
+      <div class="controls">
+        <input type="text" class="input"/><button>搜索</button>
+      </div>
+    </div>
+    
   </div>
   <div class="modal-footer">
     <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>

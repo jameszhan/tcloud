@@ -732,6 +732,7 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
   
   Storage.get(function(storages){
     $scope.storages = storages.storages;
+    $scope.storage_obj = storages;
     Util.pagination($scope, 'storages', 5);
   });
 
