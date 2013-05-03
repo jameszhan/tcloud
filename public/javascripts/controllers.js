@@ -482,6 +482,15 @@ function ActionBarCtrl($scope, $q, $dialog, VM, Util){
     }); 
   };
   
+  $scope.do_operate = function(){
+    do_check(1,100).then(function(vms){
+      if(window.confirm("运营管理?")){
+        var vm_ids = vms.map(function(vm){return vm.id});
+        console.log("operation VMS " + vm_ids);
+        new VM({ids: vm_ids}).$operate(Util.update_activities);
+      }
+    });
+  };
 }
 
 function TemplateCtrl($scope, $routeParams, Template, Util){
