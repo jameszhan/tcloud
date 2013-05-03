@@ -21,7 +21,8 @@ angular.module('webvirtServices', [])
       'start': {method: 'POST', url: 'vms/start'},  
       'shutdown': {method: 'POST', url: 'vms/shutdown'},   
       'reboot': {method: 'POST', url: 'vms/reboot'},
-      'snapshot': {method: 'POST', url: 'vms/snapshot'}
+      'snapshot': {method: 'POST', url: 'vms/snapshot'},
+      'operate': {method: 'POST', url: 'vms/operate'}
     })
   })
   .factory('Host', function($resource){

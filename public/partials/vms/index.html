@@ -1,10 +1,14 @@
 <div class="tabbable">
   <ul class="nav nav-tabs" style="background-color:#F2F2F2;">
-    <li class="active"><a href="#overview" data-toggle="tab">虚拟机</a></li>
+    <li class="active"><a href="#overview" data-toggle="tab">信息</a></li>
+    <li><a href="#snapshot" data-toggle="tab">快照</a></li>
   </ul>
   <div class="tab-content">
     <div id="overview" class="tab-pane active" style="padding:0px 10px">
       <ng:include src="'/partials/vms/_overview.html'" />   
+    </div>
+    <div id="snapshot" class="tab-pane active" style="padding:0px 10px">
+      snapshot  
     </div>
   </div>
 </div>

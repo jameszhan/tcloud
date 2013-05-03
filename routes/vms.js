@@ -130,6 +130,22 @@ exports.snapshot = function(req, res){
     }]});  
 }
 
+exports.operate = function(req, res){
+  var ids = req.body.ids;
+  console.log("Snapshot vms %a", ids);
+  //Do your actual snapshot operation here.
+  res.json({success: true, activities: [
+    {
+      id: 121, 
+      name: 'operate', 
+      target: "vms", 
+      target_type: "VM", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
 exports.status = function(req, res){  
   res.set("ContentType", "application/json");
   var ids = req.body.ids;
