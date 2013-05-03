@@ -76,15 +76,15 @@
 </div>
 <div class="row-fluid">
   <div class="span4">
-    CPU使用率
-    <curvegraph url="/hosts/{{host.id}}/current_cpu" width="300" height="160" max="100" min="0"></curvegraph> 
+    <curvegraph url="/hosts/{{host.id}}/current_cpu" name="CPU" suffix="%" width="300" height="160" 
+      max="100" min="0" title="CPU使用率"></curvegraph> 
   </div>
   <div class="span4">
-    内存使用量
-    <curvegraph url="/hosts/{{host.id}}/current_memory" width="300" height="160" min="0" max="8192"></curvegraph> 
+    <curvegraph url="/hosts/{{host.id}}/current_memory" name="Memory" suffix="MB" width="300" height="160" 
+      min="0" max="8192" title="内存使用率"></curvegraph> 
   </div>
   <div class="span4">
-     以太网
-     <curvegraph url="/hosts/{{host.id}}/current_traffic" width="300" height="160" min="0" max="1024"></curvegraph> 
+     <curvegraph url="/hosts/{{host.id}}/current_traffic" name="Network" suffix="b" width="300" height="160" 
+      min="0" max="1024" title="网络状况"></curvegraph> 
   </div>
 </div>

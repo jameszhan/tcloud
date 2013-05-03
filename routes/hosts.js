@@ -137,15 +137,16 @@ exports.reboot = function(req, res){
     }]});  
 }
 
+var strftime = require('strftime');
 
 exports.current_cpu = function(req, res){
-  res.render("templates/current_cpu.json");  
+  res.render("templates/current_cpu.json", {current_time: strftime('%H:%M:%S')});  
 }
 
 exports.current_memory = function(req, res){
-  res.render("templates/current_memory.json");  
+  res.render("templates/current_memory.json", {current_time: strftime('%H:%M:%S')});  
 }
 
 exports.current_traffic = function(req, res){
-  res.render("templates/current_traffic.json");  
+  res.render("templates/current_traffic.json", {current_time: strftime('%H:%M:%S')});  
 }

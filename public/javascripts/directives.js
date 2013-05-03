@@ -138,6 +138,9 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
     return {
       restrict: 'E',
       scope: {
+        name: "@",
+        suffix: "@",
+        title: '@',
         url: '@',
         width: '@',
         height: '@',
@@ -145,51 +148,64 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
         min: '@'
       },
       link: function(scope, element, attrs){
-        var usage = [], ticks = [];
+        var line_datas = [];
         for(var i = 0; i < 10; i++){
-          usage.push(50);
-          ticks.push([i * 60, i]);
+          line_datas.push(["00:00:00", 50]);
         }
+                
+        var deferred = $q.defer();
         
-        var build_line = function(){
-          var line = [];
-          for(var i = 0; i < usage.length; i++){
-            line.push([i * 60, usage[i]]);
-          }
-          return line;
-        };
-        
-        scope.$watch('width', function(new_value, old_value){
+        scope.$watch('url', function(new_value, old_value){
           if(new_value != undefined){            
             deferred.resolve();
           }
-        });
-
-        var deferred = $q.defer();
-        deferred.promise.then(function(){
-          //var plot = element.find(".graph").plot([line], {
-          var min = parseInt(attrs.min) || 0, max = parseInt(attrs.max) || 100;
-          var plot = $.plot(element.find(".graph"), [build_line()], {
-            yaxis: {
-              min: min,
-              max: max
-            },
-            xaxis: {
-              ticks: ticks,
-              show: true
-            }
-          });
+        });        
         
+        var options = {
+          chart: {
+            type: 'spline',
+            renderTo: element.find('.graph')[0]
+          },
+          title: {
+            align: 'left'
+          },
+          subtitle: null,
+          xAxis: {
+            categories: ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0']
+          },
+          yAxis: {
+            title: null,  
+          },
+          rangeSelector: {
+    	    	selected: 100
+    	    },
+          tooltip: {
+            valueSuffix: ''
+          },
+          series: [{
+            color: '#006900',
+            showInLegend: false,
+            name: null,
+            data: []
+          }]
+        };
+        deferred.promise.then(function(){
+          options.series[0].name = scope.name;
+          options.yAxis.min = scope.min || 0;
+          options.yAxis.max = scope.max || 100; 
+          if(scope.title){
+            options.title.text = scope.title;
+          }
+          options.tooltip.valueSuffix = scope.suffix;
+          var highcharts = new Highcharts.Chart(options);
+          highcharts.series[0].setData(line_datas);
           $pollingPool.add(function(){
             $http.get(attrs.url).success(function(data){
-              usage.shift();              
-              usage.push(data.value);
-              
-              plot.setData([build_line()]);
-              plot.draw();
+              line_datas.shift();              
+              line_datas.push(data);
+              highcharts.series[0].setData(line_datas);
             });            
-          });
-          
+          });          
         }).then(function(){
           $pollingPool.run();
         });

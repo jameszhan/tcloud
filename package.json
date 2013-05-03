@@ -9,6 +9,7 @@
     "express": "3.x",
     "ejs": "*",
     "node-sass": "*",
-    "node-compass": "*"
+    "node-compass": "*", 
+    "strftime": "*"
   }
 }

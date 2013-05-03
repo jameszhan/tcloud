@@ -1,3 +1,2 @@
-{ "value": <%=: [20, 8096] | range_rand %> }
-
+["<%= current_time %>", <%=: [20, 8096] | range_rand %>]
 

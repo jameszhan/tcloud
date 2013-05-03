@@ -1,9 +1,9 @@
-
 /**
  * Module dependencies.
  */
 
 var express = require('express')
+  , strftime = require('strftime')
   , sass = require('node-sass')
   , compass = require('node-compass')
   , routes = require('./routes')  
