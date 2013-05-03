@@ -734,13 +734,14 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
     keyboard: true,
     backdropClick: true,
     templateUrl: "/partials/storages/_storage_dialog.html",
-    controller: 'DialogCtrl'
+    controller: 'DialogStorageCtrl'
   });
 
   $scope.selected || ($scope.selected = {});
   
   Storage.get(function(storages){
     $scope.storages = storages.storages;
+    $scope.storage_obj = storages;
     Util.pagination($scope, 'storages', 5);
   });
 
@@ -779,7 +780,9 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
     });
   }
 
-  $scope.do_create = function(){
+  $scope.do_add = function(){
+    d.context_scope = $scope;
+    d.context_scope.selected_storage = null;
     d.open().then(function(result){
       if(result){
         alert('dialog closed with result: ' + result);
@@ -788,7 +791,9 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
   };
 
   $scope.do_edit = function(){
+    d.context_scope = $scope;
     do_check(1, 1).then(function(storages){
+      d.context_scope.selected_storage = storages[0];
       d.open().then(function(result){
         if(result) {
           alert('dialog closed with result: ' + result);
@@ -798,9 +803,31 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
   };
 }
 
-function DialogCtrl($scope, dialog){
+function DialogStorageCtrl($scope, dialog, Util, Storage){
   $scope.close = function(result){
     dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.storage){
+      new Storage($scope.storage)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_storage = dialog.context_scope.selected_storage;  
+  if(selected_storage){
+    $scope.title = "编辑存储配置";
+    $scope.action = "$update";
+    $scope.storage = selected_storage;
+  } else {
+    $scope.title = "配置存储";
+    $scope.action = "$save";
+    $scope.storage = {};   
   }
 }
 

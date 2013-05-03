@@ -55,6 +55,7 @@ angular.module('webvirtServices', [])
   })
   .factory('Storage', function($resource){
     return $resource('storages/:id', {id: '@id'}, {
+      'update': {method: 'PUT'},
       'status': {method: 'POST', isArray: true, url: 'storages/status'},
       'delete_all': {method: 'POST', url: 'storages/delete_all'}
     });
