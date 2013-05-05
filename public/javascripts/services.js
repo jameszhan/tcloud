@@ -62,4 +62,7 @@ angular.module('webvirtServices', [])
   })
   .factory('ShortCut', function($resource){
     return $resource('shortcuts/:id', {id: '@id'});
+  })
+  .factory('Backup', function($resource){
+    return $resource('backups/:id', {id: '@id'});
   });
