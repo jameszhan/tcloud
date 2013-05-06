@@ -15,17 +15,21 @@
     <thead>
       <tr>
         <th><input type="checkbox" ng-model="selected_all" /></th>
-        <th>策略名称</th>
+        <th>名称</th>
         <th>备份类型</th>
+        <th>压缩比</th>
+        <th>备份位置</th>
         <th>计划时间</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="backup in backups | startFrom:(current_page * page_size) | limitTo:page_size">  
-        <td><input type="checkbox" value="{{backup.id}}" ng-model="selected[backup.id]"/></td>  
-        <td>{{backup.name}}</td>
-        <td>{{backup.type}}</td>  
-        <td>{{backup.plan_time}}</td> 
+      <tr ng-repeat="backupstrategy in backupstrategys | startFrom:(current_page * page_size) | limitTo:page_size">  
+        <td><input type="checkbox" value="{{backupstrategy.id}}" ng-model="selected[backupstrategy.id]"/></td>  
+        <td>{{backupstrategy.name}}</td>
+        <td>{{backupstrategy.type}}</td>  
+        <td>{{backupstrategy.compress_rate}}</td>
+        <td>{{backupstrategy.path}}</td>
+        <td>{{backupstrategy.schedule}}</td> 
       </tr>
     </tbody>
   </table>
