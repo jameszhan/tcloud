@@ -1,5 +1,11 @@
 @import "compass";
 
+h6 {
+  &.title {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
 .navbar-inner {
   background-color: #2C2C2C;
   @include background-image(linear-gradient(center top, #555555, #222222)); 
