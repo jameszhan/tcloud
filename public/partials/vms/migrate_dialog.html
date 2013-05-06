@@ -1,0 +1,21 @@
+<form class="form-horizontal" name="host_form"  ng-submit="do_migrate()">
+<div class="modal-header">
+  <a class="close" ng-click="close()">×</a>
+  <h3>{{title}}</h3>
+</div>
+<div class="modal-body">
+  <div class="row-fluid"> 
+    <div class="control-group">
+      <label class="control-label">主机位置：</label>
+      <div class="controls">
+        <select ng-model="migration.host" ng-options="h.name for h in hosts" class="span5">
+        </select>
+      </div>
+    </div>
+  </div>  
+</div>
+<div class="modal-footer">
+  <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
+  <button type="submit" ng-disabled="!host_form.$valid" class="btn btn-primary">保存</button>
+</div>
+</form>
