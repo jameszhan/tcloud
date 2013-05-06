@@ -236,7 +236,7 @@ ul#rMenu a {
 .selectable .ui-selecting { background: #b8dce0; }
 .selectable .ui-selected { background: #C3D0E0; color: white; }
 
-.table {
+.table-overview {
   td {
     border-top: 0px;
   }
@@ -270,4 +270,17 @@ ul#rMenu a {
   .radio:first-child {
     padding-top: 0px;
   }
+}
+
+.text-layout {
+  th {
+    text-align: center;
+  }
+  td {
+    text-align: center;
+  }
+}
+
+.overview-layout {
+  margin-top: 23px;
 }

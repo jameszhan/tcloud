@@ -1,5 +1,20 @@
 var util = require('util');
 
+exports.reset_backup = function(req, res){
+  var ids = req.body.ids;
+  console.log("Reset %d from backup %d", req.params.id, req.params.backup_id);
+  //Do your actual snapshot operation here.
+  res.json({success: true, activities: [
+    {
+      id: 121, 
+      name: 'reset_backup', 
+      target: "vms", 
+      target_type: "VM", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
 
 exports.delete_all = function(req, res){
   //var ids = req.query['ids'].split(",").map(function(i){return parseInt(i);}); //Here is use DELETE method

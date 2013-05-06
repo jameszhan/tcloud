@@ -16,3 +16,20 @@ exports.top_vms = function(req, res){
   var rand = Math.ceil(Math.random() * 5)
   res.sendfile(__dirname + '/json/clusters/top_vms/0' + rand + '.json');  
 }
+
+
+
+exports.backups = function(req, res){
+  res.set("ContentType", "application/json");
+  res.sendfile(__dirname + '/json/clusters/backups.json');  
+}
+
+exports.backup_strategy = function(req, res){
+  res.set("ContentType", "application/json");
+  res.sendfile(__dirname + '/json/clusters/backup_strategy.json');  
+}
+
+exports.backup_status = function(req, res){
+  res.set("ContentType", "application/json");
+  res.sendfile(__dirname + '/json/clusters/backup_status.json');  
+}

@@ -63,6 +63,24 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
   });
 }
 
+function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
+  Cluster.backup_strategy({id: $routeParams.id}, function(data){
+    $scope.backup_strategies = data;
+  });
+  
+  Cluster.backup_status({id: $routeParams.id}, function(data){
+    $scope.backup_status = data;
+  });  
+  
+  Cluster.backups({id: $routeParams.id}, function(data){
+    $scope.backups = data;
+  });
+  
+  $scope.do_reset = function(backup){
+    VM.reset_backup({id: backup.instance.id, backup_id: backup.id}, Util.update_activities);
+  };
+}
+
 function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;

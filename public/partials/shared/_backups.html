@@ -1,0 +1,65 @@
+<div ng-controller="BackupCtrl">
+<div class="row-fluid">
+   <div class="well">
+       <div class="span2">备份成功：{{backup_status.success}}</div>
+       <div class="span2">备份失败：{{backup_status.failure}}</div>
+       <div class="span2">备份实例：{{backup_status.instances}}</div>
+       <div class="span2">备份总大小：{{backup_status.size | bytes}}</div>
+   </div>
+</div>
+<div class="row-fluid">
+  <div class="span6">
+    <h6 class="title">备份策略</h6>
+    <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>策略名称</th>
+        <th>备份类型</th>
+        <th>计划时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="strategy in backup_strategies">
+        <td>{{strategy.name}}</td>
+        <td class="center">{{strategy.type}}</td>
+        <td class="center">{{strategy.schedule}}</td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <h6 class="title">备份列表</h6>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>实例</th>
+        <th>服务器</th>
+        <th>策略</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th>大小</th>
+        <th>结果</th>
+        <th>备份位置</th>
+        <th>重置</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="backup in backups">
+         <td>{{backup.instance.name}}</td>
+         <td class="center">{{backup.server_name}}</td>
+         <td class="center">{{backup.strategy}}</td>
+         <td class="center">{{backup.start_time}}</td>
+         <td class="center">{{backup.finish_time}}</td>
+         <td class="center">{{backup.size | bytes}}</td>
+         <td class="center"><span class="label label-{{backup.status}}">{{backup.status}}</span></td>
+         <td class="center">{{backup.where}}</td>
+         <td class="center">
+           <button class="btn btn-mini" data-url="/vms/{{backup.instance.id}}/backups/{{backup.id}}/reset" ng-click="do_reset(backup)">reset</button>
+         </td>
+       </tr>
+     </tbody>
+ </table>
+</div>
+</div>
