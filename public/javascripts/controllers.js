@@ -722,3 +722,7 @@ function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
     Util.pagination($scope, 'shortcuts', 5);
   });
 }
+
+function ProjectCtrl($scope, $routeParams, Project, Util){
+  
+}
