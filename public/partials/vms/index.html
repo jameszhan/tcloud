@@ -1,8 +1,15 @@
 <div class="tabbable">
-  <ul class="nav nav-tabs" style="background-color:#F2F2F2;">
-    <li class="active"><a href="#overview" data-toggle="tab">信息</a></li>
-    <li><a href="#snapshot" data-toggle="tab">快照</a></li>
-  </ul>
+  <div class="row-fluid">
+    <div class="span9 tab-layout">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#overview" data-toggle="tab">信息</a></li>
+        <li><a href="#snapshot" data-toggle="tab">快照</a></li>
+      </ul>
+    </div>
+    <div class="span3 tab-layout">
+      <button class="btn btn-info">存为书签</button>
+    </div>
+  </div>
   <div class="tab-content">
     <div id="overview" class="tab-pane active" style="padding:0px 10px">
       <ng:include src="'/partials/vms/_overview.html'" />   
