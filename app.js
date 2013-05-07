@@ -79,6 +79,9 @@ app.get('/datacenters/:id/top_vms', datacenters.top_vms);
 app.get('/clusters/:id', clusters.show);
 app.get('/clusters/:id/top_hosts', clusters.top_hosts);
 app.get('/clusters/:id/top_vms', clusters.top_vms);
+app.get('/clusters/:id/backups', clusters.backups);
+app.get('/clusters/:id/backup_strategy', clusters.backup_strategy);
+app.get('/clusters/:id/backup_status', clusters.backup_status);
 
 app.get('/hosts/:id', hosts.show);
 app.post('/hosts', hosts.save);
@@ -99,8 +102,8 @@ app.get('/vms/:id/current_cpu', vms.current_cpu);
 app.get('/vms/:id/current_memory', vms.current_memory);
 app.get('/vms/:id/current_traffic', vms.current_traffic);
 app.post('/vms/delete_all', vms.delete_all);
-app.post('/vms/save_template', vms.save_template);
-app.post('/vms/migrate', vms.migrate);
+app.post('/vms/:id/save_template', vms.save_template);
+app.post('/vms/:id/migrate', vms.migrate);
 app.post('/vms/suspend', vms.suspend);
 app.post('/vms/start', vms.start);
 app.post('/vms/reboot', vms.reboot);
@@ -108,6 +111,9 @@ app.post('/vms/shutdown', vms.shutdown);
 app.post('/vms/snapshot', vms.snapshot);
 app.post('/vms/status', vms.status);
 app.post('/vms/operate', vms.operate);
+app.post('/vms/:id/backups/:backup_id/reset', vms.reset_backup);
+app.get('/vms/:id/migration_hosts', vms.migration_hosts);
+
 
 app.get('/templates', templates.index);
 

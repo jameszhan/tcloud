@@ -1,5 +1,63 @@
 var util = require('util');
 
+exports.reset_backup = function(req, res){
+  console.log("Reset %d from backup %d", req.params.id, req.params.backup_id);
+  //Do your actual snapshot operation here.
+  res.json({success: true, activities: [
+    {
+      id: 121, 
+      name: 'reset_backup', 
+      target: "vms", 
+      target_type: "VM", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+exports.save_template = function(req, res){
+  console.log("Save template for vm %d as template %s", req.params.id, util.inspect(req.body.template));
+  //Async job for generate template for specify vms.
+  res.json({success: true, activities: [
+    {
+      id: 111, 
+      name: 'TEMPLATE', 
+      target: "vms", 
+      target_type: "VM", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+exports.migrate = function(req, res){
+  console.log("Migration for vm %d to host %s", req.params.id, util.inspect(req.body.migration));
+  //Do your actual migrate operation here.
+  res.json({success: true, activities: [
+    {
+      id: 115, 
+      name: 'MIGRATE', 
+      target: "vms", 
+      target_type: "VM", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+
+exports.migration_hosts = function(req, res){
+  res.json([{
+    name: "HOST1",
+    id: 1
+  }, {
+    name: "HOST2",
+    id: 2
+  }, {
+    name: "HOST3",
+    id: 3
+  }]);
+}
 
 exports.delete_all = function(req, res){
   //var ids = req.query['ids'].split(",").map(function(i){return parseInt(i);}); //Here is use DELETE method
@@ -18,37 +76,6 @@ exports.delete_all = function(req, res){
     }]});  
 }
 
-exports.save_template = function(req, res){
-  var ids = req.body.ids;
-  console.log("Save template for vms %a", ids);
-  //Async job for generate template for specify vms.
-  res.json({success: true, activities: [
-    {
-      id: 111, 
-      name: 'TEMPLATE', 
-      target: "vms", 
-      target_type: "VM", 
-      start_time: new Date().toISOString(), 
-      end_time: new Date().toISOString(),
-      status: 'requested'
-    }]});  
-}
-
-exports.migrate = function(req, res){
-  var ids = req.body.ids;
-  console.log("Migrate all vms %a", ids);
-  //Do your actual migrate operation here.
-  res.json({success: true, activities: [
-    {
-      id: 115, 
-      name: 'MIGRATE', 
-      target: "vms", 
-      target_type: "VM", 
-      start_time: new Date().toISOString(), 
-      end_time: new Date().toISOString(),
-      status: 'requested'
-    }]});  
-}
 
 exports.start = function(req, res){
   var ids = req.body.ids;

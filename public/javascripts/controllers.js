@@ -63,6 +63,24 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
   });
 }
 
+function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
+  Cluster.backup_strategy({id: $routeParams.id}, function(data){
+    $scope.backup_strategies = data;
+  });
+  
+  Cluster.backup_status({id: $routeParams.id}, function(data){
+    $scope.backup_status = data;
+  });  
+  
+  Cluster.backups({id: $routeParams.id}, function(data){
+    $scope.backups = data;
+  });
+  
+  $scope.do_reset = function(backup){
+    VM.reset_backup({id: backup.instance.id, backup_id: backup.id}, Util.update_activities);
+  };
+}
+
 function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
@@ -319,6 +337,43 @@ function VMWorkflowCtrl($scope, dialog) {
   load_step();
 }
 
+function TemplateDialogCtrl($scope, dialog, VM, Util){
+  $scope.title = "存为模版";
+  $scope.template = {};
+  $scope.close = function(result){
+    dialog.close(result)
+  };
+  $scope.save_template = function(){
+    new VM({id: dialog.context_scope.selected_vm.id, template: $scope.template}).$save_template(function(data){
+      dialog.close();
+      Util.update_activities(data);
+    });
+  };
+}
+
+function MigrateDialogCtrl($scope, dialog, VM, Util){
+  $scope.title = "迁移虚拟机";
+  $scope.migration = {};
+  $scope.close = function(result){
+    dialog.close(result)
+  };
+
+  VM.migration_hosts({id: dialog.context_scope.selected_vm.id}, function(data){
+    //THIS Should return the cluster hosts for current vm exclude the same host.
+    $scope.hosts = data;
+    $scope.migration.host = $scope.hosts[0];
+  });  
+  
+  
+  $scope.do_migrate = function(){
+    new VM({id: dialog.context_scope.selected_vm.id, migration: $scope.migration}).$migrate(function(data){
+      dialog.close();
+      Util.update_activities(data);
+    });
+  };
+}
+
+
 function ActionBarCtrl($scope, $q, $dialog, VM, Util){
   var d = $dialog.dialog({
     backdrop: true,
@@ -371,18 +426,40 @@ function ActionBarCtrl($scope, $q, $dialog, VM, Util){
   };
 
   $scope.do_template = function(){
-    Util.bind($scope, 'vms').select(1, 100).confirm("确定要存为模版？").then(function(vms){
-      var vm_ids = vms.map(function(vm){ return vm.id; });
-      console.log("Save Template for VMS " + vm_ids);
-      new VM({ids: vm_ids}).$save_template(Util.update_activities);
+    Util.bind($scope, 'vms').select(1, 1).then(function(vms){
+      var td = $dialog.dialog({
+        backdrop: true,
+        keyboard: true,
+        backdropClick: false,
+        templateUrl: "/partials/vms/template_dialog.html", 
+        controller: "TemplateDialogCtrl"
+      });
+      td.context_scope = $scope;
+      td.context_scope.selected_vm = vms[0];
+      td.open().then(function(result){
+        if(result) {
+          alert('' + result);
+        }
+      });
     }); 
   };
   
   $scope.do_migrate = function(){
-    Util.bind($scope, 'vms').select(1, 100).confirm("你确定要迁移它(们)吗？").then(function(vms){
-      var vm_ids = vms.map(function(vm){ return vm.id; });        
-      console.log("Migration for VMS " + vm_ids);
-      new VM({ids: vm_ids}).$migrate(Util.update_activities);
+    Util.bind($scope, 'vms').select(1, 1).then(function(vms){
+      var md = $dialog.dialog({
+        backdrop: true,
+        keyboard: true,
+        backdropClick: false,
+        templateUrl: "/partials/vms/migrate_dialog.html", 
+        controller: "MigrateDialogCtrl"
+      });
+      md.context_scope = $scope;
+      md.context_scope.selected_vm = vms[0];
+      md.open().then(function(result){
+        if(result) {
+          alert('' + result);
+        }
+      });
     }); 
   };
   

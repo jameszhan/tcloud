@@ -9,20 +9,26 @@ angular.module('webvirtServices', [])
     });
   })
   .factory('Cluster', function($resource){
-    return $resource('clusters/:id', {id: '@id'}, {get: {method: 'GET'}});
+    return $resource('clusters/:id', {id: '@id'}, {
+      'backups': {method: 'GET', isArray: true, url: "clusters/:id/backups"},
+      'backup_strategy': {method: 'GET', isArray: true, url: "clusters/:id/backup_strategy"},
+      'backup_status': {method: 'GET', url: "clusters/:id/backup_status"}      
+    });
   })
   .factory('VM', function($resource){
-    return $resource('vms/:id', {id: '@id'}, {    
+    return $resource('vms/:id', {id: '@id', backup_id: '@backup_id'}, {    
       'status': {method: 'POST', isArray: true, url: 'vms/status'},
       'delete_all': {method: 'POST', url: 'vms/delete_all'}, 
-      'save_template': {method: 'POST', url: 'vms/save_template'},
-      'migrate': {method: 'POST', url: 'vms/migrate'},
+      'save_template': {method: 'POST', url: 'vms/:id/save_template'},
+      'migrate': {method: 'POST', url: 'vms/:id/migrate'},
       'suspend': {method: 'POST', url: 'vms/suspend'},  
       'start': {method: 'POST', url: 'vms/start'},  
       'shutdown': {method: 'POST', url: 'vms/shutdown'},   
       'reboot': {method: 'POST', url: 'vms/reboot'},
       'snapshot': {method: 'POST', url: 'vms/snapshot'},
-      'operate': {method: 'POST', url: 'vms/operate'}
+      'operate': {method: 'POST', url: 'vms/operate'},
+      'reset_backup': {method: 'POST', url: 'vms/:id/backups/:backup_id/reset'},
+      'migration_hosts': {method: 'GET', isArray: true, url: 'vms/:id/migration_hosts'}
     })
   })
   .factory('Host', function($resource){
