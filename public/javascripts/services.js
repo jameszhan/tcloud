@@ -64,5 +64,9 @@ angular.module('webvirtServices', [])
     return $resource('shortcuts/:id', {id: '@id'});
   })
   .factory('Project', function($resource){
-    return $resource('projects/:id', {id: '@id'});
+    return $resource('projects/:id', {id: '@id'}, {
+      'update': {method: 'PUT'},
+      'status': {method: 'POST', isArray: true, url: 'projects/status'},
+      'delete_all': {method: 'POST', url: 'projects/delete_all'}
+    });
   });

@@ -1,0 +1,94 @@
+<form class="form-horizontal" name="storage_form" ng-submit="do_upsert()">
+  <div class="modal-header">
+    <a class="close" ng-click="close()">&times;</a>
+    <div class="input-prepend input-append">
+      <h4>{{title}}</h4>       
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="control-group">
+      <label for="name" class="control-label">存储:</label>
+      <div class="controls">
+        <select class="span2">
+          <option>option1</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">名称:</label>
+      <div class="controls">
+        <input type="text" required ng-model="storage.name" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">格式:</label>
+      <div class="controls">
+        <select class="span2">
+          <option>option1</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">最大容量:</label>
+      <div class="controls">
+        <input type="text" required ng-model="storage.size" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">分配:</label>
+      <div class="controls">
+        <input type="text" required ng-model="storage.own_size" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <input type="checkbox" class="input-mini"/> 只读
+        <input type="checkbox" class="input-mini"/> 共享
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="accordion" id="accordion2">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+              高级
+            </a>
+          </div>
+          <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
+            <div class="accordion-inner">
+              <div class="control-group">
+                <label class="control-label">磁盘总线:</label>
+                <div class="controls">
+                  <select class="span2">
+                    <option>IDE</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">cache:</label>
+                <div class="controls">
+                  <select class="span2">
+                    <option>writeback</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">IO模式:</label>
+                <div class="controls">
+                  <select class="span2">
+                    <option>default</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>          
+      </div>
+    </div>
+    
+  </div>
+  <div class="modal-footer">
+    <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
+    <button type="submit" ng-disabled="!storage_form.$valid" class="btn btn-primary">保存</button>
+  </div>
+</form>
