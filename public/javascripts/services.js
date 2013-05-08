@@ -66,6 +66,9 @@ angular.module('webvirtServices', [])
       'delete_all': {method: 'POST', url: 'storages/delete_all'}
     });
   })
-  .factory('ShortCut', function($resource){
-    return $resource('shortcuts/:id', {id: '@id'});
+  .factory('Shortcut', function($resource){
+    return $resource('shortcuts/:id', {id: '@id'}, {
+      'status': {method: 'POST', isArray: true, url: 'shortcuts/status'},
+      'delete_all': {method: 'POST', url: 'shortcuts/delete_all'}
+    });
   });

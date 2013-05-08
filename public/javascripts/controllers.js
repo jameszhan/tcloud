@@ -12,9 +12,12 @@ var flatten = function(arr, target){
   return ret;
 };
 
-function ActivityCtrl($rootScope, Activity){
+function ActivityCtrl($rootScope, Activity, Shortcut){
   Activity.query({}, function(data){    
     $rootScope.activities = data;
+  });
+  Shortcut.query({},function(data){
+    $rootScope.shortcuts = data;
   });
 }
 
@@ -41,7 +44,20 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool
         Util.update($scope.hosts, data);
       });
     });
-  });  
+  });
+
+  $scope.add_bookmark = function(){
+
+    shortcut = {
+      "id": "6",
+      "name": "DataCenter",
+      "url": "/#/datacenters/"+$routeParams.id,
+      "desrc": "Datacenter快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };  
 }
 
 function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util) {
@@ -61,6 +77,18 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
       });
     });
   });
+
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "61"+$routeParams.id,
+      "name": "Cluster"+$routeParams.id,
+      "url": "/#/clusters/"+$routeParams.id,
+      "desrc": "Cluster快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };  
 }
 
 function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
@@ -101,6 +129,18 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
       });
     });
   });
+
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "611"+$routeParams.id,
+      "name": "Host"+$routeParams.id,
+      "url": "/#/hosts/"+$routeParams.id,
+      "desrc": "Host快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function HostMgmtCtrl($scope, Util){  
@@ -251,13 +291,25 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
   
 }
 
-function VMCtrl($scope, $routeParams, VM) {
+function VMCtrl($scope, $routeParams, VM, Util) {
   $scope.selected = {};
   VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
     $scope.selected[vm.id] = true;
     $scope.vms = [vm]; //Here is compatible with action_bar.
   });
+
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "6111"+$routeParams.id,
+      "name": "VM"+$routeParams.id,
+      "url": "/#/vms/"+$routeParams.id,
+      "desrc": "VM快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function VMMgmtCtrl($scope, Util){
@@ -528,10 +580,32 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
       return $scope.templates.filter(function(t){return t.os_type == $scope.search.os_type}).length <= $scope.page_size;
     };
   });
+
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "7",
+      "name": "Template",
+      "url": "/#/templates",
+      "desrc": "Template快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function NetworkCtrl($scope, $routeParams, Network, Util){
-
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "8",
+      "name": "Network",
+      "url": "/#/networks",
+      "desrc": "Network快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
@@ -703,7 +777,18 @@ function DialogPortCtrl($scope, dialog, Util, Network){
   }
 }
 
-function ArchitectCtrl($scope){
+function ArchitectCtrl($scope, Util){
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "9",
+      "name": "Architect",
+      "url": "/#/architects",
+      "desrc": "Network快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
@@ -791,11 +876,21 @@ function DialogStorageCtrl($scope, dialog, Util, Storage){
   }
 }
 
-function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
-  $scope.selected || ($scope.selected = {});
-  
-  ShortCut.get(function(shortcuts){
-    $scope.shortcuts = shortcuts.shortcuts;
-    Util.pagination($scope, 'shortcuts', 5);
-  });
+function ShortcutCtrl($scope, $rootScope, Shortcut, Util){
+  $rootScope.selected || ($rootScope.selected = {});
+  $scope.do_delete = function(){
+    Util.bind($rootScope, 'shortcuts').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(shortcuts){
+      var shortcut_ids = shortcuts.map(function(shortcut){return shortcut.id;});
+      console.log("REMOVE ALL storages " + shortcut_ids);
+      new Shortcut({ids: shortcut_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(shortcuts, function(shortcut){
+            var index = $rootScope.shortcuts.indexOf(shortcut);
+            $rootScope.shortcuts.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
 }

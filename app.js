@@ -132,6 +132,8 @@ app.post('/storages/status', storages.status);
 app.post('/storages/delete_all', storages.delete_all);
 
 app.get('/shortcuts', shortcuts.index);
+app.post('/shortcuts/status', shortcuts.status);
+app.post('/shortcuts/delete_all', shortcuts.delete_all);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
