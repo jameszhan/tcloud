@@ -27,7 +27,7 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
   });
 }
 
-function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool, Util) {
+function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool, Util ,$location) {
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
     $scope.clusters = $scope.datacenter.clusters;
@@ -46,12 +46,38 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool
     });
   });
 
+  $scope.path = $location.path();
+  var pathArr = $location.absUrl().split('#');
+  
+  switch(pathArr[2]){
+    case 'events':
+      $scope.eventstab = "active";
+      break;  
+    case 'hosts':
+      $scope.hoststab = "active";
+      break;
+    case 'vms':
+      $scope.vmstab = "active";
+      break;
+    case 'networks':
+      $scope.networkstab = "active";
+      break;
+    case 'storages':
+      $scope.storagestab = "active";
+      break;
+    default:
+      $scope.overviewtab = "active";
+  }
+  
   $scope.add_bookmark = function(){
-
+    var name="DataCenter ";
+    if(pathArr[2] && pathArr[2]!="overview"){
+      name += pathArr[2];
+    }
     shortcut = {
       "id": "6",
-      "name": "DataCenter",
-      "url": "/#/datacenters/"+$routeParams.id,
+      "name": name,
+      "url": $location.absUrl(),
       "desrc": "Datacenter快捷方式"
     };
     if(confirm("添加书签?")){
