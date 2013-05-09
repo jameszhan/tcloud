@@ -1,0 +1,80 @@
+<form class="form-horizontal" name="strategy_form" ng-submit="do_upsert()">
+  <div class="modal-header">
+    <a class="close" ng-click="close()">&times;</a>
+    <div class="input-prepend input-append">
+      <h4>{{title}}</h4>       
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="control-group">
+      <label class="control-label">名称:</label>
+      <div class="controls">
+        <input type="text" required ng-model="backupstrategy.name" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">备份方式:</label>
+      <div class="controls">
+        <select class="span2">
+          <option value="">冷备份</option>
+          <option value="">热备份</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">压缩:</label>
+      <div class="controls">
+        <input type="checkbox" class="input-mini"/> 级别: <input type="text" ng-model="backupstrategy.compress_rate" class="input-small"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">保留:</label>
+      <div class="controls">
+        <label class="radio">
+          <input type="radio" name="persist" id="optionsRadios1">所有
+        </label>
+        <label class="radio">
+          <input type="radio" name="persist" id="optionsRadios1">保留最后<input type="text" class="input-small"/>天 
+        </label>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">备份位置:</label>
+      <div class="controls">
+        <label class="radio">
+          <input type="radio" name="path" value="{{backupstrategy.path}}" id="optionsRadios1">本地
+          <input type="text" class="input"/> 
+        </label>
+        <label class="radio">
+          <input type="radio" name="path" value="{{backupstrategy.path}}" id="optionsRadios1">存储
+          <select class="span2">
+            <option>storage server</option>
+          </select>
+        </label>
+        <label class="radio">
+          <input type="radio" name="path" value="b{{ackupstrategy.path}}" id="optionsRadios1">远程(sftp)<br />
+          host: <input type="text" class="input-small"/> <br />
+          path: <input type="text" class="input-small"/> <br />
+          username: <input type="text" class="input-small"/> <br />
+          password: <input type="password" class="input-small"/> <br />
+        </label>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">计划时间:</label>
+      <div class="controls">
+        <select class="span2">
+          <option>每小时</option>
+          <option>每天</option>
+          <option>每周</option>
+          <option>每月</option>
+          <option>每年</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
+    <button type="submit" ng-disabled="!strategy_form.$valid" class="btn btn-primary">保存</button>
+  </div>
+</form>
