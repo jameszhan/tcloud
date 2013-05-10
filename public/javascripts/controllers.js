@@ -28,7 +28,7 @@ function DataCenterCtrl($scope, $routeParams, $location, DataCenter, Host, VM, $
   var d = date.getDate();
   var m = date.getMonth();
   var y = date.getFullYear();
-  $scope.alertEventOnClick = function( date, allDay, jsEvent, view ){
+  $scope.alertEventOnClick = function(date, allDay, jsEvent, view){
     $scope.$apply(function(){
       $scope.alertMessage = ('Day Clicked ' + date);
     });
@@ -101,6 +101,14 @@ function DataCenterCtrl($scope, $routeParams, $location, DataCenter, Host, VM, $
       });
     });
   });
+  
+  $scope.change_location = function(hash){
+    try{
+      //$location.path($location.hash(hash));
+    }catch(e){
+      //console.log(e.message);
+    }
+  };
 
   $scope.path = $location.path();
   var pathArr = $location.absUrl().split('#');
