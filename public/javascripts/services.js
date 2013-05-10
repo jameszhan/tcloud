@@ -3,6 +3,7 @@ angular.module('webvirtServices', [])
     return $resource('datacenters/:id', {id: '@id'}, {
       get: {method: 'GET'},
       tasks: {method: 'GET', isArray: true, url: "datacenters/:id/tasks"},
+      backups: {method: 'GET', isArray: true, url: "datacenters/:id/backups"},
       add_task: {method: 'POST', url: "datacenters/:id/add_task"},
       update_task: {method: 'POST', url: "datacenters/:id/update_task"}
     });
@@ -38,7 +39,8 @@ angular.module('webvirtServices', [])
   })
   .factory('Host', function($resource){
     return $resource('hosts/:id', {id: '@id'}, {
-      'update': {method: 'PUT'},
+      'update': {method: 'PUT'},      
+      'backups': {method: 'GET', isArray: true, url: "hosts/:id/backups"},
       'status': {method: 'POST', isArray: true, url: 'hosts/status'},
       "remove_all": {method: 'POST', url: "hosts/remove_all"},
       "start": {method: 'POST', url: "hosts/start"},

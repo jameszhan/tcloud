@@ -2,9 +2,10 @@
   <div class="row-fluid">
     <div class="span9 tab-layout">
       <ul class="nav nav-tabs">
-        <li ng-class="overviewtab"><a href="#{{path}}#overview" data-toggle="tab">概览</a></li>
-        <li ng-class="vmstab"><a href="#{{path}}#vms" data-toggle="tab">虚拟机</a></li>
-        <li ng-class="storagestab"><a href="#{{path}}#storages" data-toggle="tab">磁盘</a></li>
+        <li ng-class="overviewtab"><a href="#overview" data-toggle="tab">概览</a></li>
+        <li ng-class="vmstab"><a href="#vms" data-toggle="tab">虚拟机</a></li>
+        <li ng-class="storagestab"><a href="#storages" data-toggle="tab">磁盘</a></li>
+        <li ng-class="backupstab"><a href="#backups" data-toggle="tab">备份</a></li>
       </ul>
     </div>
     <div class="span3 tab-layout">
@@ -21,5 +22,8 @@
     <div id="storages" class="tab-pane {{storagestab}}" style="padding:0px 10px">
       <ng:include src="'/partials/storages/_storage_list.html'" />
     </div> 
+    <div id="backups" class="tab-pane {{backupstab}}" style="padding:0px 10px">
+      <ng:include src="'/partials/shared/_backups.html'" />
+    </div>
   </div>
 </div>

@@ -1,3 +1,8 @@
+exports.backups = function(req, res){
+  res.set("ContentType", "application/json");
+  res.sendfile(__dirname + '/json/clusters/backups.json');  
+}
+
 exports.show = function(req, res){
   res.set("ContentType", "application/json");
   res.sendfile(__dirname + '/json/dcs/0' + req.params.id + '.json');  
