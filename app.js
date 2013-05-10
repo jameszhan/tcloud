@@ -16,6 +16,7 @@ var express = require('express')
   , activities = require('./routes/activities')
   , storages = require('./routes/storages')
   , shortcuts = require('./routes/shortcuts')
+  , backupstrategys = require('./routes/backupstrategys')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs');
@@ -134,6 +135,12 @@ app.post('/storages/delete_all', storages.delete_all);
 app.get('/shortcuts', shortcuts.index);
 app.post('/shortcuts/status', shortcuts.status);
 app.post('/shortcuts/delete_all', shortcuts.delete_all);
+
+app.get('/backupstrategys', backupstrategys.index);
+app.post('/backupstrategys', backupstrategys.save);
+app.put('/backupstrategys/:id', backupstrategys.update);
+app.post('/backupstrategys/status', backupstrategys.status);
+app.post('/backupstrategys/delete_all', backupstrategys.delete_all);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

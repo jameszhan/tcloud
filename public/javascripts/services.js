@@ -71,4 +71,11 @@ angular.module('webvirtServices', [])
       'status': {method: 'POST', isArray: true, url: 'shortcuts/status'},
       'delete_all': {method: 'POST', url: 'shortcuts/delete_all'}
     });
+  })
+  .factory('BackupStrategy', function($resource){
+    return $resource('backupstrategys/:id', {id: '@id'}, {
+      'update': {method: 'PUT'},
+      'status': {method: 'POST', isArray: true, url: 'backupstrategys/status'},
+      'delete_all': {method: 'POST', url: 'backupstrategys/delete_all'}
+    });
   });

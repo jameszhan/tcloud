@@ -920,3 +920,87 @@ function ShortcutCtrl($scope, $rootScope, Shortcut, Util){
     });
   }
 }
+
+function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util) {
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "/partials/backupstrategys/_backupstrategy_dialog.html",
+    controller: 'DialogBackupStrategyCtrl'
+  });
+
+  $scope.selected || ($scope.selected = {});
+  
+  BackupStrategy.get(function(backupstrategys){
+    $scope.backupstrategys = backupstrategys.strategys;
+    Util.pagination($scope, 'backupstrategys', 5);
+  });
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'backupstrategys').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(backupstrategys){
+      var backupstrategy_ids = backupstrategys.map(function(backupstrategy){return backupstrategy.id;});
+      console.log("REMOVE ALL storages " + backupstrategy_ids);
+      new BackupStrategy({ids: backupstrategy_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(backupstrategys, function(backupstrategy){
+            var index = $scope.backupstrategys.indexOf(backupstrategy);
+            $scope.backupstrategys.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
+
+  $scope.do_add = function(){
+    d.context_scope = $scope;
+    d.context_scope.selected_backupstrategy = null;
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
+    });
+  };
+
+  $scope.do_edit = function(){
+    d.context_scope = $scope;
+    Util.bind($scope, 'backupstrategys').select(1, 1).then(function(backupstrategys){
+      d.context_scope.selected_backupstrategy = backupstrategys[0];
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogBackupStrategyCtrl($scope, dialog, Util, BackupStrategy){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.backupstrategy){
+      new BackupStrategy($scope.backupstrategy)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_backupstrategy = dialog.context_scope.selected_backupstrategy;  
+  if(selected_backupstrategy){
+    $scope.title = "配置策略";
+    $scope.action = "$update";
+    $scope.backupstrategy = selected_backupstrategy;
+  } else {
+    $scope.title = "新建策略";
+    $scope.action = "$save";
+    $scope.backupstrategy = {};   
+  }
+}
