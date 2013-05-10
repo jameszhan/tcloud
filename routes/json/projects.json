@@ -1,0 +1,80 @@
+{
+  "computes":[
+    {
+      "id": "1",
+      "name": "tiny",
+      "cpu": "2",
+      "memory": "1024MB",
+      "view_type": "vnc",
+      "autostart": "on"
+      },
+    {
+      "id": "2",
+      "name": "tiny2",
+      "cpu": "3",
+      "memory": "1024MB",
+      "view_type": "vnc",
+      "autostart": "off"
+      },
+    {
+      "id": "3",
+      "name": "tiny3",
+      "cpu": "2",
+      "memory": "1024MB",
+      "view_type": "vnc",
+      "autostart": "on"
+      }
+  ],
+  "storages":[
+    {
+      "id": "1",
+      "storage": "option1",
+      "name": "s1",
+      "pattern": "SNTFS",
+      "size": "40GB",
+      "own_size": "10GB",
+      "type": "option1"
+      },
+    {
+      "id": "2",
+      "storage": "option1",
+      "name": "s2",
+      "pattern": "SNTFS",
+      "size": "40GB",
+      "own_size": "20GB",
+      "type": "option1"
+      },
+    {
+      "id": "3",
+      "storage": "option1",
+      "name": "s3",
+      "pattern": "SNTFS",
+      "size": "50GB",
+      "own_size": "15GB",
+      "type": "option1"
+      }
+  ],
+  "networks":[
+    {
+      "id": "1",
+      "name": "net1",
+      "group": "3",
+      "device_type": "3",
+      "type": "3"
+      },
+    {
+      "id": "2",
+      "name": "net1",
+      "group": "1",
+      "device_type": "2",
+      "type": "1"
+      },
+    {
+      "id": "3",
+      "name": "net1",
+      "group": "2",
+      "device_type": "1",
+      "type": "3"
+      }
+  ]
+}

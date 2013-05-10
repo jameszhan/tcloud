@@ -800,6 +800,220 @@ function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
   });
 }
 
+function ProjectCtrl($scope, $routeParams, Project, Util){
+  
+}
+
+function ComputeProjectCtrl($scope, $dialog, $routeParams, Project, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "/partials/projects/_compute_dialog.html",
+    controller: 'DialogCompute'
+  });
+
+  $scope.selected || ($scope.selected = {});
+
+  Project.get(function(projects){
+    $scope.computes = projects.computes;
+    Util.pagination($scope, 'computes', 5);
+  });
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'computes').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(computes){
+      var compute_ids = computes.map(function(compute){return compute.id;});
+      console.log("REMOVE ALL storages " + compute_ids);
+      new Project({ids: compute_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(computes, function(compute){
+            var index = $scope.computes.indexOf(compute);
+            $scope.computes.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
+
+  $scope.do_edit = function(){
+    d.context_scope = $scope;
+    Util.bind($scope, 'computes').select(1, 1).then(function(computes){
+      d.context_scope.selected_compute = computes[0];
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogCompute($scope, dialog, Util, Project){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.compute){
+      new Project($scope.compute)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_compute = dialog.context_scope.selected_compute;  
+  if(selected_compute){
+    $scope.title = "修改计算方案";
+    $scope.action = "$update";
+    $scope.compute = selected_compute;
+  }
+}
+
+function StorageProjectCtrl($scope, $dialog, $routeParams, Project, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "/partials/projects/_storage_dialog.html",
+    controller: 'DialogStorage'
+  });
+
+  $scope.selected || ($scope.selected = {});
+
+  Project.get(function(projects){
+    $scope.storages = projects.storages;
+    Util.pagination($scope, 'storages', 5);
+  });
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'storages').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(storages){
+      var storage_ids = storages.map(function(storage){return storage.id;});
+      console.log("REMOVE ALL storages " + storage_ids);
+      new Project({ids: storage_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(storages, function(storage){
+            var index = $scope.storages.indexOf(storage);
+            $scope.storages.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
+
+  $scope.do_edit = function(){
+    d.context_scope = $scope;
+    Util.bind($scope, 'storages').select(1, 1).then(function(storages){
+      d.context_scope.selected_storage = storages[0];
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogStorage($scope, dialog, Util, Project){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.storage){
+      new Project($scope.storage)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_storage = dialog.context_scope.selected_storage;  
+  if(selected_storage){
+    $scope.title = "修改存储方案";
+    $scope.action = "$update";
+    $scope.storage = selected_storage;
+  }
+}
+
+function NetworkProjectCtrl($scope, $dialog, $routeParams, Project, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "/partials/projects/_network_dialog.html",
+    controller: 'DialogNetwork'
+  });
+
+  $scope.selected || ($scope.selected = {});
+
+  Project.get(function(projects){
+    $scope.networks = projects.networks;
+    Util.pagination($scope, 'networks', 5);
+  });
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'networks').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(networks){
+      var network_ids = networks.map(function(network){return network.id;});
+      console.log("REMOVE ALL storages " + network_ids);
+      new Project({ids: network_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(networks, function(network){
+            var index = $scope.networks.indexOf(network);
+            $scope.networks.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
+
+  $scope.do_edit = function(){
+    d.context_scope = $scope;
+    Util.bind($scope, 'networks').select(1, 1).then(function(networks){
+      d.context_scope.selected_network = networks[0];
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogNetwork($scope, dialog, Util, Project){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.network){
+      new Project($scope.network)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_network = dialog.context_scope.selected_network;  
+  if(selected_network){
+    $scope.title = "修改存储方案";
+    $scope.action = "$update";
+    $scope.network = selected_network;
+  }
+}
+
 function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util) {
   
   var d = $dialog.dialog({
