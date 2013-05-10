@@ -2,7 +2,9 @@ angular.module('webvirtServices', [])
   .factory('DataCenter', function($resource) {
     return $resource('datacenters/:id', {id: '@id'}, {
       get: {method: 'GET'},
-      tasks: {method: 'GET', isArray: true, url: "datacenters/:id/tasks"}
+      tasks: {method: 'GET', isArray: true, url: "datacenters/:id/tasks"},
+      add_task: {method: 'POST', url: "datacenters/:id/add_task"},
+      update_task: {method: 'POST', url: "datacenters/:id/update_task"}
     });
   })
   .factory('DataCenterEvent', function($resource){

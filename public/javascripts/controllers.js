@@ -21,37 +21,71 @@ function ActivityCtrl($rootScope, Activity, Shortcut){
   });
 }
 
-function DataCenterCtrl($scope, $routeParams, $location, DataCenter, Host, VM, $pollingPool, Util) {
+function TaskCalCtrl($scope, dialog, DataCenter){
+  $scope.task = {};
+  $scope.title = "添加任务";
+  $scope.close = function(result){
+    dialog.close(result)
+  };
+  $scope.save_task = function(){
+    DataCenter.add_task({id: dialog.context_scope.datacenter.id, task: $scope.task}, function(task){
+      dialog.context_scope.events.push(task);
+      dialog.close();
+    });
+  };
+  if(dialog.context_scope.current_date){
+    $scope.task.start = dialog.context_scope.current_date;
+    $scope.task.end = dialog.context_scope.current_date;
+  }
+}
+
+function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Host, VM, $pollingPool, Util) {
   $scope.events = [];
   $scope.eventSources = [$scope.events];
   var date = new Date();
   var d = date.getDate();
   var m = date.getMonth();
   var y = date.getFullYear();
-  $scope.alertEventOnClick = function(date, allDay, jsEvent, view){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: false,
+    templateUrl: "/partials/datacenters/_task.html",
+    controller: 'TaskCalCtrl'
+  });  
+  
+  $scope.day_click = function(date, all_day, js_event, view){
     $scope.$apply(function(){
-      $scope.alertMessage = ('Day Clicked ' + date);
+      d.context_scope = $scope;
+      d.context_scope.current_date = date;
+      d.open().then(function(result){
+        if(result){
+          alert('dialog closed with result: ' + result);
+        }
+      });
     });
   };
 
-  $scope.alertOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
+  $scope.event_on_drop = function(event, day_delta, minute_delta, all_day, revert_func, js_event, ui, view){
     $scope.$apply(function(){
-      $scope.alertMessage = ('Event Droped to make dayDelta ' + dayDelta);
+      DataCenter.update_task({id: $scope.datacenter.id, task: {id: event.id, day_delta: day_delta, minute_delta: minute_delta, all_day: all_day}});
     });
   };
 
-  $scope.alertOnResize = function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
+  $scope.event_on_resize = function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
     $scope.$apply(function(){
       $scope.alertMessage = ('Event Resized to make dayDelta ' + minuteDelta);
     });
   };
 
-  $scope.addEvent = function() {
-    $scope.events.push({
-      title: 'Open Sesame',
-      start: new Date(y, m, 28),
-      end: new Date(y, m, 29),
-      className: ['openSesame']
+  $scope.add_task = function() {
+    d.context_scope = $scope;
+    d.context_scope.current_date = null;
+    d.open().then(function(result){
+      if(result){
+        alert('dialog closed with result: ' + result);
+      }
     });
   };
 
@@ -59,7 +93,7 @@ function DataCenterCtrl($scope, $routeParams, $location, DataCenter, Host, VM, $
     $scope.events.splice(index, 1);
   };
 
-  $scope.changeView = function(view) {
+  $scope.change_view = function(view) {
     $scope.currentCalendar.fullCalendar('changeView', view);
   };
   
@@ -72,9 +106,9 @@ function DataCenterCtrl($scope, $routeParams, $location, DataCenter, Host, VM, $
         center: 'title',
         right: 'today prev,next'
       },
-      dayClick: $scope.alertEventOnClick,
-      eventDrop: $scope.alertOnDrop,
-      eventResize: $scope.alertOnResize
+      dayClick: $scope.day_click,
+      eventDrop: $scope.event_on_drop,
+      eventResize: $scope.event_on_resize
     }
   };
   
