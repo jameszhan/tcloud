@@ -16,7 +16,8 @@ jQuery(document).ready(function($){
   });
 });
 
-angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilters', "ui.bootstrap.dialog", "ngResource"]).
+
+angular.module('webvirt', ['ui.calendar', 'webvirtDirectives', 'webvirtServices', 'webvirtFilters', 'ui.bootstrap.dialog', 'ngResource']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.
       when('/datacenters/:id', {templateUrl: '/partials/datacenters/index.html', controller: DataCenterCtrl}).
@@ -30,7 +31,7 @@ angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilte
       when('/backupstrategys',{templateUrl: '/partials/backupstrategys/index.html', controller: BackupStrategyCtrl}).
       otherwise({redirectTo: '/'});
 }]).run(["$pollingPool", "$timeout", "$rootScope", "Util", "Activity", function($pollingPool, $timeout, $rootScope, Util, Activity){
-  $rootScope.$on('$routeChangeStart', function(e, route){
+  $rootScope.$on('$routeChangeStart', function(e, route){  
     $pollingPool.clear();
     $pollingPool.add(function(){
       if($rootScope.activities){

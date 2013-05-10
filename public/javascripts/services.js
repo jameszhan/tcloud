@@ -1,6 +1,9 @@
 angular.module('webvirtServices', [])
   .factory('DataCenter', function($resource) {
-    return $resource('datacenters/:id', {id: '@id'}, {get: {method: 'GET'}});
+    return $resource('datacenters/:id', {id: '@id'}, {
+      get: {method: 'GET'},
+      tasks: {method: 'GET', isArray: true, url: "datacenters/:id/tasks"}
+    });
   })
   .factory('DataCenterEvent', function($resource){
     return $resource('datacenters/:data_center_id/events/:id', {data_center_id: '@data_center_id',id: '@id'}, {

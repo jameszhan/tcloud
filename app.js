@@ -75,6 +75,7 @@ app.get('/datacenters/:id', datacenters.show);
 app.get('/datacenters/:id/events', datacenters.events);
 app.get('/datacenters/:id/top_hosts', datacenters.top_hosts);
 app.get('/datacenters/:id/top_vms', datacenters.top_vms);
+app.get('/datacenters/:id/tasks', datacenters.tasks);
 
 app.get('/clusters/:id', clusters.show);
 app.get('/clusters/:id/top_hosts', clusters.top_hosts);

@@ -1,4 +1,4 @@
-<div class="tabbable">
+<div class="tabbable" id="main-tabs">  
   <ul class="nav nav-tabs" style="background-color:#F2F2F2;">
     <li class="active"><a href="#overview" data-toggle="tab">仪表盘</a></li>
     <li><a href="#events" data-toggle="tab">平台系统事件</a></li>
@@ -8,7 +8,7 @@
     <li><a href="#storage" data-toggle="tab">存储</a></li>
     <li><a href="#tasks" data-toggle="tab">任务</a></li>
   </ul>
-  <div class="tab-content">
+  <div class="tab-content">    
     <div id="overview" class="tab-pane active" style="padding:0px 10px">
       <ng:include src="'/partials/datacenters/_overview.html'" />
     </div>
@@ -27,8 +27,38 @@
     <div id="storage" class="tab-pane" style="padding:0px 10px">    
       <ng:include src="'/partials/storages/_storage_list.html'" />
     </div>
-    <div id="tasks" class="tab-pane" style="padding:0px 10px">    
-      <ng:include src="'/partials/datacenters/_tasks.html'" />
+    <div id="tasks" class="tab-pane" style="padding:0px 10px"> 
+      <section id="directives-calendar">
+        <div class="row-fluid">
+          <div class="span2">
+            <p><button type="button" class="btn btn-primary" ng-click="addEvent()">Add Event</button></p>
+            <ul class="unstyled">
+              <li ng-repeat="e in events">
+                <div class="alert alert-info">
+                  <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
+                  <b> {{e.title}}</b> - {{e.start | date:"MMM dd"}}
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="span10">
+            <div class="alert-success calAlert" ng-show="alertMessage">{{alertMessage}}</div>
+            <div class="well">
+              <div class="calendar" ng-model="eventSources" calendar="currentCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+jQuery(function($){
+  $('#main-tabs').tabs({
+    activate: function(e, ui){
+      $(".calendar").fullCalendar('render');
+    }
+  });
+});
+</script>

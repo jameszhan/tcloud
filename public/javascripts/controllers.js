@@ -18,19 +18,76 @@ function ActivityCtrl($rootScope, Activity){
   });
 }
 
-function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
-  DataCenterEvent.query({data_center_id: $routeParams.id}, function(events, headersFn){
-    $scope.events = events;
-  });
-}
-
 function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool, Util) {
+  $scope.events = [];
+  $scope.eventSources = [$scope.events];
+  var date = new Date();
+  var d = date.getDate();
+  var m = date.getMonth();
+  var y = date.getFullYear();
+  $scope.alertEventOnClick = function( date, allDay, jsEvent, view ){
+    $scope.$apply(function(){
+      $scope.alertMessage = ('Day Clicked ' + date);
+    });
+  };
+
+  $scope.alertOnDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
+    $scope.$apply(function(){
+      $scope.alertMessage = ('Event Droped to make dayDelta ' + dayDelta);
+    });
+  };
+
+  $scope.alertOnResize = function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view ){
+    $scope.$apply(function(){
+      $scope.alertMessage = ('Event Resized to make dayDelta ' + minuteDelta);
+    });
+  };
+
+  $scope.addEvent = function() {
+    $scope.events.push({
+      title: 'Open Sesame',
+      start: new Date(y, m, 28),
+      end: new Date(y, m, 29),
+      className: ['openSesame']
+    });
+  };
+
+  $scope.remove = function(index) {
+    $scope.events.splice(index, 1);
+  };
+
+  $scope.changeView = function(view) {
+    $scope.currentCalendar.fullCalendar('changeView', view);
+  };
+  
+  $scope.uiConfig = {
+    calendar:{
+      height: 450,
+      editable: true,
+      header:{
+        left: 'month basicWeek basicDay agendaWeek agendaDay',
+        center: 'title',
+        right: 'today prev,next'
+      },
+      dayClick: $scope.alertEventOnClick,
+      eventDrop: $scope.alertOnDrop,
+      eventResize: $scope.alertOnResize
+    }
+  };
+  
+  DataCenter.tasks({id: $routeParams.id}, function(data){
+    angular.forEach(data, function(v){
+      $scope.events.push(v);
+    });
+  });
+  
+  
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
     $scope.clusters = $scope.datacenter.clusters;
     $scope.hosts = Util.flatten($scope.clusters, 'hosts');
     $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
-    
+        
     $pollingPool.add(function(){
       var vm_ids = $scope.vms.map(function(vm){return vm.id});
       VM.status({ids: vm_ids}, function(data){
@@ -42,6 +99,12 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool
       });
     });
   });  
+}
+
+function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
+  DataCenterEvent.query({data_center_id: $routeParams.id}, function(events, headersFn){
+    $scope.events = events;
+  });
 }
 
 function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util) {
