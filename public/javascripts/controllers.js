@@ -86,7 +86,7 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool
   };  
 }
 
-function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util) {
+function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util, $location) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
     $scope.hosts = cluster.hosts;
@@ -104,11 +104,38 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
     });
   });
 
+  $scope.path = $location.path();
+  var pathArr = $location.absUrl().split('#');
+  
+  switch(pathArr[2]){
+    case 'backups':
+      $scope.backupstab = "active";
+      break;  
+    case 'hosts':
+      $scope.hoststab = "active";
+      break;
+    case 'vms':
+      $scope.vmstab = "active";
+      break;
+    case 'networks':
+      $scope.networkstab = "active";
+      break;
+    case 'storages':
+      $scope.storagestab = "active";
+      break;
+    default:
+      $scope.overviewtab = "active";
+  }
+  
   $scope.add_bookmark = function(){
+    var name="Cluster ";
+    if(pathArr[2] && pathArr[2]!="overview"){
+      name += pathArr[2];
+    }
     shortcut = {
       "id": "61"+$routeParams.id,
-      "name": "Cluster"+$routeParams.id,
-      "url": "/#/clusters/"+$routeParams.id,
+      "name": name,
+      "url": $location.absUrl(),
       "desrc": "Cluster快捷方式"
     };
     if(confirm("添加书签?")){
@@ -135,7 +162,7 @@ function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
   };
 }
 
-function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
+function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
     $scope.vms = $scope.host.virtual_machines;
@@ -156,17 +183,35 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
     });
   });
 
+  $scope.path = $location.path();
+  var pathArr = $location.absUrl().split('#');
+  
+  switch(pathArr[2]){
+    case 'vms':
+      $scope.vmstab = "active";
+      break;
+    case 'storages':
+      $scope.storagestab = "active";
+      break;
+    default:
+      $scope.overviewtab = "active";
+  }
+  
   $scope.add_bookmark = function(){
+    var name="Host ";
+    if(pathArr[2] && pathArr[2]!="overview"){
+      name += pathArr[2];
+    }
     shortcut = {
       "id": "611"+$routeParams.id,
-      "name": "Host"+$routeParams.id,
-      "url": "/#/hosts/"+$routeParams.id,
+      "name": name,
+      "url": $location.absUrl(),
       "desrc": "Host快捷方式"
     };
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
     }
-  };
+  }; 
 }
 
 function HostMgmtCtrl($scope, Util){  
@@ -317,7 +362,7 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
   
 }
 
-function VMCtrl($scope, $routeParams, VM, Util) {
+function VMCtrl($scope, $routeParams, VM, Util, $location) {
   $scope.selected = {};
   VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
@@ -325,11 +370,26 @@ function VMCtrl($scope, $routeParams, VM, Util) {
     $scope.vms = [vm]; //Here is compatible with action_bar.
   });
 
+  $scope.path = $location.path();
+  var pathArr = $location.absUrl().split('#');
+  
+  switch(pathArr[2]){
+    case 'snapshots':
+      $scope.snapshotstab = "active";
+      break;
+    default:
+      $scope.overviewtab = "active";
+  }
+  
   $scope.add_bookmark = function(){
+    var name="VM ";
+    if(pathArr[2] && pathArr[2]!="overview"){
+      name += pathArr[2];
+    }
     shortcut = {
       "id": "6111"+$routeParams.id,
-      "name": "VM"+$routeParams.id,
-      "url": "/#/vms/"+$routeParams.id,
+      "name": name,
+      "url": $location.absUrl(),
       "desrc": "VM快捷方式"
     };
     if(confirm("添加书签?")){

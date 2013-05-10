@@ -2,8 +2,8 @@
   <div class="row-fluid">
     <div class="span9 tab-layout">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#overview" data-toggle="tab">信息</a></li>
-        <li><a href="#snapshot" data-toggle="tab">快照</a></li>
+        <li ng-class="overviewtab"><a href="#{{path}}#overview" data-toggle="tab">信息</a></li>
+        <li ng-class="snapshotstab"><a href="#{{path}}#snapshots" data-toggle="tab">快照</a></li>
       </ul>
     </div>
     <div class="span3 tab-layout">
@@ -11,11 +11,11 @@
     </div>
   </div>
   <div class="tab-content">
-    <div id="overview" class="tab-pane active" style="padding:0px 10px">
+    <div id="overview" class="tab-pane {{overviewtab}}" style="padding:0px 10px">
       <ng:include src="'/partials/vms/_overview.html'" />   
     </div>
-    <div id="snapshot" class="tab-pane active" style="padding:0px 10px">
-      snapshot  
+    <div id="snapshots" class="tab-pane {{snapshotstab}}" style="padding:0px 10px">
+      <ng:include src="'/partials/vms/_snapshots.html'" />  
     </div>
   </div>
 </div>
