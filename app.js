@@ -16,6 +16,7 @@ var express = require('express')
   , activities = require('./routes/activities')
   , storages = require('./routes/storages')
   , shortcuts = require('./routes/shortcuts')
+  , projects = require('./routes/projects')
   , backupstrategys = require('./routes/backupstrategys')
   , http = require('http')
   , path = require('path')
@@ -135,6 +136,11 @@ app.post('/storages/delete_all', storages.delete_all);
 app.get('/shortcuts', shortcuts.index);
 app.post('/shortcuts/status', shortcuts.status);
 app.post('/shortcuts/delete_all', shortcuts.delete_all);
+
+app.get('/projects', projects.index);
+app.put('/projects/:id', projects.update);
+app.post('/projects/status', projects.status);
+app.post('/projects/delete_all', projects.delete_all);
 
 app.get('/backupstrategys', backupstrategys.index);
 app.post('/backupstrategys', backupstrategys.save);
