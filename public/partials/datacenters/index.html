@@ -2,14 +2,14 @@
   <div class="row-fluid">
     <div class="span9 tab-layout">
       <ul class="nav nav-tabs">
-        <li ng-class="overviewtab"><a href="#overview" data-toggle="tab" ng-click="change_location('overview')">仪表盘</a></li>
-        <li ng-class="eventstab"><a href="#events" data-toggle="tab" ng-click="change_location('events')">平台系统事件</a></li>
-        <li ng-class="hoststab"><a href="#hosts" data-toggle="tab" ng-click="change_location('hosts')">主机</a></li>
-        <li ng-class="vmstab"><a href="#vms" data-toggle="tab" ng-click="change_location('vms')">虚拟机</a></li>    
-        <li ng-class="networkstab"><a href="#networks" data-toggle="tab" ng-click="change_location('networks')">网络</a></li>
-        <li ng-class="storagestab"><a href="#storages" data-toggle="tab" ng-click="change_location('storages')">存储</a></li>
-        <li ng-class="backupstab"><a href="#backups" data-toggle="tab">备份</a></li>
-        <li ng-class="taskstab"><a href="#tasks" data-toggle="tab" ng-click="change_location('tasks')">任务</a></li>
+        <li><a href="#overview" data-toggle="tab" ng-click="change_location('overview')">仪表盘</a></li>
+        <li><a href="#events" data-toggle="tab" ng-click="change_location('events')">平台系统事件</a></li>
+        <li><a href="#hosts" data-toggle="tab" ng-click="change_location('hosts')">主机</a></li>
+        <li><a href="#vms" data-toggle="tab" ng-click="change_location('vms')">虚拟机</a></li>    
+        <li><a href="#networks" data-toggle="tab" ng-click="change_location('networks')">网络</a></li>
+        <li><a href="#storages" data-toggle="tab" ng-click="change_location('storages')">存储</a></li>
+        <li><a href="#backups" data-toggle="tab">备份</a></li>
+        <li><a href="#tasks" data-toggle="tab" ng-click="change_location('tasks')">任务</a></li>
       </ul>
     </div>
     <div class="span3 tab-layout">
@@ -17,25 +17,25 @@
     </div>
   </div>
   <div class="tab-content">
-    <div id="overview" class="tab-pane {{overviewtab}}" style="padding:0px 10px">
+    <div id="overview" class="tab-pane active" style="padding:0px 10px">
       <ng:include src="'/partials/datacenters/_overview.html'" />
     </div>
-    <div id="events" class="tab-pane {{eventstab}}" style="padding:0px 10px">
+    <div id="events" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/datacenters/_events.html'" />
     </div>
-    <div id="hosts" class="tab-pane {{hoststab}}" style="padding:0px 10px">
+    <div id="hosts" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/shared/_host_list.html'" />
     </div>
-    <div id="vms" class="tab-pane {{vmstab}}" style="padding:0px 10px">
+    <div id="vms" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/shared/_vm_list.html'" />
     </div>    
-    <div id="networks" class="tab-pane {{networkstab}}" style="padding:0px 10px">
+    <div id="networks" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/networks/_network_types.html'" />
     </div>
-    <div id="storages" class="tab-pane {{storagestab}}" style="padding:0px 10px">
+    <div id="storages" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/storages/_storage_list.html'" />
     </div>
-    <div id="backups" class="tab-pane {{backupstab}}" style="padding:0px 10px">
+    <div id="backups" class="tab-pane" style="padding:0px 10px">
       <ng:include src="'/partials/shared/_backups.html'" />
     </div>
     <div id="tasks" class="tab-pane" style="padding:0px 10px"> 
@@ -58,18 +58,15 @@
               <div class="calendar" ng-model="eventSources" calendar="currentCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
             </div>
           </div>
-        </div>
+        </div>        
       </section>
+      <script type="text/javascript">
+      $('a[data-toggle="tab"]').on('shown', function (e) {
+        $('#directives-calendar').find('.calendar').fullCalendar('render');
+      })
+      </script>
     </div>
   </div>
 </div>
 
-<script type="text/javascript">
-jQuery(function($){
-  $('#main-tabs').tabs({
-    activate: function(e, ui){
-      $(".calendar").fullCalendar('render');
-    }
-  });
-});
-</script>
+

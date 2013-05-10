@@ -62,7 +62,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
     }
   };
-}).factory("Util", function($rootScope){
+}).factory("Util", function($rootScope, $location){
   return {
     update: function(dst, update_data){
       angular.forEach(dst, function(vm){
@@ -181,6 +181,14 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
           });
         }
       });      
+    },
+    bind_tab: function(){
+      var hs = $location.absUrl().split('#');
+      if(hs.length == 3){
+        var h = hs[2];
+        $('.tabbable a:first').tab('show'); //Here is for wrong hash input.
+        $('.tabbable a[href="#' + h + '"]').tab('show');//.closest('li').addClass('active'); 
+      }
     },
     bookmark: function(shortcut){
       if(shortcut){

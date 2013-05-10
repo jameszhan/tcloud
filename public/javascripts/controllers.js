@@ -138,34 +138,14 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
   
   $scope.change_location = function(hash){
     try{
+      //We just want to change the navigation bar.
       //$location.path($location.hash(hash));
     }catch(e){
       //console.log(e.message);
     }
   };
-
-  $scope.path = $location.path();
-  var pathArr = $location.absUrl().split('#');
   
-  switch(pathArr[2]){
-    case 'events':
-      $scope.eventstab = "active";
-      break;  
-    case 'hosts':
-      $scope.hoststab = "active";
-      break;
-    case 'vms':
-      $scope.vmstab = "active";
-      break;
-    case 'networks':
-      $scope.networkstab = "active";
-      break;
-    case 'storages':
-      $scope.storagestab = "active";
-      break;
-    default:
-      $scope.overviewtab = "active";
-  }
+  Util.bind_tab();
   
   $scope.add_bookmark = function(){
     var name="DataCenter ";
@@ -208,28 +188,7 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
     });
   });
 
-  $scope.path = $location.path();
-  var pathArr = $location.absUrl().split('#');
-  
-  switch(pathArr[2]){
-    case 'backups':
-      $scope.backupstab = "active";
-      break;  
-    case 'hosts':
-      $scope.hoststab = "active";
-      break;
-    case 'vms':
-      $scope.vmstab = "active";
-      break;
-    case 'networks':
-      $scope.networkstab = "active";
-      break;
-    case 'storages':
-      $scope.storagestab = "active";
-      break;
-    default:
-      $scope.overviewtab = "active";
-  }
+  Util.bind_tab();
   
   $scope.add_bookmark = function(){
     var name="Cluster ";
@@ -287,19 +246,8 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
     });
   });
 
-  $scope.path = $location.path();
-  var pathArr = $location.absUrl().split('#');
   
-  switch(pathArr[2]){
-    case 'vms':
-      $scope.vmstab = "active";
-      break;
-    case 'storages':
-      $scope.storagestab = "active";
-      break;
-    default:
-      $scope.overviewtab = "active";
-  }
+  Util.bind_tab();
   
   $scope.add_bookmark = function(){
     var name="Host ";
