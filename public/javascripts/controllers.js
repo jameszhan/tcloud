@@ -135,28 +135,20 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
       });
     });
   });
-  
-  $scope.change_location = function(hash){
-    try{
-      //We just want to change the navigation bar.
-      //$location.path($location.hash(hash));
-    }catch(e){
-      //console.log(e.message);
-    }
-  };
-  
-  Util.bind_tab();
+
+  Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
     var name="DataCenter ";
-    if(pathArr[2] && pathArr[2]!="overview"){
-      name += pathArr[2];
+    var subname = $location.absUrl().split('#')[2];
+    if(subname && subname != "overview"){
+      name += subname;
     }
     shortcut = {
-      "id": "6",
+      "id": 6,
       "name": name,
-      "url": $location.absUrl(),
-      "desrc": "Datacenter快捷方式"
+      "url": $scope.location,
+      "desc": "Datacenter快捷方式"
     };
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
@@ -188,7 +180,7 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
     });
   });
 
-  Util.bind_tab();
+  Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
     var name="Cluster ";
@@ -247,7 +239,7 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
   });
 
   
-  Util.bind_tab();
+  Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
     var name="Host ";

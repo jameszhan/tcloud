@@ -119,7 +119,7 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
         };
         
         scope.$watch('initial', function(new_value, old_value){
-          if(new_value != undefined){   
+          if(new_value != undefined && new_value != null && new_value != ''){   
             var data = [];
             angular.forEach(angular.fromJson(new_value), function(val, key){
               data.push([key, val]);

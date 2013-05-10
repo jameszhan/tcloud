@@ -2,7 +2,7 @@
   <div class="row-fluid">
     <div class="span9 tab-layout">
       <ul class="nav nav-tabs">
-        <li><a href="#overview" data-toggle="tab" ng-click="change_location('overview')">仪表盘</a></li>
+        <li class="active"><a href="#overview" data-toggle="tab" ng-click="change_location('overview')">仪表盘</a></li>
         <li><a href="#events" data-toggle="tab" ng-click="change_location('events')">平台系统事件</a></li>
         <li><a href="#hosts" data-toggle="tab" ng-click="change_location('hosts')">主机</a></li>
         <li><a href="#vms" data-toggle="tab" ng-click="change_location('vms')">虚拟机</a></li>    
@@ -60,11 +60,6 @@
           </div>
         </div>        
       </section>
-      <script type="text/javascript">
-      $('a[data-toggle="tab"]').on('shown', function (e) {
-        $('#directives-calendar').find('.calendar').fullCalendar('render');
-      })
-      </script>
     </div>
   </div>
 </div>

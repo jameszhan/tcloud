@@ -14,7 +14,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     }      
   }, schedule = function(){
     run();
-    $timeout(schedule, next_delay());
+    //$timeout(schedule, next_delay());
   }, add = function(task, key){
     task.first_time = true;
     key && (task.key = key);
@@ -62,7 +62,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
     }
   };
-}).factory("Util", function($rootScope, $location){
+}).factory("Util", function($rootScope, $location, $window){
   return {
     update: function(dst, update_data){
       angular.forEach(dst, function(vm){
@@ -182,13 +182,32 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         }
       });      
     },
-    bind_tab: function(){
+    bind_tab: function($scope){
+      $scope.$on('$locationChangeStart', function(e){
+        if($location.absUrl().split('#').length >= 3){
+          e.preventDefault();
+        }
+      });
+      $scope.$on('$locationChangeSuccess', function(e){
+      });
+      
       var hs = $location.absUrl().split('#');
       if(hs.length == 3){
         var h = hs[2];
         $('.tabbable a:first').tab('show'); //Here is for wrong hash input.
         $('.tabbable a[href="#' + h + '"]').tab('show');//.closest('li').addClass('active'); 
       }
+      $scope.location = $location.absUrl();
+      $('a[data-toggle="tab"]').on('shown', function (e) {             
+        $scope.$apply(function(){
+          $location.hash(e.target.hash.substr(1));
+          $scope.location = $location.absUrl();
+          //$window.history.pushState("tab", "Tabs", $location.path());
+        });
+        
+        $('#directives-calendar').find('.calendar').fullCalendar('render');
+        return false;
+      });
     },
     bookmark: function(shortcut){
       if(shortcut){
