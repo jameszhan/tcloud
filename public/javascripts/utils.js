@@ -181,7 +181,12 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
           });
         }
       });      
-    } 
+    },
+    bookmark: function(shortcut){
+      if(shortcut){
+        $rootScope.shortcuts.unshift(shortcut);
+      }
+    }
   };
 });
 

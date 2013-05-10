@@ -12,9 +12,12 @@ var flatten = function(arr, target){
   return ret;
 };
 
-function ActivityCtrl($rootScope, Activity){
+function ActivityCtrl($rootScope, Activity, Shortcut){
   Activity.query({}, function(data){    
     $rootScope.activities = data;
+  });
+  Shortcut.query({},function(data){
+    $rootScope.shortcuts = data;
   });
 }
 
@@ -81,7 +84,6 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool
     });
   });
   
-  
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
     $scope.clusters = $scope.datacenter.clusters;
@@ -98,7 +100,46 @@ function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool
         Util.update($scope.hosts, data);
       });
     });
-  });  
+  });
+
+  $scope.path = $location.path();
+  var pathArr = $location.absUrl().split('#');
+  
+  switch(pathArr[2]){
+    case 'events':
+      $scope.eventstab = "active";
+      break;  
+    case 'hosts':
+      $scope.hoststab = "active";
+      break;
+    case 'vms':
+      $scope.vmstab = "active";
+      break;
+    case 'networks':
+      $scope.networkstab = "active";
+      break;
+    case 'storages':
+      $scope.storagestab = "active";
+      break;
+    default:
+      $scope.overviewtab = "active";
+  }
+  
+  $scope.add_bookmark = function(){
+    var name="DataCenter ";
+    if(pathArr[2] && pathArr[2]!="overview"){
+      name += pathArr[2];
+    }
+    shortcut = {
+      "id": "6",
+      "name": name,
+      "url": $location.absUrl(),
+      "desrc": "Datacenter快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };  
 }
 
 function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
@@ -107,7 +148,7 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
   });
 }
 
-function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util) {
+function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util, $location) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
     $scope.hosts = cluster.hosts;
@@ -124,6 +165,45 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
       });
     });
   });
+
+  $scope.path = $location.path();
+  var pathArr = $location.absUrl().split('#');
+  
+  switch(pathArr[2]){
+    case 'backups':
+      $scope.backupstab = "active";
+      break;  
+    case 'hosts':
+      $scope.hoststab = "active";
+      break;
+    case 'vms':
+      $scope.vmstab = "active";
+      break;
+    case 'networks':
+      $scope.networkstab = "active";
+      break;
+    case 'storages':
+      $scope.storagestab = "active";
+      break;
+    default:
+      $scope.overviewtab = "active";
+  }
+  
+  $scope.add_bookmark = function(){
+    var name="Cluster ";
+    if(pathArr[2] && pathArr[2]!="overview"){
+      name += pathArr[2];
+    }
+    shortcut = {
+      "id": "61"+$routeParams.id,
+      "name": name,
+      "url": $location.absUrl(),
+      "desrc": "Cluster快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };  
 }
 
 function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
@@ -144,7 +224,7 @@ function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
   };
 }
 
-function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
+function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
     $scope.vms = $scope.host.virtual_machines;
@@ -164,6 +244,36 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util) {
       });
     });
   });
+
+  $scope.path = $location.path();
+  var pathArr = $location.absUrl().split('#');
+  
+  switch(pathArr[2]){
+    case 'vms':
+      $scope.vmstab = "active";
+      break;
+    case 'storages':
+      $scope.storagestab = "active";
+      break;
+    default:
+      $scope.overviewtab = "active";
+  }
+  
+  $scope.add_bookmark = function(){
+    var name="Host ";
+    if(pathArr[2] && pathArr[2]!="overview"){
+      name += pathArr[2];
+    }
+    shortcut = {
+      "id": "611"+$routeParams.id,
+      "name": name,
+      "url": $location.absUrl(),
+      "desrc": "Host快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  }; 
 }
 
 function HostMgmtCtrl($scope, Util){  
@@ -314,13 +424,40 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
   
 }
 
-function VMCtrl($scope, $routeParams, VM) {
+function VMCtrl($scope, $routeParams, VM, Util, $location) {
   $scope.selected = {};
   VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
     $scope.selected[vm.id] = true;
     $scope.vms = [vm]; //Here is compatible with action_bar.
   });
+
+  $scope.path = $location.path();
+  var pathArr = $location.absUrl().split('#');
+  
+  switch(pathArr[2]){
+    case 'snapshots':
+      $scope.snapshotstab = "active";
+      break;
+    default:
+      $scope.overviewtab = "active";
+  }
+  
+  $scope.add_bookmark = function(){
+    var name="VM ";
+    if(pathArr[2] && pathArr[2]!="overview"){
+      name += pathArr[2];
+    }
+    shortcut = {
+      "id": "6111"+$routeParams.id,
+      "name": name,
+      "url": $location.absUrl(),
+      "desrc": "VM快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function VMMgmtCtrl($scope, Util){
@@ -591,10 +728,32 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
       return $scope.templates.filter(function(t){return t.os_type == $scope.search.os_type}).length <= $scope.page_size;
     };
   });
+
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "7",
+      "name": "Template",
+      "url": "/#/templates",
+      "desrc": "Template快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function NetworkCtrl($scope, $routeParams, Network, Util){
-
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "8",
+      "name": "Network",
+      "url": "/#/networks",
+      "desrc": "Network快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
@@ -766,7 +925,18 @@ function DialogPortCtrl($scope, dialog, Util, Network){
   }
 }
 
-function ArchitectCtrl($scope){
+function ArchitectCtrl($scope, Util){
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "9",
+      "name": "Architect",
+      "url": "/#/architects",
+      "desrc": "Network快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
@@ -854,13 +1024,237 @@ function DialogStorageCtrl($scope, dialog, Util, Storage){
   }
 }
 
-function ShortCutCtrl($scope, $routeParams, ShortCut, Util){
-  $scope.selected || ($scope.selected = {});
+function ShortcutCtrl($scope, $rootScope, Shortcut, Util){
+  $rootScope.selected || ($rootScope.selected = {});
+  $scope.do_delete = function(){
+    Util.bind($rootScope, 'shortcuts').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(shortcuts){
+      var shortcut_ids = shortcuts.map(function(shortcut){return shortcut.id;});
+      console.log("REMOVE ALL storages " + shortcut_ids);
+      new Shortcut({ids: shortcut_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(shortcuts, function(shortcut){
+            var index = $rootScope.shortcuts.indexOf(shortcut);
+            $rootScope.shortcuts.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
+}
+
+function ProjectCtrl($scope, $routeParams, Project, Util){
   
-  ShortCut.get(function(shortcuts){
-    $scope.shortcuts = shortcuts.shortcuts;
-    Util.pagination($scope, 'shortcuts', 5);
+}
+
+function ComputeProjectCtrl($scope, $dialog, $routeParams, Project, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "/partials/projects/_compute_dialog.html",
+    controller: 'DialogCompute'
   });
+
+  $scope.selected || ($scope.selected = {});
+
+  Project.get(function(projects){
+    $scope.computes = projects.computes;
+    Util.pagination($scope, 'computes', 5);
+  });
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'computes').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(computes){
+      var compute_ids = computes.map(function(compute){return compute.id;});
+      console.log("REMOVE ALL storages " + compute_ids);
+      new Project({ids: compute_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(computes, function(compute){
+            var index = $scope.computes.indexOf(compute);
+            $scope.computes.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
+
+  $scope.do_edit = function(){
+    d.context_scope = $scope;
+    Util.bind($scope, 'computes').select(1, 1).then(function(computes){
+      d.context_scope.selected_compute = computes[0];
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogCompute($scope, dialog, Util, Project){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.compute){
+      new Project($scope.compute)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_compute = dialog.context_scope.selected_compute;  
+  if(selected_compute){
+    $scope.title = "修改计算方案";
+    $scope.action = "$update";
+    $scope.compute = selected_compute;
+  }
+}
+
+function StorageProjectCtrl($scope, $dialog, $routeParams, Project, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "/partials/projects/_storage_dialog.html",
+    controller: 'DialogStorage'
+  });
+
+  $scope.selected || ($scope.selected = {});
+
+  Project.get(function(projects){
+    $scope.storages = projects.storages;
+    Util.pagination($scope, 'storages', 5);
+  });
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'storages').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(storages){
+      var storage_ids = storages.map(function(storage){return storage.id;});
+      console.log("REMOVE ALL storages " + storage_ids);
+      new Project({ids: storage_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(storages, function(storage){
+            var index = $scope.storages.indexOf(storage);
+            $scope.storages.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
+
+  $scope.do_edit = function(){
+    d.context_scope = $scope;
+    Util.bind($scope, 'storages').select(1, 1).then(function(storages){
+      d.context_scope.selected_storage = storages[0];
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogStorage($scope, dialog, Util, Project){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.storage){
+      new Project($scope.storage)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_storage = dialog.context_scope.selected_storage;  
+  if(selected_storage){
+    $scope.title = "修改存储方案";
+    $scope.action = "$update";
+    $scope.storage = selected_storage;
+  }
+}
+
+function NetworkProjectCtrl($scope, $dialog, $routeParams, Project, Util){
+  
+  var d = $dialog.dialog({
+    backdrop: true,
+    keyboard: true,
+    backdropClick: true,
+    templateUrl: "/partials/projects/_network_dialog.html",
+    controller: 'DialogNetwork'
+  });
+
+  $scope.selected || ($scope.selected = {});
+
+  Project.get(function(projects){
+    $scope.networks = projects.networks;
+    Util.pagination($scope, 'networks', 5);
+  });
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'networks').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(networks){
+      var network_ids = networks.map(function(network){return network.id;});
+      console.log("REMOVE ALL storages " + network_ids);
+      new Project({ids: network_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(networks, function(network){
+            var index = $scope.networks.indexOf(network);
+            $scope.networks.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
+
+  $scope.do_edit = function(){
+    d.context_scope = $scope;
+    Util.bind($scope, 'networks').select(1, 1).then(function(networks){
+      d.context_scope.selected_network = networks[0];
+      d.open().then(function(result){
+        if(result) {
+          alert('dialog closed with result: ' + result);
+        }
+      });
+    });
+  };
+}
+
+function DialogNetwork($scope, dialog, Util, Project){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+
+  $scope.do_upsert = function(){
+    if($scope.network){
+      new Project($scope.network)[$scope.action](function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+  };
+
+  var selected_network = dialog.context_scope.selected_network;  
+  if(selected_network){
+    $scope.title = "修改存储方案";
+    $scope.action = "$update";
+    $scope.network = selected_network;
+  }
 }
 
 function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util) {
