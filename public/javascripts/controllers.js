@@ -21,7 +21,7 @@ function ActivityCtrl($rootScope, Activity, Shortcut){
   });
 }
 
-function DataCenterCtrl($scope, $routeParams, DataCenter, Host, VM, $pollingPool, Util) {
+function DataCenterCtrl($scope, $routeParams, $location, DataCenter, Host, VM, $pollingPool, Util) {
   $scope.events = [];
   $scope.eventSources = [$scope.events];
   var date = new Date();
