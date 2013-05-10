@@ -26,7 +26,7 @@ angular.module('webvirt', ['webvirtDirectives', 'webvirtServices', 'webvirtFilte
       when('/templates', {templateUrl: '/partials/templates/index.html', controller: TemplateCtrl}).
       when('/networks', {templateUrl: '/partials/networks/index.html', controller: NetworkCtrl}).
       when('/architects', {templateUrl: '/partials/architects/index.html', controller: ArchitectCtrl}).
-      when('/shortcuts', {templateUrl: '/partials/shortcuts/index.html', controller: ShortCutCtrl}).
+      when('/shortcuts', {templateUrl: '/partials/shortcuts/index.html', controller: ShortcutCtrl}).
       when('/projects', {templateUrl: '/partials/projects/index.html', controller: ProjectCtrl}).
       when('/backupstrategys',{templateUrl: '/partials/backupstrategys/index.html', controller: BackupStrategyCtrl}).
       otherwise({redirectTo: '/'});

@@ -134,6 +134,8 @@ app.post('/storages/status', storages.status);
 app.post('/storages/delete_all', storages.delete_all);
 
 app.get('/shortcuts', shortcuts.index);
+app.post('/shortcuts/status', shortcuts.status);
+app.post('/shortcuts/delete_all', shortcuts.delete_all);
 
 app.get('/projects', projects.index);
 app.put('/projects/:id', projects.update);

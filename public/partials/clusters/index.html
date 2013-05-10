@@ -1,29 +1,36 @@
 <div class="tabbable">
-  <ul class="nav nav-tabs" style="background-color:#F2F2F2;">
-    <li class="active"><a href="#overview" data-toggle="tab">概览</a></li>
-    <li><a href="#host" data-toggle="tab">主机</a></li>
-    <li><a href="#vms" data-toggle="tab">虚拟机</a></li>    
-    <li><a href="#networks" data-toggle="tab">网络</a></li>
-    <li><a href="#backups" data-toggle="tab">备份</a></li>
-    <li><a href="#storage" data-toggle="tab">存储</a></li>
-  </ul>
+  <div class="row-fluid">
+    <div class="span9 tab-layout">
+      <ul class="nav nav-tabs">
+        <li ng-class="overviewtab"><a href="#{{path}}#overview" data-toggle="tab">概览</a></li>
+        <li ng-class="hoststab"><a href="#{{path}}#hosts" data-toggle="tab">主机</a></li>
+        <li ng-class="vmstab"><a href="#{{path}}#vms" data-toggle="tab">虚拟机</a></li>    
+        <li ng-class="networkstab"><a href="#{{path}}#networks" data-toggle="tab">网络</a></li>
+        <li ng-class="backupstab"><a href="#{{path}}#backups" data-toggle="tab">备份</a></li>
+        <li ng-class="storagestab"><a href="#{{path}}#storages" data-toggle="tab">存储</a></li>
+      </ul>
+    </div>
+    <div class="span3 tab-layout">
+      <button class="btn btn-info" ng-click="add_bookmark()">存为书签</button>
+    </div>
+  </div>
   <div class="tab-content">
-    <div id="overview" class="tab-pane active" style="padding:0px 10px">
+    <div id="overview" class="tab-pane {{overviewtab}}" style="padding:0px 10px">
       <ng:include src="'/partials/clusters/_overview.html'" />
     </div>
-    <div id="host" class="tab-pane" style="padding:0px 10px">
+    <div id="hosts" class="tab-pane {{hoststab}}" style="padding:0px 10px">
       <ng:include src="'/partials/shared/_host_list.html'" />
     </div>
-    <div id="vms" class="tab-pane" style="padding:0px 10px">
+    <div id="vms" class="tab-pane {{vmstab}}" style="padding:0px 10px">
       <ng:include src="'/partials/shared/_vm_list.html'" />
     </div>    
-    <div id="networks" class="tab-pane" style="padding:0px 10px">
+    <div id="networks" class="tab-pane {{networkstab}}" style="padding:0px 10px">
       <ng:include src="'/partials/networks/_network_types.html'" />
     </div>
-    <div id="backups" class="tab-pane" style="padding:0px 10px">
+    <div id="backups" class="tab-pane {{backupstab}}" style="padding:0px 10px">
       <ng:include src="'/partials/shared/_backups.html'" />
     </div>
-    <div id="storage" class="tab-pane" style="padding:0px 10px">    
+    <div id="storage" class="tab-pane {{storagestab}}" style="padding:0px 10px">    
       <ng:include src="'/partials/storages/_storage_list.html'"/>
     </div>
   </div>
