@@ -1,23 +1,25 @@
-<div class="row-fluid">
-  <div class="span9 tab-layout">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#compute" data-toggle="tab">计算方案</a></li>
-      <li><a href="#storage" data-toggle="tab">存储方案</a></li>
-      <li><a href="#network" data-toggle="tab">网络方案</a></li>
-    </ul>
+<div class="tabbable">
+  <div class="row-fluid">
+    <div class="span9 tab-layout">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#compute" data-toggle="tab">计算方案</a></li>
+        <li><a href="#storage" data-toggle="tab">存储方案</a></li>
+        <li><a href="#network" data-toggle="tab">网络方案</a></li>
+      </ul>
+    </div>
+    <div class="span3 tab-layout">
+      <button class="btn btn-info" ng-click="add_bookmark()">存为书签</button>
+    </div>
   </div>
-  <div class="span3 tab-layout">
-    <button class="btn btn-info">存为书签</button>
+  <div class="tab-content">
+    <div id="compute" class="tab-pane active" style="padding:0px 10px">
+      <ng:include src="'/partials/projects/_compute_list.html'" />
+    </div>
+    <div id="storage" class="tab-pane" style="padding:0px 10px">
+      <ng:include src="'/partials/projects/_storage_list.html'" />
+    </div> 
+    <div id="network" class="tab-pane" style="padding:0px 10px">
+      <ng:include src="'/partials/projects/_network_list.html'" />
+    </div> 
   </div>
-</div>
-<div class="tab-content">
-  <div id="compute" class="tab-pane active" style="padding:0px 10px">
-    <ng:include src="'/partials/projects/_compute_list.html'" />
-  </div>
-  <div id="storage" class="tab-pane" style="padding:0px 10px">
-    <ng:include src="'/partials/projects/_storage_list.html'" />
-  </div> 
-  <div id="network" class="tab-pane" style="padding:0px 10px">
-    <ng:include src="'/partials/projects/_network_list.html'" />
-  </div> 
 </div>

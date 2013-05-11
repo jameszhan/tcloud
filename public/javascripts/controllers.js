@@ -140,7 +140,7 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
   
   $scope.add_bookmark = function(){
     var name="DataCenter ";
-    var subname = $location.absUrl().split('#')[2];
+    var subname = $scope.shortcut_name;
     if(subname && subname != "overview"){
       name += subname;
     }
@@ -184,14 +184,15 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
   
   $scope.add_bookmark = function(){
     var name="Cluster ";
-    if(pathArr[2] && pathArr[2]!="overview"){
-      name += pathArr[2];
+    var subname = $scope.shortcut_name;
+    if(subname && subname != "overview"){
+      name += subname;
     }
     shortcut = {
       "id": "61"+$routeParams.id,
       "name": name,
-      "url": $location.absUrl(),
-      "desrc": "Cluster快捷方式"
+      "url": $scope.location,
+      "desc": "Cluster快捷方式"
     };
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
@@ -243,13 +244,14 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
   
   $scope.add_bookmark = function(){
     var name="Host ";
-    if(pathArr[2] && pathArr[2]!="overview"){
-      name += pathArr[2];
+    var subname = $scope.shortcut_name;
+    if(subname && subname != "overview"){
+      name += subname;
     }
     shortcut = {
       "id": "611"+$routeParams.id,
       "name": name,
-      "url": $location.absUrl(),
+      "url": $scope.location,
       "desrc": "Host快捷方式"
     };
     if(confirm("添加书签?")){
@@ -414,26 +416,18 @@ function VMCtrl($scope, $routeParams, VM, Util, $location) {
     $scope.vms = [vm]; //Here is compatible with action_bar.
   });
 
-  $scope.path = $location.path();
-  var pathArr = $location.absUrl().split('#');
-  
-  switch(pathArr[2]){
-    case 'snapshots':
-      $scope.snapshotstab = "active";
-      break;
-    default:
-      $scope.overviewtab = "active";
-  }
+  Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
     var name="VM ";
-    if(pathArr[2] && pathArr[2]!="overview"){
-      name += pathArr[2];
+    var subname = $scope.shortcut_name;
+    if(subname && subname != "overview"){
+      name += subname;
     }
     shortcut = {
       "id": "6111"+$routeParams.id,
       "name": name,
-      "url": $location.absUrl(),
+      "url": $scope.location,
       "desrc": "VM快捷方式"
     };
     if(confirm("添加书签?")){
@@ -716,7 +710,7 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
       "id": "7",
       "name": "Template",
       "url": "/#/templates",
-      "desrc": "Template快捷方式"
+      "desc": "Template快捷方式"
     };
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
@@ -730,7 +724,7 @@ function NetworkCtrl($scope, $routeParams, Network, Util){
       "id": "8",
       "name": "Network",
       "url": "/#/networks",
-      "desrc": "Network快捷方式"
+      "desc": "Network快捷方式"
     };
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
@@ -913,7 +907,7 @@ function ArchitectCtrl($scope, Util){
       "id": "9",
       "name": "Architect",
       "url": "/#/architects",
-      "desrc": "Network快捷方式"
+      "desc": "Network快捷方式"
     };
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
@@ -1026,7 +1020,24 @@ function ShortcutCtrl($scope, $rootScope, Shortcut, Util){
 }
 
 function ProjectCtrl($scope, $routeParams, Project, Util){
+  Util.bind_tab($scope);
   
+  $scope.add_bookmark = function(){
+    var name="Project ";
+    var subname = $scope.shortcut_name;
+    if(subname && subname != "overview"){
+      name += subname;
+    }
+    shortcut = {
+      "id": "10"+$routeParams.id,
+      "name": name,
+      "url": $scope.location,
+      "desrc": "Project快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 function ComputeProjectCtrl($scope, $dialog, $routeParams, Project, Util){
@@ -1293,6 +1304,26 @@ function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util)
       });
     });
   };
+
+  Util.bind_tab($scope);
+  
+  $scope.add_bookmark = function(){
+    var name="BackupStrategy ";
+    var subname = $scope.shortcut_name;
+    if(subname && subname != "overview"){
+      name += subname;
+    }
+    shortcut = {
+      "id": "11",
+      "name": name,
+      "url": $scope.location,
+      "desrc": "BackupStrategy快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
+
 }
 
 function DialogBackupStrategyCtrl($scope, dialog, Util, BackupStrategy){

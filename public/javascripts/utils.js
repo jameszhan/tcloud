@@ -202,6 +202,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         $scope.$apply(function(){
           $location.hash(e.target.hash.substr(1));
           $scope.location = $location.absUrl();
+          $scope.shortcut_name = e.target.hash.substr(1)
           //$window.history.pushState("tab", "Tabs", $location.path());
         });
         
