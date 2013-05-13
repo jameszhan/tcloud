@@ -213,6 +213,12 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       if(shortcut){
         $rootScope.shortcuts.unshift(shortcut);
       }
+    },
+    update_list: function(list, data){
+      if(list){
+        data.id = list[list.length-1].id+1
+        list.unshift(data);
+      }
     }
   };
 });
