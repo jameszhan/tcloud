@@ -39,7 +39,7 @@ function TaskCalCtrl($scope, dialog, DataCenter){
   }
 }
 
-function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Host, VM, $pollingPool, Util) {
+function DataCenterCtrl($rootScope, $scope, $routeParams, $location, $dialog, DataCenter, Host, VM, $pollingPool, Util) {
   $scope.events = [];
   $scope.eventSources = [$scope.events];
   var date = new Date();
@@ -121,7 +121,8 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
     $scope.clusters = $scope.datacenter.clusters;
-    $scope.hosts = Util.flatten($scope.clusters, 'hosts');
+    $rootScope.hosts = Util.flatten($scope.clusters, 'hosts');
+    $scope.hosts = $rootScope.hosts;
     $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
         
     $pollingPool.add(function(){
@@ -162,10 +163,11 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
   });
 }
 
-function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util, $location) {
+function ClusterCtrl($rootScope, $scope, $routeParams, Cluster, Host, VM, $pollingPool, Util, $location) {
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
-    $scope.hosts = cluster.hosts;
+    $rootScope.hosts = cluster.hosts;
+    $scope.hosts = $rootScope.hosts;
     $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
     
     $pollingPool.add(function(){
@@ -273,7 +275,7 @@ function HostMgmtCtrl($scope, Util){
   Util.pagination($scope, 'hosts', 5);
 }
 
-function HostFormCtrl($scope, dialog, Util, Host){
+function HostFormCtrl($rootScope, $scope, dialog, Util, Host){
   $scope.close = function(result){
     dialog.close(result)
   };
@@ -282,6 +284,9 @@ function HostFormCtrl($scope, dialog, Util, Host){
     if($scope.host){
       new Host($scope.host)[$scope.action](function(data){
         if(data.success){
+          if($scope.action == "$save"){
+            Util.update_list($rootScope.hosts, $scope.host);
+          }
           Util.update_activities(data);
           dialog.close("Save Successful!");
         }
