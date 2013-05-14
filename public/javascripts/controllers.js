@@ -1259,7 +1259,7 @@ function DialogNetwork($scope, dialog, Util, Project){
   }
 }
 
-function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util) {
+function BackupStrategyCtrl($rootScope, $scope, $dialog, $routeParams, BackupStrategy, Util) {
   
   var d = $dialog.dialog({
     backdrop: true,
@@ -1272,7 +1272,8 @@ function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util)
   $scope.selected || ($scope.selected = {});
   
   BackupStrategy.get(function(backupstrategys){
-    $scope.backupstrategys = backupstrategys.strategys;
+    $rootScope.backupstrategys = backupstrategys.strategys; 
+    $scope.backupstrategys = $rootScope.backupstrategys;
     Util.pagination($scope, 'backupstrategys', 5);
   });
 
@@ -1335,7 +1336,7 @@ function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util)
 
 }
 
-function DialogBackupStrategyCtrl($scope, dialog, Util, BackupStrategy){
+function DialogBackupStrategyCtrl($rootScope, $scope, dialog, Util, BackupStrategy){
   $scope.close = function(result){
     dialog.close(result);
   }
@@ -1344,6 +1345,9 @@ function DialogBackupStrategyCtrl($scope, dialog, Util, BackupStrategy){
     if($scope.backupstrategy){
       new BackupStrategy($scope.backupstrategy)[$scope.action](function(data){
         if(data.success){
+          if($scope.action == "$save"){
+            Util.update_list($rootScope.backupstrategys, $scope.backupstrategy);
+          }
           Util.update_activities(data);
           dialog.close("Save Successful!");
         }
