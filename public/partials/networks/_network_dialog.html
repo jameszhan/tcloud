@@ -13,6 +13,23 @@
       </div>
     </div>
     <div class="control-group">
+      <label for="name" class="control-label">网络类型：</label>
+      <div class="controls">
+        <label class="radio radio-top">
+          <input type="radio" ng-model="network.type" value="隔离网络">
+          <h5>隔离网络</h5>
+        </label>
+        <label class="radio">
+          <input type="radio" ng-model="network.type" value="nat网络">
+          <h5>nat网络</h5>  
+        </label>
+        <label class="radio">
+          <input type="radio" ng-model="network.type" value="路由网络">
+          <h5>路由网络</h5>
+        </label>
+      </div>
+    </div>
+    <div class="control-group">
       <label for="name" class="control-label">IP网段：</label>
       <div class="controls">
         <input type="text" required ng-model="network.ip_range" class="input"/>
@@ -38,7 +55,7 @@
     <div class="control-group">
       <label for="name" class="control-label">启用DHCP：</label>
       <div class="controls">
-        <input type="checkbox" class="input-mini"/>
+        <input type="checkbox" class="input-mini" ng-model="network.dhcp" ng-true-value="是" ng-true-value="否"/>
       </div>
     </div>
     <div class="control-group">
@@ -51,23 +68,6 @@
       <label for="name" class="control-label">DHCP结束：</label>
       <div class="controls">
         <input type="text" required ng-model="network.dhcp_end" class="input"/>
-      </div>
-    </div>
-    <div class="control-group">
-      <label for="name" class="control-label">网络类型：</label>
-      <div class="controls">
-        <label class="radio radio-top">
-          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-          <h5>隔离网络</h5>
-        </label>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-          <h5>nat网络</h5>  
-        </label>
-        <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-          <h5>路由网络</h5>
-        </label>
       </div>
     </div>
     <div class="control-group">
