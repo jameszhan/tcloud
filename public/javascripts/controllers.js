@@ -123,8 +123,9 @@ function DataCenterCtrl($rootScope, $scope, $routeParams, $location, $dialog, Da
     $scope.clusters = $scope.datacenter.clusters;
     $rootScope.hosts = Util.flatten($scope.clusters, 'hosts');
     $scope.hosts = $rootScope.hosts;
-    $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
-        
+    $rootScope.vms = Util.flatten($scope.hosts, 'virtual_machines');
+    $scope.vms = $rootScope.vms; 
+
     $pollingPool.add(function(){
       var vm_ids = $scope.vms.map(function(vm){return vm.id});
       VM.status({ids: vm_ids}, function(data){
@@ -168,8 +169,9 @@ function ClusterCtrl($rootScope, $scope, $routeParams, Cluster, Host, VM, $polli
     $scope.cluster = cluster;
     $rootScope.hosts = cluster.hosts;
     $scope.hosts = $rootScope.hosts;
-    $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
-    
+    $rootScope.vms = Util.flatten($scope.hosts, 'virtual_machines');
+    $scope.vms = $rootScope.vms;
+
     $pollingPool.add(function(){
       var vm_ids = $scope.vms.map(function(vm){return vm.id});
       VM.status({ids: vm_ids}, function(data){
@@ -220,10 +222,11 @@ function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
   };
 }
 
-function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location) {
+function HostCtrl($rootScope, $scope, $routeParams, Host, VM, $pollingPool, Util, $location) {
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
-    $scope.vms = $scope.host.virtual_machines;
+    $rootScope.vms = $scope.host.virtual_machines;
+    $scope.vms = $rootScope.vms;
     $scope.os_info = $scope.vms.reduce(function(ret, vm){
       if(ret[vm.os_type] != undefined){
         ret[vm.os_type] += 1;
@@ -447,7 +450,7 @@ function VMMgmtCtrl($scope, Util){
   Util.pagination($scope, 'vms', 5);
 }
 
-function VMWorkflowCtrl($scope, dialog) {  
+function VMWorkflowCtrl($rootScope, $scope, VM, dialog, Util) {  
   $scope.current_step = 1;
   $scope.steps = ["虚拟机设置", "操作系统类型", "选择计算方案", "选择存储方案", "选择网络方案", "确认创建"];
   $scope.view_types = ['vnc'];
@@ -458,6 +461,7 @@ function VMWorkflowCtrl($scope, dialog) {
     $scope.vm = selected_vm;
   } else {
     $scope.action = "$save";
+    $rootScope.vm = {};
     $scope.vm = {};    
   }  
   
@@ -509,9 +513,24 @@ function VMWorkflowCtrl($scope, dialog) {
     $scope.current_step += 1;
     load_step();
   };
-  $scope.create = function(){
-    console.log($scope.vm);
-  };  
+  
+  $scope.do_upsert = function(){
+    if($scope.vm){
+      new VM($scope.vm)[$scope.action](function(data){
+        if(data.success){
+          if($scope.action == "$save"){
+            Util.update_list($rootScope.vms, $scope.vm);
+          }
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+
+
+    dialog.close();
+  };
+
   $scope.close = function(result){
     dialog.close(result)
   };
@@ -1016,8 +1035,6 @@ function DialogStorageCtrl($rootScope, $scope, dialog, Util, Storage){
     $scope.action = "$save";
     $scope.storage = {};   
   }
-
-    
 }
 
 function ShortcutCtrl($scope, $rootScope, Shortcut, Util){
@@ -1344,7 +1361,6 @@ function BackupStrategyCtrl($rootScope, $scope, $dialog, $routeParams, BackupStr
       Util.bookmark(shortcut); 
     }
   };
-
 }
 
 function DialogBackupStrategyCtrl($rootScope, $scope, dialog, Util, BackupStrategy){
