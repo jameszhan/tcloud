@@ -732,7 +732,7 @@ function NetworkCtrl($scope, $routeParams, Network, Util){
   };
 }
 
-function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
+function NetworkTypeCtrl($rootScope, $scope, $dialog, $routeParams, Network, Util){
   
   var d = $dialog.dialog({
     backdrop: true,
@@ -744,7 +744,8 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
 
   $scope.selected || ($scope.selected = {});
   Network.get(function(networks){
-    $scope.networks = networks.networks;
+    $rootScope.networks || ($rootScope.networks = networks.networks);
+    $scope.networks = $rootScope.networks;
     Util.pagination($scope, 'networks', 5);
   });
 
@@ -787,7 +788,7 @@ function NetworkTypeCtrl($scope, $dialog, $routeParams, Network, Util){
   };
 }
 
-function DialogTypeCtrl($scope, dialog, Util, Network){
+function DialogTypeCtrl($rootScope, $scope, dialog, Util, Network){
 
   $scope.close = function(result){
     dialog.close(result);
@@ -797,6 +798,9 @@ function DialogTypeCtrl($scope, dialog, Util, Network){
     if($scope.network){
       new Network($scope.network)[$scope.action](function(data){
         if(data.success){
+          if($scope.action == "$save"){
+            Util.update_list($rootScope.networks, $scope.network);
+          }
           Util.update_activities(data);
           dialog.close("Save Successful!");
         }
@@ -816,7 +820,7 @@ function DialogTypeCtrl($scope, dialog, Util, Network){
   }
 }
 
-function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){  
+function NetworkPortCtrl($rootScope ,$scope, $dialog, $routeParams, Network, Util){  
   var d = $dialog.dialog({
     backdrop: true,
     keyboard: true,
@@ -827,7 +831,8 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
 
   $scope.selected || ($scope.selected = {});  
   Network.get(function(networks){
-    $scope.ports = networks.ports;
+    $rootScope.ports || ($rootScope.ports = networks.ports);
+    $scope.ports = $rootScope.ports;
     Util.pagination($scope, 'ports', 5);
   });
 
@@ -870,15 +875,19 @@ function NetworkPortCtrl($scope, $dialog, $routeParams, Network, Util){
   };
 }
 
-function DialogPortCtrl($scope, dialog, Util, Network){
+function DialogPortCtrl($rootScope ,$scope, dialog, Util, Network){
   $scope.close = function(result){
     dialog.close(result);
   }
 
   $scope.do_upsert = function(){
-    if($scope.network){
+    var network = $scope.network
+    if(network){
       new Network($scope.network)[$scope.action](function(data){
         if(data.success){
+          if($scope.action == "$save"){
+            Util.update_list($rootScope.ports, network);  
+          }
           Util.update_activities(data);
           dialog.close("Save Successful!");
         }

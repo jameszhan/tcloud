@@ -1,7 +1,7 @@
 {
   "networks":[
     {
-      "id": "1",
+      "id": 1,
       "name": "应用网络",
       "type": "NAT",
       "ip_range": "172.16.10.0/24",
@@ -12,7 +12,7 @@
       "status": "停用"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "应用网络",
       "type": "NAT",
       "ip_range": "172.16.10.0/24",
@@ -23,7 +23,7 @@
       "status": "禁用"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "应用网络",
       "type": "NAT",
       "ip_range": "172.16.10.0/24",
@@ -34,7 +34,7 @@
       "status": "启动"
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "应用网络",
       "type": "NAT",
       "ip_range": "172.16.10.0/24",
@@ -45,7 +45,7 @@
       "status": "停用"
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "应用网络",
       "type": "NAT",
       "ip_range": "172.16.10.0/24",
@@ -56,7 +56,7 @@
       "status": "禁用"
     },
     {
-      "id": "6",
+      "id": 6,
       "name": "应用网络",
       "type": "NAT",
       "ip_range": "172.16.10.0/24",
@@ -69,7 +69,7 @@
   ],
   "ports":[
     { 
-      "id": "1",
+      "id": 1,
       "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
@@ -78,7 +78,7 @@
       "created_at": ""
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
@@ -87,7 +87,7 @@
       "created_at": ""
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
@@ -96,7 +96,7 @@
       "created_at": ""
     },
     {
-      "id": "4",
+      "id": 4,
       "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
@@ -105,7 +105,7 @@
       "created_at": ""
     },
     {
-      "id": "5",
+      "id": 5,
       "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
@@ -114,8 +114,8 @@
       "created_at": ""
     },
     {
-      "id": "6",
-      "cluster": "开发",
+      "id": 6,
+      "name": "开发",
       "protocol": "tcp",
       "port_begin": "22",
       "port_end": "22",
