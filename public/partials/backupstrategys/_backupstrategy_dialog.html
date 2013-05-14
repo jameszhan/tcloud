@@ -15,16 +15,14 @@
     <div class="control-group">
       <label class="control-label">备份方式:</label>
       <div class="controls">
-        <select class="span2">
-          <option value="">冷备份</option>
-          <option value="">热备份</option>
-        </select>
+        <select class="span2" ng-model="backupstrategy.type" ng-options="t.name for t in backupTypes"></select>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">压缩:</label>
       <div class="controls">
-        <input type="checkbox" class="input-mini"/> 级别: <input type="text" ng-model="backupstrategy.compress_rate" class="input-small"/>
+        <input type="checkbox" class="input-mini" ng-model="checked"/> 
+        <span ng-show="checked">级别: <input type="text" ng-model="backupstrategy.compress_rate" class="input-small"/></span>
       </div>
     </div>
     <div class="control-group">
@@ -42,34 +40,28 @@
       <label class="control-label">备份位置:</label>
       <div class="controls">
         <label class="radio">
-          <input type="radio" name="path" value="{{backupstrategy.path}}" id="optionsRadios1">本地
+          <input type="radio" ng-model="backupstrategy.path" value="本地">本地
           <input type="text" class="input"/> 
         </label>
         <label class="radio">
-          <input type="radio" name="path" value="{{backupstrategy.path}}" id="optionsRadios1">存储
+          <input type="radio" ng-model="backupstrategy.path" value="存储">存储
           <select class="span2">
             <option>storage server</option>
           </select>
         </label>
         <label class="radio">
-          <input type="radio" name="path" value="b{{ackupstrategy.path}}" id="optionsRadios1">远程(sftp)<br />
-          host: <input type="text" class="input-small"/> <br />
+          <input type="radio" ng-model="backupstrategy.path" value="远程(sftp)">远程(sftp)<br />
+          host: <input type="text" class="input-small"/> 
           path: <input type="text" class="input-small"/> <br />
-          username: <input type="text" class="input-small"/> <br />
-          password: <input type="password" class="input-small"/> <br />
+          username: <input type="text" class="input-small"/>
+          password: <input type="password" class="input-small"/>
         </label>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">计划时间:</label>
       <div class="controls">
-        <select class="span2">
-          <option>每小时</option>
-          <option>每天</option>
-          <option>每周</option>
-          <option>每月</option>
-          <option>每年</option>
-        </select>
+        <select class="span2" ng-model="backupstrategy.schedule" ng-options="s.name for s in schedules"></select>
       </div>
     </div>
   </div>

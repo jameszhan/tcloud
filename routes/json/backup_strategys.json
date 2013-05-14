@@ -3,42 +3,42 @@
     {
       "id": "1",
       "name": "周备份",
-      "type": "冷备份",
+      "type": {"name": "冷备份"},
       "compress_rate": "9",
       "path": "本地",
-      "schedule": "每周(12:00 pm)"
+      "schedule": {"name": "每周(12:00 pm)"}
     },
     {
       "id": "2",
       "name": "年备份",
-      "type": "冷备份",
+      "type": {"name": "冷备份"},
       "compress_rate": "0",
       "path": "存储",
-      "schedule": "每周(12:00 pm)"
+      "schedule": {"name": "每周(12:00 pm)"}
     },
     {
       "id": "3",
       "name": "月备份",
-      "type": "冷备份",
+      "type": {"name": "冷备份"},
       "compress_rate": "6",
       "path": "sftp",
-      "schedule": "每周(12:00 pm)"
+      "schedule": {"name": "每周(12:00 pm)"}
     },
     {
       "id": "4",
       "name": "日备份",
-      "type": "冷备份",
+      "type": {"name": "冷备份"},
       "compress_rate": "2",
       "path": "存储",
-      "schedule": "每周(12:00 pm)"
+      "schedule": {"name": "每周(12:00 pm)"}
     },
     {
       "id": "5",
       "name": "时备份",
-      "type": "热备份",
+      "type": {"name": "热备份"},
       "compress_rate": "3",
       "path": "本地",
-      "schedule": "每(*:00)"
+      "schedule": {"name": "每周(12:00 pm)"}
     }
   ]
 }

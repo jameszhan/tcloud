@@ -31,10 +31,10 @@
       <tr ng-repeat="backupstrategy in backupstrategys | startFrom:(current_page * page_size) | limitTo:page_size">  
         <td><input type="checkbox" value="{{backupstrategy.id}}" ng-model="selected[backupstrategy.id]"/></td>  
         <td>{{backupstrategy.name}}</td>
-        <td>{{backupstrategy.type}}</td>  
+        <td>{{backupstrategy.type.name}}</td>  
         <td>{{backupstrategy.compress_rate}}</td>
         <td>{{backupstrategy.path}}</td>
-        <td>{{backupstrategy.schedule}}</td> 
+        <td>{{backupstrategy.schedule.name}}</td> 
       </tr>
     </tbody>
   </table>
