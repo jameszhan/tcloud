@@ -1352,4 +1352,19 @@ function DialogBackupStrategyCtrl($scope, dialog, Util, BackupStrategy){
     $scope.action = "$save";
     $scope.backupstrategy = {};   
   }
+
+  $scope.backupTypes = [
+    {name:'冷备份'},
+    {name:'热备份'}
+  ];
+  $scope.backupstrategy.type = $scope.backupTypes[0];
+
+  $scope.schedules = [
+    {name: "每小时"},
+    {name: "每天"},
+    {name: "每周"},
+    {name: "每月"},
+    {name: "每年"}
+  ];
+  $scope.backupstrategy.schedule = $scope.schedules[0];
 }
