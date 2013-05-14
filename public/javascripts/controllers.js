@@ -929,7 +929,7 @@ function ArchitectCtrl($scope, Util){
   };
 }
 
-function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
+function StorageCtrl($rootScope, $scope, $dialog, $routeParams, Storage, Util){
   
   var d = $dialog.dialog({
     backdrop: true,
@@ -942,7 +942,8 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
   $scope.selected || ($scope.selected = {});
   
   Storage.get(function(storages){
-    $scope.storages = storages.storages;
+    $rootScope.storages = storages.storages;
+    $scope.storages = $rootScope.storages;
     $scope.storage_obj = storages;
     Util.pagination($scope, 'storages', 5);
   });
@@ -986,7 +987,7 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
   };
 }
 
-function DialogStorageCtrl($scope, dialog, Util, Storage){
+function DialogStorageCtrl($rootScope, $scope, dialog, Util, Storage){
   $scope.close = function(result){
     dialog.close(result);
   }
@@ -995,6 +996,9 @@ function DialogStorageCtrl($scope, dialog, Util, Storage){
     if($scope.storage){
       new Storage($scope.storage)[$scope.action](function(data){
         if(data.success){
+          if($scope.action == "$save"){
+            Util.update_list($rootScope.storages, $scope.storage);
+          }
           Util.update_activities(data);
           dialog.close("Save Successful!");
         }
@@ -1012,6 +1016,8 @@ function DialogStorageCtrl($scope, dialog, Util, Storage){
     $scope.action = "$save";
     $scope.storage = {};   
   }
+
+    
 }
 
 function ShortcutCtrl($scope, $rootScope, Shortcut, Util){
