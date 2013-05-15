@@ -158,10 +158,25 @@ function DataCenterCtrl($rootScope, $scope, $routeParams, $location, $dialog, Da
   };  
 }
 
-function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent){
+function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent, Util){
   DataCenterEvent.query({data_center_id: $routeParams.id}, function(events, headersFn){
     $scope.events = events;
   });
+
+  $scope.delete_all = function(id){
+    if(confirm("你确定要删除它们吗，此操作将无法恢复!")){
+      console.log("DELETE event " + id);
+      new DataCenterEvent({data_center_id: $routeParams.id, id: id}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(events, function(event){
+            var index = $scope.events.indexOf(event);
+            $scope.events.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    }
+  }
 }
 
 function ClusterCtrl($rootScope, $scope, $routeParams, Cluster, Host, VM, $pollingPool, Util, $location) {

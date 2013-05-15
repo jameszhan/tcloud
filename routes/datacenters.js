@@ -13,6 +13,24 @@ exports.events = function(req, res){
   res.sendfile(__dirname + '/json/dcs/0' + req.params.id + '/events.json');
 }
 
+exports.event_delete = function(req, res){
+  console.log("mlx");
+  var ids = req.body.ids;
+  console.log("Remove event %a", ids);
+  //Do your actual migrate operation here.
+  res.json({success: true, activities: [
+    {
+      id: 111, 
+      name: 'REMOVE', 
+      target: "event", 
+      target_type: "Event", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]
+  });
+}
+
 
 exports.top_hosts = function(req, res){
   res.set("ContentType", "application/json");
