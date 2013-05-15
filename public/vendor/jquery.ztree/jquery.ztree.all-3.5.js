@@ -1177,7 +1177,7 @@
 		},
 		makeNodeTarget: function(node) {
 			//return (node.target || "_blank");
-			alert(node.target);
+			//alert(node.target);
 			return node.target;
 		},
 		makeNodeUrl: function(setting, node) {
