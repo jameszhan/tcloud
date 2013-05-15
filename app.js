@@ -74,6 +74,7 @@ app.get('/tree_list', routes.tree_list);
 
 app.get('/datacenters/:id', datacenters.show);
 app.get('/datacenters/:id/events', datacenters.events);
+app.post('/datacenters/:id/events/delete_all', datacenters.event_delete);
 app.get('/datacenters/:id/top_hosts', datacenters.top_hosts);
 app.get('/datacenters/:id/top_vms', datacenters.top_vms);
 app.get('/datacenters/:id/backups', datacenters.backups);
