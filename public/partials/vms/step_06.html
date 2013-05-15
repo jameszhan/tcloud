@@ -10,11 +10,11 @@
     <form class="form-horizontal">
       <div class="control-group">
         <label for="name" class="control-label">名字：</label>
-        <label for="name" class="text-label">Ubuntu</label>
+        <label for="name" class="text-label">{{vm.name}}</label>
       </div>
       <div class="control-group">
         <label for="name" class="control-label">显示设置：</label>
-        <label for="name" class="text-label">vnc</label>
+        <label for="name" class="text-label">{{vm.view_type}}</label>
       </div>
       <div class="control-group">
         <label for="name" class="control-label">USB重定向：</label>
@@ -40,31 +40,23 @@
       </div>
       <div class="control-group">
         <label for="name" class="control-label">虚拟机描述：</label>
-        <label for="name" class="text-label"></label>
+        <label for="name" class="text-label">{{vm.desc}}</label>
       </div>
       <div class="control-group">
         <label for="name" class="control-label">模板：</label>
-        <label for="name" class="text-label">
-          ISO &nbsp;&nbsp;包含操作系统的数据或可启动介质的磁盘映像
-        </label>
+        <label for="name" class="text-label">{{vm.template}}</label>
       </div>
       <div class="control-group">
         <label for="name" class="control-label">计算方案：</label>
-        <label for="name" class="text-label">
-          计算方案 &nbsp;&nbsp;选择已有的计算方案
-        </label>
+        <label for="name" class="text-label">{{vm.computeProject}}</label>
       </div>
       <div class="control-group">
         <label for="name" class="control-label">存储方案：</label>
-        <label for="name" class="text-label">
-          中 &nbsp;&nbsp;(50GB)
-        </label>
+        <label for="name" class="text-label">{{vm.storageProject}}</label>
       </div>
       <div class="control-group">
         <label for="name" class="control-label">网络方案：</label>
-        <label for="name" class="text-label">
-          网络方案 &nbsp;&nbsp;选择已有网络方案
-        </label>
+        <label for="name" class="text-label">{{vm.networkProject}}</label>
       </div>
     </form>
     </div>
@@ -73,5 +65,5 @@
     </div>
   </div>
   <button ng-click="prev_step()" class="btn btn-mini pull-left btn-primary">上一步</div>
-  <button ng-click="create()" class="btn btn-mini pull-right btn-primary">确认</div>
+  <button ng-click="do_upsert()" class="btn btn-mini pull-right btn-primary">确认</div>
 </fieldset>

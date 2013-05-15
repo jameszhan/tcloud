@@ -119,7 +119,8 @@ app.post('/vms/status', vms.status);
 app.post('/vms/operate', vms.operate);
 app.post('/vms/:id/backups/:backup_id/reset', vms.reset_backup);
 app.get('/vms/:id/migration_hosts', vms.migration_hosts);
-
+app.post('/vms', vms.save);
+app.put('/vms/:id', vms.update);
 
 app.get('/templates', templates.index);
 

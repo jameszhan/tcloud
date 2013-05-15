@@ -24,6 +24,7 @@ angular.module('webvirtServices', [])
   .factory('VM', function($resource){
     return $resource('vms/:id', {id: '@id', backup_id: '@backup_id'}, {    
       'status': {method: 'POST', isArray: true, url: 'vms/status'},
+      'update': {method: 'PUT'},
       'delete_all': {method: 'POST', url: 'vms/delete_all'}, 
       'save_template': {method: 'POST', url: 'vms/:id/save_template'},
       'migrate': {method: 'POST', url: 'vms/:id/migrate'},

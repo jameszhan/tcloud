@@ -9,7 +9,7 @@
     <div class="span8">
       <form class="form-horizontal">
         <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+          <input type="radio" ng-model="vm.template" value="模板">
           <h5>模板 &nbsp;&nbsp;可用于启动虚拟机的操作系统映像</h5>
           <div class="control-group">
             <label for="cluster" class="control-label">模板类型:</label>
@@ -29,7 +29,7 @@
           </div>
         </label>
         <label class="radio">
-          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+          <input type="radio" ng-model="vm.template" value="ISO">
           <h5>ISO &nbsp;&nbsp;包含操作系统的数据或可启动介质的磁盘映像</h5>
         </label>
       </form>

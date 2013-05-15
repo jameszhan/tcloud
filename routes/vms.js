@@ -180,6 +180,37 @@ exports.status = function(req, res){
   res.render("templates/vms_status.json", {ids: ids});  
 }
 
+exports.save = function(req, res){
+  res.set("ContentType", "application/json");
+  console.log("save vm", req.body);
+  res.json({success: true, activities: [
+    {
+      id: 1180, 
+      name: 'ADD', 
+      target: "vm", 
+      target_type: "VM", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]
+  });
+}
+
+exports.update = function(req, res){
+  res.set("ContentType", "application/json");
+  console.log("update vm", req.body);
+  res.json({success: true, activities: [
+    {
+      id: 1160, 
+      name: 'UPDATE', 
+      target: "vm", 
+      target_type: "VM", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]
+  });
+}
 
 exports.show = function(req, res){
   res.set("ContentType", "application/json");
@@ -200,3 +231,4 @@ exports.current_memory = function(req, res){
 exports.current_traffic = function(req, res){
   res.render("templates/current_traffic.json", {current_time: strftime('%H:%M:%S')});  
 }
+
