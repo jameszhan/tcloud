@@ -11,7 +11,8 @@ angular.module('webvirtServices', [])
   .factory('DataCenterEvent', function($resource){
     return $resource('datacenters/:data_center_id/events/:id', {data_center_id: '@data_center_id',id: '@id'}, {
       get: {method: 'GET'},
-      query: {method: 'GET', isArray: true}
+      query: {method: 'GET', isArray: true},
+      delete_all: {method: 'POST', url: 'datacenters/:data_center_id/events/delete_all'}
     });
   })
   .factory('Cluster', function($resource){
