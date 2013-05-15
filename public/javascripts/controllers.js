@@ -204,6 +204,35 @@ function ClusterCtrl($rootScope, $scope, $routeParams, Cluster, Host, VM, $polli
   };  
 }
 
+function MonitoringCtrl($scope, $http, $timeout){
+  $scope.template = {
+    url: "/partials/shared/_monitoring_list.html"
+  };
+  $scope.targets = [{name: 'CPU', type: 'cpu'}, {name: 'Memory', type: 'memory'}, {name: 'Disk', type: 'disk'}];
+  $scope.intervals = [{name: '1秒', value: '1000'}, {name: '3秒', value: '3000'}, {name: '10秒', value: '10000'}, {name: '30秒', value: '30000'}, {name: '1分', value: '60000'}, {name: '10分', value: '100000'}];
+  $scope.monitoring = {};
+  $scope.monitoring.target = $scope.targets[0]; 
+  $scope.monitoring.interval = $scope.intervals[1];  
+  
+  $scope.show_details = function(host){
+    $scope.host = host;
+    $scope.template.url = "/partials/shared/_monitoring_details.html";
+    show_target_image();
+  };
+  $scope.go_back = function(){
+    $scope.host = null;
+    $scope.template.url = "/partials/shared/_monitoring_list.html";
+  };
+  
+  function show_target_image(){
+    if($scope.host){
+      var url = "hosts/" + $scope.host.id + "/" + $scope.monitoring.target.type;
+      $scope.monitoring.image = url;
+      $timeout(show_target_image, $scope.monitoring.interval.value);      
+    }
+  }
+}
+
 function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
   Cluster.backup_strategy({id: $routeParams.id}, function(data){
     $scope.backup_strategies = data;

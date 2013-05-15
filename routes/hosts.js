@@ -1,3 +1,9 @@
+exports.monitoring = function(req, res){
+  console.log("monitor host %d with type: %s", req.params.id, req.params.type);
+  res.set("ContentType", "image/jpeg");
+  res.sendfile(__dirname + '/images/' + req.params.type + '_monitor.jpg');
+}
+
 exports.backups = function(req, res){
   res.set("ContentType", "application/json");
   res.sendfile(__dirname + '/json/clusters/backups.json');  

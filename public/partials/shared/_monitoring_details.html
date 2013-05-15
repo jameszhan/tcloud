@@ -1,0 +1,19 @@
+<div>
+  <div class="row-fluid">
+    <div class="span7">
+      {{host.name}}<br />
+      {{host.architect}}<br />
+      {{host.total_memory|bytes}}
+      ...
+    </div>
+    <div class="filters span5">
+      间隔：<select ng-options="c.name for c in intervals" class="span2" ng-model="monitoring.interval"></select>
+      目标：<select ng-options="c.name for c in targets"  class="span2" ng-model="monitoring.target"></select>
+    </div>
+  </div>
+
+  <div class="monitoring-image">
+    <img src="{{monitoring.image}}" />
+  </div>
+  <button class="btn pull-right" ng-click="go_back()">Back</button>
+</div>

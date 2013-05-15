@@ -26,9 +26,7 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
     var context_menu = $('#right-click-menu');
     var show_context_menu = function(e, tree_id, tree_node){
       context_menu = $('#right-click-menu');
-      console.log(context_menu.length);
       context_menu.css({"top": e.clientY + "px", "left":e.clientX + "px", "visibility":"visible"});
-      console.log(context_menu.html());
       $("body").bind("mousedown", body_mousedown);
     };
     var hide_context_menu = function(){
@@ -61,19 +59,6 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
         element.on('keyup', '.search', function(){
           _filter(scope.data, scope.search);
           ztree = $.fn.zTree.init(_tree, _settings, scope.data);
-          /*
-          $.fn.zTree.init(_tree, {
-            target: '_self',
-            callback: {
-              onRightClick: function(e, tree_id, tree_node){
-                console.log("right click =>");
-                console.log(e, tree_id, tree_node);
-                console.log(ztree.selectNode(tree_node));
-              }
-            } 
-          }, scope.data);
-          var ztree = $.fn.zTree.getZTreeObj("search-tree");
-          */
         });
         $http.get(attrs.url).success(function(data, status, headers, config) {
           scope.data = data
