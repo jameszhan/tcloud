@@ -21,8 +21,33 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
           data.open = status =  (data.name && data.name.search(re) >= 0);
         }                     
       }
-      return status
+      return status;
     }
+    var context_menu = $('#right-click-menu');
+    var show_context_menu = function(e, tree_id, tree_node){
+      context_menu = $('#right-click-menu');
+      context_menu.css({"top": e.clientY + "px", "left":e.clientX + "px", "visibility":"visible"});
+      $("body").bind("mousedown", body_mousedown);
+    };
+    var hide_context_menu = function(){
+      if(context_menu){
+        context_menu.css({"visibility":"hidden"});
+      }
+      $("body").unbind("mousedown", body_mousedown);
+    };
+    
+    function body_mousedown(e) {
+      if (!(e.target.id == "right-click-menu" || $(e.target).parents("#right-click-menu").length > 0)) {
+        context_menu.css({"visibility":"hidden"});
+      }
+    }
+    
+    var ztree = null;
+    var _settings = {
+      callback: {
+        onRightClick: show_context_menu
+      }
+    };
     return {
       restrict: 'E',
       transclude: true,
@@ -30,14 +55,14 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
         classname: '@'
       },
       link: function(scope, element, attrs){
-        var _tree = element.find("#search-tree")
+        var _tree = element.find("#search-tree");
         element.on('keyup', '.search', function(){
-          _filter(scope.data, scope.search)
-          $.fn.zTree.init(_tree, {target: '_self'}, scope.data);
+          _filter(scope.data, scope.search);
+          ztree = $.fn.zTree.init(_tree, _settings, scope.data);
         });
         $http.get(attrs.url).success(function(data, status, headers, config) {
           scope.data = data
-          $.fn.zTree.init(_tree, {}, scope.data)
+          ztree = $.fn.zTree.init(_tree, _settings, scope.data);
         }).error(function(data, status, headers, config) {
           scope.data = []
         });        
@@ -48,7 +73,7 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
               '<input type="search" ng-model="search" class="search span12" />' + 
           '</div>' + 
           '<ul id="search-tree" class="{{classname}}" ng-transclude></ul>' +
-        '</div>'
+        '</div>' 
     };
   })
   .directive('toplist', function($q, $http, $timeout, $pollingPool) {   

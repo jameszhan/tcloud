@@ -15,7 +15,8 @@
   <link rel="stylesheet" href="/vendor/toggle-switch.css" type="text/css" /> 
   <link rel="stylesheet" href="/vendor/jquery.ztree/jquery.ztree.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/fullcalendar/fullcalendar.css" type="text/css" />
-  <link rel="stylesheet" href="/stylesheets/bootstrap-override.css" type="text/css" />
+  <link rel="stylesheet" href="/stylesheets/bootstrap-override.css" type="text/css" />  
+  <link rel="stylesheet" href="/stylesheets/right_context_menu.css" type="text/css" />
   <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
   <link rel="stylesheet" href="/stylesheets/chart.css" type="text/css" />
   <script src="/vendor/jquery/jquery-1.7.2.js" type="text/javascript"></script>
@@ -33,7 +34,7 @@
   <script src="/vendor/fullcalendar/gcal.js" type="text/javascript"></script>
   <script src="/vendor/angular-ui/calendar.js" type="text/javascript"></script>
   <script src="/vendor/bootstrap/bootstrap.js" type="text/javascript"></script>
-  <script src="/vendor/jquery.ztree/jquery.ztree.core-3.5.js" type="text/javascript"></script>
+  <script src="/vendor/jquery.ztree/jquery.ztree.all-3.5.js" type="text/javascript"></script>
   <script src="/javascripts/utils.js" type="text/javascript"></script>
   <script src="/javascripts/directives.js" type="text/javascript"></script>
   <script src="/javascripts/services.js" type="text/javascript"></script>
@@ -63,6 +64,19 @@
 
 <div class="ui-layout-south">
   <% include partials/activities %>
+</div>
+
+<div id="right-click-menu">
+  <ul class="datacenters">
+    <li>创建虚拟机</li>
+    <li>添加主机</li>
+    <li>添加网络</li>
+  </ul>
+  <ul class="clusters">
+    <li>创建虚拟机</li>
+    <li>添加主机</li>
+    <li>添加网络</li>
+  </ul>
 </div>
 
 <% include partials/ng-templates %>
