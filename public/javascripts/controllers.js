@@ -588,7 +588,6 @@ function MigrateDialogCtrl($scope, dialog, VM, Util){
   };
 }
 
-
 function ActionBarCtrl($scope, $q, $dialog, VM, Util){
   var d = $dialog.dialog({
     backdrop: true,
@@ -729,7 +728,6 @@ function ActionBarCtrl($scope, $q, $dialog, VM, Util){
 
 function TemplateCtrl($scope, $routeParams, Template, Util){
   $scope.selected || ($scope.selected = {});
-  $scope.selected_all = false;
   $scope.search = {os_type: 'windows'};
   
   Template.get(function(templates){
@@ -754,6 +752,22 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
     }
+  };
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'templates').select(1, 100).confirm("你确定要移除它们吗，此操作将无法恢复!").then(function(templates){
+      var template_ids = templates.map(function(template){return template.id;});
+      console.log("REMOVE ALL templates " + template_ids);
+      new Template({ids: template_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(templates, function(template){
+            var index = $scope.templates.indexOf(template);
+            $scope.templates.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
   };
 }
 
