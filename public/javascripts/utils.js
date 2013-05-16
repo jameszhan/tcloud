@@ -217,7 +217,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     },
     update_list: function(list, data){
       if(list){
-        data.id = list[list.length-1].id+1
+        data.id = 10+Math.round(Math.random()*10); 
         list.unshift(data);
       }
     }
