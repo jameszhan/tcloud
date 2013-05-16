@@ -461,12 +461,50 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
 }
 
 function VMCtrl($scope, $routeParams, VM, Util, $location) {
-  $scope.selected = {};
+  $scope.selected || ($scope.selected = {});
   VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
-    $scope.selected[vm.id] = true;
+    $scope.snapshots = vm.snapshots;
+    Util.pagination($scope, 'snapshots', 5);
+    //$scope.selected[vm.id] = true;
     $scope.vms = [vm]; //Here is compatible with action_bar.
   });
+
+  $scope.do_add = function(){
+    if(confirm("要增加快照?")){
+      new VM({id: $routeParams.id}).$snapshot(function(data){
+        if(data.success){
+          snapshot = {
+            "name": "snapshot",
+            "desc": "snapshot",
+            "created_at": "today"
+          }
+          Util.update_list($scope.snapshots, snapshot)
+          Util.update_activities(data);
+        }
+      });
+    }
+  }
+
+  $scope.do_recover = function(){
+    alert("已删除无法恢复");
+  }
+
+  $scope.do_delete = function(){
+    Util.bind($scope, 'snapshots').select(1, 100).confirm("你确定要移除它们吗，此操作将无法恢复!").then(function(snapshots){
+      var snapshot_ids = snapshots.map(function(snapshot){return snapshot.id;});
+      console.log("REMOVE ALL snapshots " + snapshot_ids);
+      new VM({id: $routeParams.id, ids: snapshot_ids}).$delete_all(function(data){
+        if(data.success){
+          angular.forEach(snapshots, function(snapshot){
+            var index = $scope.snapshots.indexOf(snapshot);
+            $scope.snapshots.splice(index, 1);
+          });
+          Util.update_activities(data);
+        }
+      });
+    });
+  }
 
   Util.bind_tab($scope);
   
@@ -480,7 +518,7 @@ function VMCtrl($scope, $routeParams, VM, Util, $location) {
       "id": "6111"+$routeParams.id,
       "name": name,
       "url": $scope.location,
-      "desrc": "VM快捷方式"
+      "desc": "VM快捷方式"
     };
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
