@@ -126,6 +126,7 @@ app.post('/vms', vms.save);
 app.put('/vms/:id', vms.update);
 
 app.get('/templates', templates.index);
+app.post('/templates/delete_all', templates.delete_all);
 
 app.get('/activities', activities.index);
 app.post('/activities/status', activities.status);

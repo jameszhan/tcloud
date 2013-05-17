@@ -53,7 +53,9 @@ angular.module('webvirtServices', [])
     });
   })
   .factory('Template', function($resource) {
-    return $resource('templates/:id', {id: '@id'});
+    return $resource('templates/:id', {id: '@id'}, {
+      'delete_all': {method: 'POST', url: 'templates/delete_all'}
+    });
   })
   .factory('Activity', function($resource){
     return $resource('activities/:id', {id: '@id'}, {

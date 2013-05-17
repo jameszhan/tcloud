@@ -10,6 +10,7 @@
         <li><a href="#storages" data-toggle="tab">存储</a></li>
         <li><a href="#backups" data-toggle="tab">备份</a></li>
         <li><a href="#tasks" data-toggle="tab">任务</a></li>
+        <li><a href="#templates" data-toggle="tab">模板</a></li>
       </ul>
     </div>
     <div class="span3 tab-layout">
@@ -39,27 +40,10 @@
       <ng:include src="'/partials/shared/_backups.html'" />
     </div>
     <div id="tasks" class="tab-pane" style="padding:0px 10px"> 
-      <section id="directives-calendar">
-        <div class="row-fluid">
-          <div class="span2">
-            <p><button type="button" class="btn btn-primary" ng-click="add_task()">添加任务</button></p>
-            <ul class="unstyled">
-              <li ng-repeat="e in events">
-                <div class="alert alert-info">
-                  <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
-                  <b> {{e.title}}</b> - {{e.start | date:"MMM dd"}}
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="span10">
-            <div class="alert-success calAlert" ng-show="alertMessage">{{alertMessage}}</div>
-            <div class="well">
-              <div class="calendar" ng-model="eventSources" calendar="currentCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
-            </div>
-          </div>
-        </div>        
-      </section>
+      <ng:include src="'/partials/datacenters/_tasks.html'">   
+    </div>
+    <div id="templates" class="tab-pane" style="padding:0px 10px">
+      <ng:include src="'/partials/templates/_templates.html'"/>
     </div>
   </div>
 </div>
