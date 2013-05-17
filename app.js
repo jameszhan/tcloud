@@ -104,6 +104,7 @@ app.post('/hosts/reboot', hosts.reboot);
 app.post('/hosts/shutdown', hosts.shutdown);
 app.post('/hosts/remove_all', hosts.remove_all);
 app.get('/hosts/:id/:type', hosts.monitoring);
+app.get('/hosts/:id/:type/:start/:finish', hosts.monitoring);
 
 app.get('/vms/:id', vms.show);
 app.get('/vms/:id/current_cpu', vms.current_cpu);

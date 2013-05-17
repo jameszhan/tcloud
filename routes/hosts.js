@@ -1,5 +1,5 @@
 exports.monitoring = function(req, res){
-  console.log("monitor host %d with type: %s", req.params.id, req.params.type);
+  console.log("monitor host %d with type: %s(%s => %s)", req.params.id, req.params.type, req.params.start, req.params.finish);
   res.set("ContentType", "image/jpeg");
   res.sendfile(__dirname + '/images/' + req.params.type + '_monitor.jpg');
 }

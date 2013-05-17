@@ -1,14 +1,16 @@
 <div>
   <div class="row-fluid">
-    <div class="span7">
+    <div class="span3">
       {{host.name}}<br />
       {{host.architect}}<br />
       {{host.total_memory|bytes}}
       ...
     </div>
-    <div class="filters span5">
-      间隔：<select ng-options="c.name for c in intervals" class="span2" ng-model="monitoring.interval"></select>
-      目标：<select ng-options="c.name for c in targets"  class="span2" ng-model="monitoring.target"></select>
+    <div class="filters span9">
+      <!--间隔：<select ng-options="c.name for c in intervals" class="span2" ng-model="monitoring.interval"></select>-->
+      开始时间：<input type="date" ng-model="monitoring.start" class="span3" />
+      结束时间：<input type="date" ng-model="monitoring.finish" class="span3" />
+      目标：<select ng-options="c.name for c in targets"  class="span2" ng-model="monitoring.target" ng-change="show_target_image()"></select>
     </div>
   </div>
 
