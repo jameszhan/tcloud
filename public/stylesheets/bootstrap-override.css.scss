@@ -40,7 +40,45 @@ td > .progress{
 
 body .modal.ng-scope {
   width: 700px;
-  margin-left: -350px;  
+  margin-left: -350px; 
+  fieldset {
+    padding-top: 10px;
+    border: 1px solid #666;
+    border-radius: 5px;
+    legend {
+      width: 100px;
+      text-align: left;
+      font-size: 16px;
+      border-style: none;
+      padding: 0 3px;
+      margin-left: 10px;
+      margin-bottom: 0;
+      line-height: 10px;
+    }
+  }  
+  
+  .form-horizontal{
+    .control-label{
+      width: 100px;
+    }
+    .text-label{
+      padding-top: 5px;
+      width: 320px;
+    }
+    .controls{
+      margin-left: 120px;
+    }
+  } 
+}
+
+body .modal.ng-scope.page-modal {
+  width: 1140px;
+  margin-left: 0px;
+  position: static;
+  border: none;
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none; 
   fieldset {
     padding-top: 10px;
     border: 1px solid #666;

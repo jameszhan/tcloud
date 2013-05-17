@@ -29,6 +29,8 @@ angular.module('webvirt', ['ui.calendar', 'webvirtDirectives', 'webvirtServices'
       when('/shortcuts', {templateUrl: '/partials/shortcuts/index.html', controller: ShortcutCtrl}).
       when('/projects', {templateUrl: '/partials/projects/index.html', controller: ProjectCtrl}).
       when('/backupstrategys',{templateUrl: '/partials/backupstrategys/index.html', controller: BackupStrategyCtrl}).
+      when('/globalconfigs', {templateUrl: '/partials/globalconfigs/index.html', controller: GlobalConfigCtrl}).
+      when('/platform', {templateUrl: '/partials/platform/index.html', controller: PlatformCtrl}).
       otherwise({redirectTo: '/'});
 }]).run(["$pollingPool", "$timeout", "$rootScope", "Util", "Activity", function($pollingPool, $timeout, $rootScope, Util, Activity){
   $rootScope.$on('$routeChangeStart', function(e, route){  
