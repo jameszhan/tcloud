@@ -1467,7 +1467,7 @@ function BackupStrategyCtrl($rootScope, $scope, $dialog, $routeParams, BackupStr
       "id": "11",
       "name": name,
       "url": $scope.location,
-      "desrc": "BackupStrategy快捷方式"
+      "desc": "BackupStrategy快捷方式"
     };
     if(confirm("添加书签?")){
       Util.bookmark(shortcut); 
@@ -1519,4 +1519,46 @@ function DialogBackupStrategyCtrl($rootScope, $scope, dialog, Util, BackupStrate
     {name: "每年"}
   ];
   $scope.backupstrategy.schedule = $scope.schedules[0];
+}
+
+function GlobalConfigCtrl($scope, Util){
+  Util.bind_tab($scope);
+  
+  $scope.add_bookmark = function(){
+    var name="Global Config";
+    var subname = $scope.shortcut_name;
+    if(subname && subname != "overview"){
+      name += subname;
+    }
+    shortcut = {
+      "id": "12",
+      "name": name,
+      "url": $scope.location,
+      "desc": "Global Config快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
+}
+
+function PlatformCtrl($scope, Util){
+  Util.bind_tab($scope);
+  
+  $scope.add_bookmark = function(){
+    var name="Platform";
+    var subname = $scope.shortcut_name;
+    if(subname && subname != "overview"){
+      name += subname;
+    }
+    shortcut = {
+      "id": "12",
+      "name": name,
+      "url": $scope.location,
+      "desc": "Platform快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }

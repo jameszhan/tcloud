@@ -169,11 +169,11 @@
    {
        "name": "全局配置",
        "icon": "/images/host.png",
-       "url": "#configs"
+       "url": "#/globalconfigs"
    },
    {
        "name": "平台信息",
        "icon": "/images/host.png",
-       "url": "#copyrights"
+       "url": "#/platform"
    }
 ]
