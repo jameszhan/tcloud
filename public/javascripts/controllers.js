@@ -225,9 +225,11 @@ function MonitoringCtrl($scope, $http, $timeout){
   };
   $scope.targets = [{name: 'CPU', type: 'cpu'}, {name: 'Memory', type: 'memory'}, {name: 'Disk', type: 'disk'}];
   $scope.intervals = [{name: '1秒', value: '1000'}, {name: '3秒', value: '3000'}, {name: '10秒', value: '10000'}, {name: '30秒', value: '30000'}, {name: '1分', value: '60000'}, {name: '10分', value: '100000'}];
+  var today = new Date(), day_before_today = new Date();
+  day_before_today.setTime(today.getTime() - 24 * 60 * 60 * 1000);
   $scope.monitoring = {
-    start: "2013-01-01",
-    finish: "2013-08-01"
+    start: day_before_today.format('yyyy-MM-ddThh:mm:ss'),
+    finish: today.format('yyyy-MM-ddThh:mm:ss')
   };
   $scope.monitoring.target = $scope.targets[0]; 
   $scope.monitoring.interval = $scope.intervals[1];  
