@@ -550,7 +550,7 @@ function VMMgmtCtrl($scope, Util){
   Util.pagination($scope, 'vms', 5);
 }
 
-function VMWorkflowCtrl($rootScope, $scope, VM, dialog, Util) {  
+function VMWorkflowCtrl($scope, VM, dialog, Util) {  
   $scope.current_step = 1;
   $scope.steps = ["虚拟机设置", "操作系统类型", "选择计算方案", "选择存储方案", "选择网络方案", "确认创建"];
   $scope.view_types = ['vnc'];
@@ -561,7 +561,6 @@ function VMWorkflowCtrl($rootScope, $scope, VM, dialog, Util) {
     $scope.vm = selected_vm;
   } else {
     $scope.action = "$save";
-    $rootScope.vm = {};
     $scope.vm = {};    
   }  
   
@@ -626,8 +625,6 @@ function VMWorkflowCtrl($rootScope, $scope, VM, dialog, Util) {
         }
       });
     }
-
-
     dialog.close();
   };
 
@@ -1139,7 +1136,7 @@ function DialogStorageCtrl($rootScope, $scope, dialog, Util, Storage){
     }
   };
 
-  var selected_storage = dialog.context_scope.selected_storage;  
+  var selected_storage = dialog.context_scope.selected_storage;
   if(selected_storage){
     $scope.title = "编辑存储配置";
     $scope.action = "$update";
@@ -1322,8 +1319,7 @@ function DialogStorage($scope, dialog, Util, Project){
       });
     }
   };
-
-  var selected_storage = dialog.context_scope.selected_storage;  
+  var selected_storage = dialog.context_scope.selected_storage; 
   if(selected_storage){
     $scope.title = "修改存储方案";
     $scope.action = "$update";

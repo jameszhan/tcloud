@@ -3,6 +3,7 @@
   "cpu_count" : 2,
   "hard_disk_capacity" : 541,
   "memory_usage" : 21,
+  "name": "",
   "os_type" : "Windows 7",
   "status" : "运行",
   "total_memory" : 42,

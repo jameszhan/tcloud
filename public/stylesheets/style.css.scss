@@ -13,6 +13,44 @@
   }
 }
 
+
+/*-------tree contextmenu--------*/
+.contextmenu-list {
+  background: none repeat scroll 0 0 #EEEEEE;
+  border: 1px solid #DDDDDD;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  list-style-type: none;
+  margin: 0;
+  max-width: 250px;
+  min-width: 120px;
+  padding: 0;
+  position: absolute;
+  z-index: 999;
+  visibility: hidden;
+  
+  .contextmenu-item {
+    -moz-user-select: -moz-none;
+    background-color: #EEEEEE;
+    padding: 2px 2px 2px 10px;
+    position: relative;
+  }
+  
+  .contextmenu-hover {
+    background-color: #3399FF;
+  }
+
+  .context-menu-separator {
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 0;
+  }
+}
+
+
+/*--------tree contextmenu---------*/
+
 .ui-layout-pane { /* all 'panes' */ 
     background: #FFF; 
     border: 1px solid #D4D4D4; 
@@ -96,45 +134,6 @@
     /*padding: 5px 0 5px 5px;*/
 /*}*/
 
-/*-------tree contextmenu--------*/
-.contextmenu-list {
-
-    background: none repeat scroll 0 0 #EEEEEE;
-    border: 1px solid #DDDDDD;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    display: inline-block;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    list-style-type: none;
-    margin: 0;
-    max-width: 250px;
-    min-width: 120px;
-    padding: 0;
-    position: absolute;
-    z-index: 999;
-    visibility: hidden;
-
-}
-
-.contextmenu-item {
-
-    -moz-user-select: -moz-none;
-    background-color: #EEEEEE;
-    padding: 2px 2px 2px 10px;
-    position: relative;
-
-}
-
-.contextmenu-hover {
-    background-color: #3399FF;
-}
-
-.context-menu-separator {
-    border-bottom: 1px solid #DDDDDD;
-    padding-bottom: 0;
-}
-
-/*--------tree contextmenu---------*/
 
 ul#rMenu a {
     color: black;

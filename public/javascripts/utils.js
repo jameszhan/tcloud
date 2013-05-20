@@ -83,7 +83,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
     }
   };
-}).factory("Util", function($rootScope, $location, $window){
+}).factory("Util", function($rootScope, $location, $window, $dialog){
   return {
     update: function(dst, update_data){
       angular.forEach(dst, function(vm){
@@ -229,6 +229,21 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         
         $('#directives-calendar').find('.calendar').fullCalendar('render');
         return false;
+      });
+    },
+    dialog: function(template_url, ctrl_name, $scope){
+      var d = $dialog.dialog({
+        backdrop: true,
+        keyboard: true,
+        backdropClick: true,
+        templateUrl: template_url,
+        controller: ctrl_name
+      });
+      d.context_scope = $scope;
+      d.open().then(function(result){
+        if(result){
+          alert('dialog closed with result: ' + result);
+        }
       });
     },
     bookmark: function(shortcut){

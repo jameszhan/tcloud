@@ -71,7 +71,7 @@
          },
          {
             "name":"计算集群",
-            "url":"#clusters/2",
+            "url":"#/clusters/2",
             "icon":"/images/cluster.png",
             "children":[
                {

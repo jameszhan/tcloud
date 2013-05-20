@@ -1,5 +1,5 @@
-angular.module('webvirtDirectives', ['webvirtUtils']).
-  directive('searchtree', function($q, $http, $templateCache) {
+angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
+  directive('searchtree', function($q, $http, $templateCache, ContextMenu) {
     function _filter(data, text){
       var status = false;      
       if(!data){
@@ -23,27 +23,14 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
       }
       return status;
     }
-    var context_menu = $('#right-click-menu');
+
     var show_context_menu = function(e, tree_id, tree_node){
-      context_menu = $('#right-click-menu');
+      var context_menu = ContextMenu.find_context_menu(tree_node.url);      
       context_menu.css({"top": e.clientY + "px", "left":e.clientX + "px", "visibility":"visible"});
-      $("body").bind("mousedown", body_mousedown);
-    };
-    var hide_context_menu = function(){
-      if(context_menu){
-        context_menu.css({"visibility":"hidden"});
-      }
-      $("body").unbind("mousedown", body_mousedown);
+      $("body").bind("mousedown", ContextMenu.body_mousedown);
     };
     
-    function body_mousedown(e) {
-      if (!(e.target.id == "right-click-menu" || $(e.target).parents("#right-click-menu").length > 0)) {
-        context_menu.css({"visibility":"hidden"});
-      }
-    }
-    
-    var ztree = null;
-    var _settings = {
+    var ztree = null, _settings = {
       callback: {
         onRightClick: show_context_menu
       }
@@ -54,7 +41,7 @@ angular.module('webvirtDirectives', ['webvirtUtils']).
       scope: {
         classname: '@'
       },
-      link: function(scope, element, attrs){
+      link: function(scope, element, attrs){        
         var _tree = element.find("#search-tree");
         element.on('keyup', '.search', function(){
           _filter(scope.data, scope.search);
