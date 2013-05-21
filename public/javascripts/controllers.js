@@ -522,7 +522,7 @@ function SecurityRuleCtrl($scope, $dialog, $routeParams, SecurityRule, Util){
 }
 
 
-function BackupStrategyCtrl(scope, $dialog, $routeParams, BackupStrategy, Util) {
+function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util) {
   $scope.selected || ($scope.selected = {});
   
   BackupStrategy.query({}, function(strategies){
@@ -548,13 +548,13 @@ function BackupStrategyCtrl(scope, $dialog, $routeParams, BackupStrategy, Util) 
 
   $scope.do_add = function(){
     $scope.selected_backupstrategy = null;
-    Util.dialog("/partials/backupstrategys/_backupstrategy_dialog.html", "BackupStrategyDialogCtrl", $scope);
+    Util.dialog("/partials/backupstrategies/_backupstrategy_dialog.html", "BackupStrategyDialogCtrl", $scope);
   };
 
   $scope.do_edit = function(){
     Util.bind($scope, 'backupstrategies').select(1, 1).then(function(backupstrategies){      
       $scope.selected_backupstrategy = backupstrategies[0];
-      Util.dialog("/partials/backupstrategys/_backupstrategy_dialog.html", "BackupStrategyDialogCtrl", $scope);
+      Util.dialog("/partials/backupstrategies/_backupstrategy_dialog.html", "BackupStrategyDialogCtrl", $scope);
     });
   };
 

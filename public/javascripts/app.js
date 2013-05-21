@@ -28,7 +28,7 @@ angular.module('webvirt', ['ui.calendar', 'webvirtDirectives', 'webvirtServices'
       when('/architects', {templateUrl: '/partials/architects/index.html', controller: ArchitectCtrl}).
       when('/shortcuts', {templateUrl: '/partials/shortcuts/index.html', controller: ShortcutCtrl}).
       when('/proposals', {templateUrl: '/partials/proposals/index.html', controller: ProposalCtrl}).
-      when('/backupstrategys',{templateUrl: '/partials/backupstrategys/index.html', controller: BackupStrategyCtrl}).
+      when('/backupstrategies',{templateUrl: '/partials/backupstrategies/index.html', controller: BackupStrategyCtrl}).
       when('/globalconfigs', {templateUrl: '/partials/globalconfigs/index.html', controller: GlobalConfigCtrl}).
       when('/platform', {templateUrl: '/partials/platform/index.html', controller: PlatformCtrl}).
       otherwise({redirectTo: '/'});
