@@ -74,7 +74,7 @@ angular.module('webvirtServices', [])
     return $resource('networks/:id', {id: '@id'}, {      
       'update': {method: 'PUT'},
       'status': {method: 'POST', isArray: true, url: 'networks/status'},
-      'delete_network_all': {method: 'POST', url: 'networks/delete_all'}
+      'delete_all': {method: 'POST', url: 'networks/delete_all'}
     });
   })
   .factory('Storage', function($resource){
@@ -97,10 +97,17 @@ angular.module('webvirtServices', [])
       'delete_all': {method: 'POST', url: 'proposals/delete_all'}
     });
   })
+  .factory('Backup', function($resource){
+    return $resource('backups/:id', {id: '@id'}, {
+      'update': {method: 'PUT'}, 
+      'status': {method: 'GET', url: 'backups/status'},
+      'delete_all': {method: 'POST', url: 'backups/delete_all'}
+    });
+  })
   .factory('BackupStrategy', function($resource){
-    return $resource('backupstrategys/:id', {id: '@id'}, {
+    return $resource('backup_strategies/:id', {id: '@id'}, {
       'update': {method: 'PUT'},
-      'status': {method: 'POST', isArray: true, url: 'backupstrategys/status'},
-      'delete_all': {method: 'POST', url: 'backupstrategys/delete_all'}
+      'status': {method: 'POST', isArray: true, url: 'backup_strategies/status'},
+      'delete_all': {method: 'POST', url: 'backup_strategies/delete_all'}
     });
   });

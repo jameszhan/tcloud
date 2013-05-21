@@ -20,7 +20,7 @@ function ActivityCtrl($rootScope, Activity){
 
 /********************************** URL(#/datacenters/:id) Start ********************************/
 function DataCenterCtrl($rootScope, $scope, $routeParams, $location, $dialog, DataCenter, Host, VM, $pollingPool, Util) {
-  
+  $scope.current_target_type = 'DataCenter';
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
     $scope.clusters = $scope.datacenter.clusters;
@@ -88,6 +88,7 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent, Util){
 
 /********************************** URL(#/clusters/:id) Start ********************************/
 function ClusterCtrl($rootScope, $scope, $routeParams, Cluster, Host, VM, $pollingPool, Util, $location) {
+  $scope.current_target_type = 'Cluster';
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
     $rootScope.hosts = cluster.hosts;
@@ -178,6 +179,7 @@ function MonitoringCtrl($scope, $http, $timeout){
 
 /********************************** URL(#/hosts/:id) Start ********************************/
 function HostCtrl($rootScope, $scope, $routeParams, Host, VM, $pollingPool, Util, $location) {
+  $scope.current_target_type = 'Host';
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
     $rootScope.vms = $scope.host.virtual_machines;
@@ -295,18 +297,19 @@ function VMSnapshotCtrl($scope, $routeParams, $location, VM, Util){
 /********************************** URL(#/vms/:id) End ********************************/
 
 
+/********************************** Shared Controller Start ********************************/
 
-
-function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
-  Cluster.backup_strategy({id: $routeParams.id}, function(data){
+function BackupCtrl($scope, $routeParams, Backup, BackupStrategy, Util) {
+  var params = {target_id: $routeParams.id, target_type: $scope.current_target_type};
+  BackupStrategy.query(params, function(data){
     $scope.backup_strategies = data;
   });
   
-  Cluster.backup_status({id: $routeParams.id}, function(data){
+  Backup.status(params, function(data){
     $scope.backup_status = data;
   });  
   
-  Cluster.backups({id: $routeParams.id}, function(data){
+  Backup.query(params, function(data){
     $scope.backups = data;
   });
   
@@ -315,34 +318,12 @@ function BackupCtrl($scope, $routeParams, Cluster, VM, Util) {
   };
 }
 
-function NetworkCtrl($scope, $routeParams, Network, Util){
-  $scope.add_bookmark = function(){
-    shortcut = {
-      "id": "8",
-      "name": "Network",
-      "url": "/#/networks",
-      "desc": "Network快捷方式"
-    };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
-  };
-}
-
-function NetworkTypeCtrl($rootScope, $scope, $dialog, $routeParams, Network, Util){
-  
-  var d = $dialog.dialog({
-    backdrop: true,
-    keyboard: true,
-    backdropClick: true,
-    templateUrl: "/partials/networks/_network_dialog.html",
-    controller: 'NetworkConfigDialogCtrl'
-  });
-
+function NetworkMgmtCtrl($rootScope, $scope, $dialog, $routeParams, Network, Util){
+  var params = {target_id: $routeParams.id, target_type: $scope.current_target_type};  
   $scope.selected || ($scope.selected = {});
-  Network.get(function(networks){
-    $rootScope.networks || ($rootScope.networks = networks.networks);
-    $scope.networks = $rootScope.networks;
+
+  Network.query(params, function(networks){
+    $scope.networks = networks;
     Util.pagination($scope, 'networks', 5);
   });
 
@@ -350,7 +331,7 @@ function NetworkTypeCtrl($rootScope, $scope, $dialog, $routeParams, Network, Uti
     Util.bind($scope, 'networks').select(1, 100).confirm("你确定要移除它们吗，此操作将无法恢复!").then(function(networks){
       var network_ids = networks.map(function(network){return network.id;});
       console.log("REMOVE ALL networks " + network_ids);
-      new Network({ids: network_ids}).$delete_network_all(function(data){
+      new Network({ids: network_ids}).$delete_all(function(data){
         if(data.success){
           angular.forEach(networks, function(network){
             var index = $scope.networks.indexOf(network);
@@ -362,47 +343,27 @@ function NetworkTypeCtrl($rootScope, $scope, $dialog, $routeParams, Network, Uti
     });
   };
 
-  $scope.do_add = function(){
-    d.context_scope = $scope;
-    d.context_scope.selected_type = null;
-    d.open().then(function(result){
-      if(result){
-        alert('dialog closed with result: ' + result);
-      }
-    });
+  $scope.do_add = function(){    
+    $scope.selected_type = null;
+    Util.dialog("/partials/networks/_network_dialog.html", 'NetworkConfigDialogCtrl', $scope);
   };
 
   $scope.do_edit = function(){
-    d.context_scope = $scope;
     Util.bind($scope, 'networks').select(1, 1).then(function(networks){
-      d.context_scope.selected_type = networks[0];
-      d.open().then(function(result){
-        if(result) {
-          alert('dialog closed with result: ' + result);
-        }
-      });
+      $scope.selected_type = networks[0];
+      Util.dialog("/partials/networks/_network_dialog.html", 'NetworkConfigDialogCtrl', $scope);
     });
   };
 }
 
-
-
 function StorageCtrl($rootScope, $scope, $dialog, $routeParams, Storage, Util){
-  
-  var d = $dialog.dialog({
-    backdrop: true,
-    keyboard: true,
-    backdropClick: true,
-    templateUrl: "/partials/storages/_storage_dialog.html",
-    controller: 'StorageConfigDialogCtrl'
-  });
+  var params = {target_id: $routeParams.id, target_type: $scope.current_target_type};  
 
   $scope.selected || ($scope.selected = {});
   
-  Storage.get(function(storages){
-    $rootScope.storages = storages.storages;
-    $scope.storages = $rootScope.storages;
-    $scope.storage_obj = storages;
+  Storage.get(params, function(storage){
+    $scope.storages = storage.items;
+    $scope.status = storage.status;
     Util.pagination($scope, 'storages', 5);
   });
 
@@ -423,28 +384,19 @@ function StorageCtrl($rootScope, $scope, $dialog, $routeParams, Storage, Util){
   }
 
   $scope.do_add = function(){
-    d.context_scope = $scope;
-    d.context_scope.selected_storage = null;
-    d.open().then(function(result){
-      if(result){
-        alert('dialog closed with result: ' + result);
-      }
-    });
+    $scope.selected_storage = null;
+    Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope);
   };
 
   $scope.do_edit = function(){
-    d.context_scope = $scope;
     Util.bind($scope, 'storages').select(1, 1).then(function(storages){
-      d.context_scope.selected_storage = storages[0];
-      d.open().then(function(result){
-        if(result) {
-          alert('dialog closed with result: ' + result);
-        }
-      });
+      $scope.selected_storage = storages[0];
+      Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope);
     });
   };
 }
 
+/********************************** Shared Controller END ********************************/
 
 /******************************************************** ROOT Section Start *******************************************/
 function ShortcutCtrl($scope, $rootScope, Shortcut, Util){
@@ -515,7 +467,22 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
       Util.bookmark(shortcut); 
     }
   };
+}
 
+
+
+function NetworkCtrl($scope, $routeParams, Network, Util){
+  $scope.add_bookmark = function(){
+    shortcut = {
+      "id": "8",
+      "name": "Network",
+      "url": "/#/networks",
+      "desc": "Network快捷方式"
+    };
+    if(confirm("添加书签?")){
+      Util.bookmark(shortcut); 
+    }
+  };
 }
 
 

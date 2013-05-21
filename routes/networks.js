@@ -1,6 +1,6 @@
 exports.index = function(req, res){
   res.set("ContentType", "application/json");
-  res.sendfile(__dirname + '/json/networks.json');  
+  res.sendfile(__dirname + '/json/networks/networks.json');  
 }
 
 exports.security_rules = function(req, res){
