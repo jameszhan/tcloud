@@ -16,8 +16,9 @@ var express = require('express')
   , activities = require('./routes/activities')
   , storages = require('./routes/storages')
   , shortcuts = require('./routes/shortcuts')
-  , projects = require('./routes/projects')
+  , proposals = require('./routes/proposals')
   , backupstrategys = require('./routes/backupstrategys')
+  , securityrules = require('./routes/securityrules')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs');
@@ -117,6 +118,8 @@ app.post('/vms/suspend', vms.suspend);
 app.post('/vms/start', vms.start);
 app.post('/vms/reboot', vms.reboot);
 app.post('/vms/shutdown', vms.shutdown);
+app.get('/vms/:id/snapshots', vms.snapshots);
+app.post('/vms/:id/delete_snapshots', vms.delete_snapshots);
 app.post('/vms/snapshot', vms.snapshot);
 app.post('/vms/status', vms.status);
 app.post('/vms/operate', vms.operate);
@@ -132,10 +135,19 @@ app.get('/activities', activities.index);
 app.post('/activities/status', activities.status);
 
 app.get('/networks', networks.index);
+app.get('/networks/security_rules', networks.security_rules);
+app.post('/networks/delete_security_rules', networks.delete_security_rules);
 app.post('/networks', networks.save);
 app.put('/networks/:id', networks.update);
 app.post('/networks/status', networks.status);
 app.post('/networks/delete_all', networks.delete_all);
+
+app.get('/security_rules', securityrules.index);
+app.get('/security_rules/:id', securityrules.show);
+app.post('/security_rules', securityrules.save);
+app.put('/security_rules/:id', securityrules.update);
+app.post('/security_rules/delete_all', securityrules.delete_all);
+
 
 app.get('/storages', storages.index);
 app.post('/storages', storages.save);
@@ -147,10 +159,10 @@ app.get('/shortcuts', shortcuts.index);
 app.post('/shortcuts/status', shortcuts.status);
 app.post('/shortcuts/delete_all', shortcuts.delete_all);
 
-app.get('/projects', projects.index);
-app.put('/projects/:id', projects.update);
-app.post('/projects/status', projects.status);
-app.post('/projects/delete_all', projects.delete_all);
+app.get('/proposals', proposals.index);
+app.put('/proposals/:id', proposals.update);
+app.post('/proposals/status', proposals.status);
+app.post('/proposals/delete_all', proposals.delete_all);
 
 app.get('/backupstrategys', backupstrategys.index);
 app.post('/backupstrategys', backupstrategys.save);

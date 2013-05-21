@@ -9,31 +9,31 @@
     <div class="control-group">
       <label class="control-label">名称</label>
       <div class="controls">
-        <input type="text" required ng-model="network.name" class="input"/>
+        <input type="text" required ng-model="security_rule.name" class="input"/>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">协议：</label>
       <div class="controls">
-        <input type="text" required ng-model="network.protocol" class="input"/>
+        <input type="text" required ng-model="security_rule.protocol" class="input"/>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">起始端口：</label>
       <div class="controls">
-        <input type="text" required ng-model="network.port_begin" class="input"/>
+        <input type="text" required ng-model="security_rule.port_begin" class="input"/>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">终止端口：</label>
       <div class="controls">
-        <input type="text" required ng-model="network.port_end" class="input"/>
+        <input type="text" required ng-model="security_rule.port_end" class="input"/>
       </div>
     </div>
     <div class="control-group">
       <label for="name" class="control-label">数据流向</label>
       <div class="controls">
-        <select required ng-model="network.data_direction" ng-options="dd.key for dd in data_directions" class="span2">
+        <select required ng-model="security_rule.data_direction" ng-options="dd.key for dd in data_directions" class="span2">
         </select>
       </div>
     </div>

@@ -3,6 +3,28 @@ exports.index = function(req, res){
   res.sendfile(__dirname + '/json/networks.json');  
 }
 
+exports.security_rules = function(req, res){
+  res.set("ContentType", "application/json");
+  res.sendfile(__dirname + '/json/networks/security_rules.json');  
+}
+
+exports.delete_security_rules = function(req, res){
+  //var ids = req.query['ids'].split(",").map(function(i){return parseInt(i);}); //Here is use DELETE method
+  var ids = req.body.ids;
+  console.log("delete all security_rules %a", ids);
+  //Do your actual delete operation here.
+  res.json({success: true, activities: [
+    {
+      id: 112, 
+      name: 'DELETE', 
+      target: "networks", 
+      target_type: "SecurityRule", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
 exports.delete_all = function(req, res){
   //var ids = req.query['ids'].split(",").map(function(i){return parseInt(i);}); //Here is use DELETE method
   var ids = req.body.ids;

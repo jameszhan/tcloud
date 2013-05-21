@@ -1,6 +1,5 @@
-<div ng-controller="NetworkPortCtrl">
+<div class="span10" ng-controller="StorageProposalCtrl">
   <div class="input-prepend input-append">
-    <button type="button" class="btn btn-mini" ng-click="do_add()">添加</button>
     <button type="button" class="btn btn-mini" ng-click="do_edit()">修改</button>
     <button type="button" class="btn btn-danger btn-mini" ng-click="do_delete()">删除</button>
   </div>
@@ -9,29 +8,23 @@
       <thead>
         <tr>
           <th><input type="checkbox" ng-model="selected_all" /></th>
-          <th>序号</th>
+          <th>存储</th>
           <th>名称</th>
-          <th>协议</th>
-          <th>起始端口</th>
-          <th>终止端口</th>
-          <th>数据流向</th>
-          <th>创建时间</th>
-          <th>操作</th>
+          <th>格式</th>
+          <th>最大容量</th>
+          <th>分配</th>
+          <th>存储类型</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="port in ports | startFrom:(current_page * page_size) | limitTo:page_size">  
-          <td><input type="checkbox" value="{{port.id}}" ng-model="selected[port.id]" /></td>
-          <td>22</td>
-          <td>{{port.name}}</td>  
-          <td>{{port.protocol}}</td>  
-          <td>{{port.port_begin}}</td> 
-          <td>{{port.port_end}}</td> 
-          <td>{{port.data_direction.key}}</td> 
-          <td>{{port.created_at}}</td> 
-          <td>
-            <button class="btn btn-primary btn-mini">关联</button>
-          </td>
+        <tr ng-repeat="storage in storages | startFrom:(current_page * page_size) | limitTo:page_size">  
+          <td><input type="checkbox" value="{{storage.id}}"  ng-model="selected[storage.id]" /></td>
+          <td>{{storage.storage}}</td>
+          <td>{{storage.name}}</td>
+          <td>{{storage.pattern}}</td>  
+          <td>{{storage.size}}</td>  
+          <td>{{storage.own_size}}</td> 
+          <td>{{storage.type}}</td>
         </tr>
       </tbody>
     </table>
