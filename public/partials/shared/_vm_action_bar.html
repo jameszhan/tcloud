@@ -1,14 +1,14 @@
 <div ng-controller="VMActionBarCtrl">
   <div class="input-prepend input-append">
-    <button type="button" class="btn" ng-click="do_edit()">修改</button>
-    <button type="button" class="btn" ng-click="do_delete()">删除</button>
-    <button type="button" class="btn" ng-click="do_template()">存为模板</button>
-    <button type="button" class="btn" ng-click="do_migrate()">迁移</button>
-    <button type="button" class="btn" ng-click="do_suspend()">暂停</button>
+    <button type="button" class="btn btn-mini" ng-click="do_edit()">修改</button>
+    <button type="button" class="btn btn-mini" ng-click="do_delete()">删除</button>
+    <button type="button" class="btn btn-mini" ng-click="do_template()">存为模板</button>
+    <button type="button" class="btn btn-mini" ng-click="do_migrate()">迁移</button>
+    <button type="button" class="btn btn-mini" ng-click="do_suspend()">暂停</button>
   </div>
   <div class="input-append input-prepend">
     <div class="btn-group">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      <button type="button" class="btn btn-mini btn-primary dropdown-toggle" data-toggle="dropdown">
         创建
         <span class="caret"></span>
       </button>
@@ -17,9 +17,9 @@
         <li><a href="#/setup_vm">创建桌面</a></li>
       </ul>
     </div>
-    <button type="button" class="btn" ng-click="do_start()">启动</button>
-    <button type="button" class="btn" ng-click="do_shutdown()">关机</button>
-    <button type="button" class="btn" ng-click="do_reboot()">重启</button>
-    <button type="button" class="btn" ng-click="do_snapshot()">快照管理</button>
+    <button type="button" class="btn btn-mini" ng-click="do_start()">启动</button>
+    <button type="button" class="btn btn-mini" ng-click="do_shutdown()">关机</button>
+    <button type="button" class="btn btn-mini" ng-click="do_reboot()">重启</button>
+    <button type="button" class="btn btn-mini" ng-click="do_snapshot()">快照管理</button>
   </div>
 </div>
