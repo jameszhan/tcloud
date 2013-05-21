@@ -17,6 +17,7 @@ var express = require('express')
   , storages = require('./routes/storages')
   , shortcuts = require('./routes/shortcuts')
   , proposals = require('./routes/proposals')
+  , backups = require('./routes/backups')
   , backupstrategys = require('./routes/backupstrategys')
   , securityrules = require('./routes/securityrules')
   , http = require('http')
@@ -86,9 +87,6 @@ app.post('/datacenters/:id/update_task', datacenters.update_task);
 app.get('/clusters/:id', clusters.show);
 app.get('/clusters/:id/top_hosts', clusters.top_hosts);
 app.get('/clusters/:id/top_vms', clusters.top_vms);
-app.get('/clusters/:id/backups', clusters.backups);
-app.get('/clusters/:id/backup_strategy', clusters.backup_strategy);
-app.get('/clusters/:id/backup_status', clusters.backup_status);
 
 app.get('/hosts/:id', hosts.show);
 app.post('/hosts', hosts.save);
@@ -164,11 +162,19 @@ app.put('/proposals/:id', proposals.update);
 app.post('/proposals/status', proposals.status);
 app.post('/proposals/delete_all', proposals.delete_all);
 
-app.get('/backupstrategys', backupstrategys.index);
-app.post('/backupstrategys', backupstrategys.save);
-app.put('/backupstrategys/:id', backupstrategys.update);
-app.post('/backupstrategys/status', backupstrategys.status);
-app.post('/backupstrategys/delete_all', backupstrategys.delete_all);
+
+app.get('/backups', backups.index);
+app.post('/backups', backups.save);
+app.put('/backups/:id', backups.update);
+app.get('/backups/status', backups.status);
+app.post('/backups/delete_all', backups.delete_all);
+
+app.get('/backup_strategies', backupstrategys.index);
+app.post('/backup_strategies', backupstrategys.save);
+app.put('/backup_strategies/:id', backupstrategys.update);
+app.post('/backup_strategies/status', backupstrategys.status);
+app.post('/backup_strategies/delete_all', backupstrategys.delete_all);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

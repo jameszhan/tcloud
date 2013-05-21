@@ -203,7 +203,7 @@ function NetworkConfigDialogCtrl($rootScope, $scope, dialog, Util, Network){
       new Network($scope.network)[$scope.action](function(data){
         if(data.success){
           if($scope.action == "$save"){
-            Util.update_list($rootScope.networks, $scope.network);
+            Util.update_list(dialog.context_scope.networks, $scope.network);
           }
           Util.update_activities(data);
           dialog.close("Save Successful!");
@@ -274,7 +274,7 @@ function StorageConfigDialogCtrl($rootScope, $scope, dialog, Util, Storage){
       new Storage($scope.storage)[$scope.action](function(data){
         if(data.success){
           if($scope.action == "$save"){
-            Util.update_list($rootScope.storages, $scope.storage);
+            Util.update_list(dialog.context_scope.storages, $scope.storage);
           }
           Util.update_activities(data);
           dialog.close("Save Successful!");

@@ -1,7 +1,13 @@
 exports.index = function(req, res){
   res.set("ContentType", "application/json");
-  console.log("find backup strategies for target :", req.params);
-  res.sendfile(__dirname + '/json/backup_strategys.json');  
+  console.log("find backup for target :", req.params);
+  res.sendfile(__dirname + '/json/backups/backups.json');  
+}
+
+exports.status = function(req, res){
+  res.set("ContentType", "application/json");
+  console.log("find backup status for target: ", req.params);
+  res.sendfile(__dirname + '/json/backups/backup_status.json');  
 }
 
 exports.delete_all = function(req, res){
@@ -13,30 +19,24 @@ exports.delete_all = function(req, res){
     {
       id: 113, 
       name: 'DELETE', 
-      target: "backupstrategy", 
-      target_type: "BackupStrategy", 
+      target: "backup", 
+      target_type: "backup", 
       start_time: new Date().toISOString(), 
       end_time: new Date().toISOString(),
       status: 'requested'
     }]});  
 }
 
-exports.status = function(req, res){  
-  res.set("ContentType", "application/json");
-  var ids = req.body.ids;
-  console.log("status for backupstrategy %a", ids);
-  res.render("templates/backupstrategy_status.json", {ids: ids});  
-}
 
 exports.save = function(req, res){
   res.set("ContentType", "application/json");
-  console.log("save BackupStrategy", req.body);
+  console.log("save Backup", req.body);
   res.json({success: true, activities: [
     {
       id: 118, 
       name: 'ADD', 
-      target: "backupstrategy", 
-      target_type: "BackupStrategy", 
+      target: "backup", 
+      target_type: "Backup", 
       start_time: new Date().toISOString(), 
       end_time: new Date().toISOString(),
       status: 'requested'
@@ -46,13 +46,13 @@ exports.save = function(req, res){
 
 exports.update = function(req, res){
   res.set("ContentType", "application/json");
-  console.log("update BackupStrategy", req.body);
+  console.log("update Backup", req.body);
   res.json({success: true, activities: [
     {
       id: 116, 
       name: 'UPDATE', 
-      target: "backupstrategy", 
-      target_type: "BackupStrategy", 
+      target: "backup", 
+      target_type: "Backup", 
       start_time: new Date().toISOString(), 
       end_time: new Date().toISOString(),
       status: 'requested'
