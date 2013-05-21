@@ -44,7 +44,7 @@ angular.module('webvirt', ['ui.calendar', 'webvirtDirectives', 'webvirtServices'
       }
     });
   });
-  // $timeout(function(){
-  //   $pollingPool.schedule();
-  // }, 3000);
+  $timeout(function(){
+    $pollingPool.schedule();
+  }, 3000);
 }]);
