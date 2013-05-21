@@ -1,4 +1,4 @@
-function HostUpsertDialogCtrl($rootScope, $scope, dialog, Util, Host){
+function HostUpsertDialogCtrl($scope, dialog, Util, Host){
   $scope.close = function(result){
     dialog.close(result)
   };
@@ -8,7 +8,7 @@ function HostUpsertDialogCtrl($rootScope, $scope, dialog, Util, Host){
       new Host($scope.host)[$scope.action](function(data){
         if(data.success){
           if($scope.action == "$save"){
-            Util.update_list($rootScope.hosts, $scope.host);
+            Util.update_list(dialog.context_scope.hosts, $scope.host);
           }
           Util.update_activities(data);
           dialog.close("Save Successful!");
@@ -138,7 +138,7 @@ function VMWorkflowDialogCtrl($scope, VM, dialog, Util) {
       new VM($scope.vm)[$scope.action](function(data){
         if(data.success){
           if($scope.action == "$save"){
-            Util.update_list($rootScope.vms, $scope.vm);
+            Util.update_list(dialog.context_scope.vms, $scope.vm);
           }
           Util.update_activities(data);
           dialog.close("Save Successful!");
@@ -192,7 +192,7 @@ function VMMigrateDialogCtrl($scope, dialog, VM, Util){
 
 /********************* Network Management Start ******************************/
 
-function NetworkConfigDialogCtrl($rootScope, $scope, dialog, Util, Network){
+function NetworkConfigDialogCtrl($scope, dialog, Util, Network){
 
   $scope.close = function(result){
     dialog.close(result);
@@ -226,7 +226,7 @@ function NetworkConfigDialogCtrl($rootScope, $scope, dialog, Util, Network){
 
 
 
-function SecurityRuleDialogCtrl($rootScope ,$scope, dialog, Util, SecurityRule){
+function SecurityRuleDialogCtrl($scope, dialog, Util, SecurityRule){
   $scope.close = function(result){
     dialog.close(result);
   }
@@ -264,7 +264,7 @@ function SecurityRuleDialogCtrl($rootScope ,$scope, dialog, Util, SecurityRule){
 /********************* Network Management End ******************************/
 
 /********************* Storage Start ******************************/
-function StorageConfigDialogCtrl($rootScope, $scope, dialog, Util, Storage){
+function StorageConfigDialogCtrl($scope, dialog, Util, Storage){
   $scope.close = function(result){
     dialog.close(result);
   }
@@ -375,7 +375,7 @@ function ComputeProposalDialogCtrl($scope, dialog, Util, Proposal){
 /********************* Backup Strategy Start ********************/
 
 
-function BackupStrategyDialogCtrl($rootScope, $scope, dialog, Util, BackupStrategy){
+function BackupStrategyDialogCtrl($scope, dialog, Util, BackupStrategy){
   $scope.close = function(result){
     dialog.close(result);
   }

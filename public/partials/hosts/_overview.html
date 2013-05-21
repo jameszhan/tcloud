@@ -55,13 +55,12 @@
   </div>
 </div>
 <div class="tab-pane" style="padding:0px 10px; margin-bottom: 10px; text-align: center;">
-  <div class="input-prepend input-append">
+  <div class="input-prepend input-append" ng-controller="HostActionBarCtrl">
     <button type="button" class="btn" ng-click="do_edit()">修改</button>
-    <button type="button" class="btn">移除</button>
-    <button type="button" class="btn">维护</button>
-    <button type="button" class="btn">激活</button>
+    <button type="button" class="btn" ng-click="do_maintain()">维护</button>
+    <button type="button" class="btn" ng-click="do_activate()">激活</button>
   </div>
-  <div class="input-append input-prepend">
+  <div class="input-append input-prepend" ng-controller="VMActionBarCtrl">
     <div class="btn-group">
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
         创建

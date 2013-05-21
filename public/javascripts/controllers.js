@@ -19,15 +19,13 @@ function ActivityCtrl($rootScope, Activity){
 }
 
 /********************************** URL(#/datacenters/:id) Start ********************************/
-function DataCenterCtrl($rootScope, $scope, $routeParams, $location, $dialog, DataCenter, Host, VM, $pollingPool, Util) {
+function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Host, VM, $pollingPool, Util) {
   $scope.current_target_type = 'DataCenter';
   DataCenter.get({id: $routeParams.id}, function(datacenter){
     $scope.datacenter = datacenter;
     $scope.clusters = $scope.datacenter.clusters;
-    $rootScope.hosts = Util.flatten($scope.clusters, 'hosts');
-    $scope.hosts = $rootScope.hosts;
-    $rootScope.vms = Util.flatten($scope.hosts, 'virtual_machines');
-    $scope.vms = $rootScope.vms; 
+    $scope.hosts = Util.flatten($scope.clusters, 'hosts');
+    $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
 
     $pollingPool.add(function(){
       var vm_ids = $scope.vms.map(function(vm){return vm.id});
@@ -87,14 +85,12 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent, Util){
 
 
 /********************************** URL(#/clusters/:id) Start ********************************/
-function ClusterCtrl($rootScope, $scope, $routeParams, Cluster, Host, VM, $pollingPool, Util, $location) {
+function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util, $location) {
   $scope.current_target_type = 'Cluster';
   Cluster.get({id: $routeParams.id}, function(cluster){
     $scope.cluster = cluster;
-    $rootScope.hosts = cluster.hosts;
-    $scope.hosts = $rootScope.hosts;
-    $rootScope.vms = Util.flatten($scope.hosts, 'virtual_machines');
-    $scope.vms = $rootScope.vms;
+    $scope.hosts = cluster.hosts;
+    $scope.vms = Util.flatten($scope.hosts, 'virtual_machines');
 
     $pollingPool.add(function(){
       var vm_ids = $scope.vms.map(function(vm){return vm.id});
@@ -178,12 +174,14 @@ function MonitoringCtrl($scope, $http, $timeout){
 /********************************** URL(#/clusters/:id) End ********************************/
 
 /********************************** URL(#/hosts/:id) Start ********************************/
-function HostCtrl($rootScope, $scope, $routeParams, Host, VM, $pollingPool, Util, $location) {
+function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location) {
+  $scope.selected || ($scope.selected = {});
   $scope.current_target_type = 'Host';
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
-    $rootScope.vms = $scope.host.virtual_machines;
-    $scope.vms = $rootScope.vms;
+    $scope.hosts = [host]; //Here is compatible with action_bar.
+    $scope.selected[host.id] = true;
+    $scope.vms = $scope.host.virtual_machines;
     $scope.os_info = $scope.vms.reduce(function(ret, vm){
       if(ret[vm.os_type] != undefined){
         ret[vm.os_type] += 1;
@@ -225,11 +223,12 @@ function HostCtrl($rootScope, $scope, $routeParams, Host, VM, $pollingPool, Util
 /********************************** URL(#/hosts/:id) End ********************************/
 
 /********************************** URL(#/vms/:id) Start ********************************/
-function VMCtrl($scope, $routeParams, VM, Util, $location) {
+function VMCtrl($scope, $routeParams, VM, Util, $location) {  
   $scope.selected || ($scope.selected = {});
   VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
     $scope.vms = [vm]; //Here is compatible with action_bar.
+    $scope.selected[vm.id] = true;
   });
   
   Util.bind_tab($scope);
@@ -318,7 +317,7 @@ function BackupCtrl($scope, $routeParams, Backup, BackupStrategy, Util) {
   };
 }
 
-function NetworkMgmtCtrl($rootScope, $scope, $dialog, $routeParams, Network, Util){
+function NetworkMgmtCtrl($scope, $dialog, $routeParams, Network, Util){
   var params = {target_id: $routeParams.id, target_type: $scope.current_target_type};  
   $scope.selected || ($scope.selected = {});
 
@@ -356,7 +355,7 @@ function NetworkMgmtCtrl($rootScope, $scope, $dialog, $routeParams, Network, Uti
   };
 }
 
-function StorageCtrl($rootScope, $scope, $dialog, $routeParams, Storage, Util){
+function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
   var params = {target_id: $routeParams.id, target_type: $scope.current_target_type};  
 
   $scope.selected || ($scope.selected = {});
@@ -486,7 +485,7 @@ function NetworkCtrl($scope, $routeParams, Network, Util){
 }
 
 
-function SecurityRuleCtrl($rootScope ,$scope, $dialog, $routeParams, SecurityRule, Util){  
+function SecurityRuleCtrl($scope, $dialog, $routeParams, SecurityRule, Util){  
   $scope.selected || ($scope.selected = {});  
   SecurityRule.query({}, function(security_rules){
     $scope.security_rules = security_rules;
@@ -523,7 +522,7 @@ function SecurityRuleCtrl($rootScope ,$scope, $dialog, $routeParams, SecurityRul
 }
 
 
-function BackupStrategyCtrl($rootScope, $scope, $dialog, $routeParams, BackupStrategy, Util) {
+function BackupStrategyCtrl(scope, $dialog, $routeParams, BackupStrategy, Util) {
   $scope.selected || ($scope.selected = {});
   
   BackupStrategy.query({}, function(strategies){
