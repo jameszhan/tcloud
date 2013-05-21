@@ -1,0 +1,47 @@
+<form class="form-horizontal" name="compute_form" ng-submit="do_upsert()">
+  <div class="modal-header">
+    <a class="close" ng-click="close()">&times;</a>
+    <div class="input-prepend input-append">
+      <h4>{{title}}</h4>       
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="control-group">
+      <label class="control-label">名称</label>
+      <div class="controls">
+        <input type="text" required ng-model="compute.name" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">CPU：</label>
+      <div class="controls">
+        <input type="text" required ng-model="compute.cpu" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">内存：</label>
+      <div class="controls">
+        <input type="text" required ng-model="compute.memory" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">显示：</label>
+      <div class="controls">
+        <input type="text" required ng-model="compute.view_type" class="input"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="name" class="control-label">随主机启动:</label>
+      <div class="controls">
+        <select class="span2">
+          <option>on</option>
+          <option>off</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
+    <button type="submit" ng-disabled="!compute_form.$valid" class="btn btn-primary">保存</button>
+  </div>
+</form>

@@ -27,7 +27,7 @@ angular.module('webvirt', ['ui.calendar', 'webvirtDirectives', 'webvirtServices'
       when('/networks', {templateUrl: '/partials/networks/index.html', controller: NetworkCtrl}).
       when('/architects', {templateUrl: '/partials/architects/index.html', controller: ArchitectCtrl}).
       when('/shortcuts', {templateUrl: '/partials/shortcuts/index.html', controller: ShortcutCtrl}).
-      when('/projects', {templateUrl: '/partials/projects/index.html', controller: ProjectCtrl}).
+      when('/proposals', {templateUrl: '/partials/proposals/index.html', controller: ProposalCtrl}).
       when('/backupstrategys',{templateUrl: '/partials/backupstrategys/index.html', controller: BackupStrategyCtrl}).
       when('/globalconfigs', {templateUrl: '/partials/globalconfigs/index.html', controller: GlobalConfigCtrl}).
       when('/platform', {templateUrl: '/partials/platform/index.html', controller: PlatformCtrl}).

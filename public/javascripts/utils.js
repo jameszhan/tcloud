@@ -83,7 +83,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
     }
   };
-}).factory("Util", function($rootScope, $location, $window, $dialog){
+}).factory("Util", function($rootScope, $location, $window, $dialog, $q, Shortcut){
   return {
     update: function(dst, update_data){
       angular.forEach(dst, function(vm){
@@ -231,14 +231,15 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         return false;
       });
     },
-    dialog: function(template_url, ctrl_name, $scope){
-      var d = $dialog.dialog({
+    dialog: function(template_url, ctrl_name, $scope, opts){
+      var options = angular.extend({
         backdrop: true,
         keyboard: true,
         backdropClick: true,
         templateUrl: template_url,
         controller: ctrl_name
-      });
+      }, opts)
+      var d = $dialog.dialog(options);
       d.context_scope = $scope;
       d.open().then(function(result){
         if(result){
@@ -247,9 +248,20 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       });
     },
     bookmark: function(shortcut){
-      if(shortcut){
-        $rootScope.shortcuts.unshift(shortcut);
-      }
+      var deferred = $q.defer();
+      deferred.promise.then(function(){
+        if(shortcut){
+          $rootScope.shortcuts.unshift(shortcut);
+        }
+      });
+      if(!$rootScope.shortcuts){
+        Shortcut.query({}, function(data){
+          $rootScope.shortcuts = data;
+          deferred.resolve();
+        });
+      }else{
+        deferred.resolve();
+      }      
     },
     update_list: function(list, data){
       if(list){

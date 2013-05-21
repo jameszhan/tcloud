@@ -1,25 +1,26 @@
-<div ng-controller="VMSnapshotCtrl">
+<div class="span10" ng-controller="NetworkProposalCtrl">
   <div class="input-prepend input-append">
-    <button type="button" class="btn btn-mini" ng-click="do_add()">新建</button>
-    <button type="button" class="btn btn-mini" ng-click="do_recover()">恢复</button>
+    <button type="button" class="btn btn-mini" ng-click="do_edit()">修改</button>
     <button type="button" class="btn btn-danger btn-mini" ng-click="do_delete()">删除</button>
   </div>
   <div>
     <table class="table table-striped table-bordered table-condensed">
       <thead>
         <tr>
-          <th></th>
+          <th><input type="checkbox" ng-model="selected_all" /></th>
           <th>名称</th>
-          <th>描述</th>
-          <th>生成时间</th>
+          <th>网络组</th>
+          <th>设备类型</th>
+          <th>网络类型</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="snapshot in snapshots | startFrom:(current_page * page_size) | limitTo:page_size">  
-          <td><input type="checkbox" value="{{snapshot.id}}" ng-model="selected[snapshot.id]" /></td>
-          <td>{{snapshot.name}}</td>  
-          <td>{{snapshot.desc}}</td>  
-          <td>{{snapshot.created_at}}</td>
+        <tr ng-repeat="network in networks | startFrom:(current_page * page_size) | limitTo:page_size">  
+          <td><input type="checkbox" value="{{network.id}}"  ng-model="selected[network.id]" /></td>
+          <td>{{network.name}}</td>
+          <td>{{network.group}}</td>  
+          <td>{{network.device_type}}</td> 
+          <td>{{network.type}}</td>
         </tr>
       </tbody>
     </table>

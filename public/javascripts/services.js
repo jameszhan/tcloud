@@ -33,6 +33,8 @@ angular.module('webvirtServices', [])
       'start': {method: 'POST', url: 'vms/start'},  
       'shutdown': {method: 'POST', url: 'vms/shutdown'},   
       'reboot': {method: 'POST', url: 'vms/reboot'},
+      'snapshots': {method: 'GET', url: 'vms/:id/snapshots', isArray: true},
+      'delete_snapshots': {method: 'POST', url: 'vms/:id/delete_snapshots'},
       'snapshot': {method: 'POST', url: 'vms/snapshot'},
       'operate': {method: 'POST', url: 'vms/operate'},
       'reset_backup': {method: 'POST', url: 'vms/:id/backups/:backup_id/reset'},
@@ -62,12 +64,17 @@ angular.module('webvirtServices', [])
       'status': {method: 'POST', isArray: true, url: 'activities/status'},
     });
   })
+  .factory('SecurityRule', function($resource){
+    return $resource('security_rules/:id', {id: '@id'}, {
+      'update': {method: 'PUT'},
+      'delete_all': {method: 'POST', url: 'security_rules/delete_all'}
+    });
+  })
   .factory('Network', function($resource){
-    return $resource('networks/:id', {id: '@id'}, {
+    return $resource('networks/:id', {id: '@id'}, {      
       'update': {method: 'PUT'},
       'status': {method: 'POST', isArray: true, url: 'networks/status'},
-      'delete_network_all': {method: 'POST', url: 'networks/delete_all'},
-      'delete_port_all': {method: 'POST', url: 'networks/delete_all'}
+      'delete_network_all': {method: 'POST', url: 'networks/delete_all'}
     });
   })
   .factory('Storage', function($resource){
@@ -83,11 +90,11 @@ angular.module('webvirtServices', [])
       'delete_all': {method: 'POST', url: 'shortcuts/delete_all'}
     });
   })
-  .factory('Project', function($resource){
-    return $resource('projects/:id', {id: '@id'}, {
+  .factory('Proposal', function($resource){
+    return $resource('proposals/:id', {id: '@id'}, {
       'update': {method: 'PUT'},
-      'status': {method: 'POST', isArray: true, url: 'projects/status'},
-      'delete_all': {method: 'POST', url: 'projects/delete_all'}
+      'status': {method: 'POST', isArray: true, url: 'proposals/status'},
+      'delete_all': {method: 'POST', url: 'proposals/delete_all'}
     });
   })
   .factory('BackupStrategy', function($resource){

@@ -141,6 +141,31 @@ exports.suspend = function(req, res){
     }]});  
 }
 
+exports.snapshots = function(req, res){
+  var id = req.params.id;
+  console.log("Get snapshots for vm %d", id);
+  res.set("ContentType", "application/json");
+  res.sendfile(__dirname + '/json/snapshots/0' + id + '.json');
+}
+
+exports.delete_snapshots = function(req, res){
+  //var ids = req.query['ids'].split(",").map(function(i){return parseInt(i);}); //Here is use DELETE method
+  var ids = req.body.ids;
+  console.log("delete all snapshots %s for %d", ids, req.params.id);
+  //Do your actual delete operation here.
+  res.json({success: true, activities: [
+    {
+      id: 110, 
+      name: 'DELETE', 
+      target: "VM", 
+      target_type: "Snapshot", 
+      start_time: new Date().toISOString(), 
+      end_time: new Date().toISOString(),
+      status: 'requested'
+    }]});  
+}
+
+
 exports.snapshot = function(req, res){
   var ids = req.body.ids;
   console.log("Snapshot vms %a", ids);

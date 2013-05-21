@@ -3,49 +3,11 @@
   "cpu_count" : 2,
   "hard_disk_capacity" : 541,
   "memory_usage" : 21,
-  "name": "",
-  "os_type" : "Windows 7",
+  "name": "CentOS",
+  "os_type" : "Linux",
   "status" : "运行",
   "total_memory" : 42,
   "start_as_host" : "ON",
   "memory_cache_usage" : 21,
-  "memory_idle" : 21,
-  "snapshots":[
-    {
-      "id": 1,
-      "name": "snapshot 1",
-      "desc": "snapshot",
-      "created_at": "today"
-    },
-    {
-      "id": 2,
-      "name": "snapshot 2",
-      "desc": "snapshot",
-      "created_at": "today"
-    },
-    {
-      "id": 3,
-      "name": "snapshot 3",
-      "desc": "snapshot",
-      "created_at": "today"
-    },
-    {
-      "id": 4,
-      "name": "snapshot 4",
-      "desc": "snapshot",
-      "created_at": "today"
-    },
-    {
-      "id": 5,
-      "name": "snapshot 5",
-      "desc": "snapshot",
-      "created_at": "today"
-    },
-    {
-      "id": 6,
-      "name": "snapshot 6",
-      "desc": "snapshot",
-      "created_at": "today"
-    }
-  ]
+  "memory_idle" : 21
 }
