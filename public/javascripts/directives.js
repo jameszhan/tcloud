@@ -101,6 +101,9 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
       link: function(scope, element, attrs) {
         var draw_pie_chart = function(data){
           element.find(".chart").highcharts({
+            credits: {
+              enabled : false
+            },
             chart: {
               plotBackgroundColor: null,
               plotBorderWidth: null,
@@ -174,6 +177,9 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
         });        
         
         var options = {
+          credits: {
+            enabled : false
+          },
           chart: {
             type: 'spline',
             renderTo: element.find('.graph')[0]
