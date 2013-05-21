@@ -30,11 +30,18 @@ h6 {
   background-color: rgba(0, 0, 0, 0.1);;
 }
 
+.table td {
+  line-height: 16px;
+}
+
 body {
   padding-top: 50px;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 td > .progress{
+  height: 16px;
   margin-bottom: 0px;
 }
 
@@ -132,4 +139,12 @@ body .modal.ng-scope.page-modal {
 .fc-event.customFeed .fc-event-skin{
 	background-color: rgb(132, 222, 175);
 	color: black;
+}
+
+.label-running{
+  background-color: #468847;
+}
+
+.label-startup{
+  background-color: #3a87ad;
 }
