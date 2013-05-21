@@ -268,7 +268,17 @@ ul#rMenu a {
 }
 
 .tab-layout {
-  padding: 10px 0px 0px 10px;
+  padding: 6px 0px 0px 10px;
+}
+
+.tab-style {
+  padding: 6px 0px 0px 0px;
+  background-color:#F2F2F2;
+  margin-bottom: 10px;
+}
+
+.tab-style .tab-ul {
+  margin-bottom: 0px;
 }
 
 .text-pos {
@@ -301,4 +311,13 @@ ul#rMenu a {
 
 .overview-layout {
   margin-top: 23px;
+}
+
+.hot-title {
+  background-color: #C3D0E0;
+  border-radius: 3px 3px 0px 0px;
+  border-top-width: 10px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+  padding-left: 20px;
 }
