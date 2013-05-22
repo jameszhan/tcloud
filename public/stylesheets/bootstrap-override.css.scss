@@ -24,9 +24,16 @@ div.loading-indicator-modal{
     background-repeat: no-repeat;
     background-color: rgba(255, 255, 255, 0);
     border: none;
-  }
-  
+  }  
 }
+
+.search-query {
+  padding-left: 29px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJ5JREFUeNpi+P//PwMQMANxERCfAeI/UBrEZwbJQ9WAFR0A4u1AbAnEbFB6O1ScGaawGoi3wHQiYyBYDZKHKbwHxLo4FOqC5GEKf4Ksw6EQ5IyfIDYTkPEUiNUZsAOQ+F9GRkYJEKcFiDficSOIcRjE4QTiY0C8DuRbqAJLKP8/FP9kQArHUiA+jySJjA8w4LAS5KZd0MAHhaccQIABALsMiBZy4YLtAAAAAElFTkSuQmCC);
+  background-repeat: no-repeat;
+  background-position: 12px 8px;
+}
+
 
 .navbar-inner {
   background-color: #2C2C2C;
@@ -65,7 +72,9 @@ div.loading-indicator-modal{
   }
 }   
 
-
+.input-append button.add-on {
+  height: inherit !important;
+}
 
 .table td {
   line-height: 16px;

@@ -43,7 +43,11 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
       },
       link: function(scope, element, attrs){        
         var _tree = element.find("#search-tree");
-        element.on('keyup', '.search', function(){
+        //element.on('keyup', '.search', function(){
+        //  _filter(scope.data, scope.search);
+        //  ztree = $.fn.zTree.init(_tree, _settings, scope.data);
+        //});
+        element.on('click', 'button.add-on', function(){
           _filter(scope.data, scope.search);
           ztree = $.fn.zTree.init(_tree, _settings, scope.data);
         });
@@ -56,8 +60,9 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
       }, 
       template:
         '<div class="ng-serach-tree">' +
-          '<div class="row-fluid">' + 
-              '<input type="search" ng-model="search" class="search span12" />' + 
+          '<div class="row-fluid input-append">' + 
+            '<input type="search" ng-model="search" class="search span10" />' +
+            '<button class="btn add-on"><i class="icon-search"></i></button>' +
           '</div>' + 
           '<ul id="search-tree" class="{{classname}}" ng-transclude></ul>' +
         '</div>' 
