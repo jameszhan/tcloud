@@ -152,12 +152,12 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         if(current == 0){
           $scope.prev_class = 'disabled';
         }else{
-          $scope.next_class = 'active';
+          $scope.prev_class = '';
         }
-        if(current == $scope.page_count - 1){
+        if(current == $scope.page_count() - 1){
           $scope.next_class = 'disabled';
         }else{
-          $scope.next_class = 'active';
+          $scope.next_class = '';
         }
       });
       

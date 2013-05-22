@@ -26,11 +26,11 @@
     
     <div class="pagination">
       <ul>
-        <li><a href="javascript:void(0);" ng-hide="should_hide()" ng-class="prev_class" ng-click="prev()">Prev</button></a></li>
+        <li><a href="javascript:void(0);" ng-hide="should_hide()" ng-class="prev_class" ng-click="prev()">上一页</button></a></li>
         <li ng-repeat="i in [] | range:page_count()">
           <a href="javascript:void(0)"  ng-hide="should_hide()" ng-click="page(i)" ng-class="(i == current_page) && 'active'">{{i + 1}}</a>
         </li>
-        <li><a href="javascript:void(0);" ng-hide="should_hide()" ng-class="next_class" ng-click="next()">Next</button></a></li>
+        <li><a href="javascript:void(0);" ng-hide="should_hide()" ng-class="next_class" ng-click="next()">下一页</button></a></li>
       </ul>
     </div>
   </div>
