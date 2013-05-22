@@ -153,9 +153,16 @@ function MonitoringCtrl($scope, $http, $timeout){
   $scope.show_target_image = show_target_image;
   
   function show_target_image(){
-    if($scope.host){
+    if($scope.host){ 
       var url = "hosts/" + $scope.host.id + "/" + $scope.monitoring.target.type + "/" 
         + $scope.monitoring.start + "/" + $scope.monitoring.finish;
+      $('.loading-indicator-modal').modal({ backdrop: 'static' });
+      $http.get(url).success(function(data){
+        $scope.monitoring.images = data;
+        $('.loading-indicator-modal').modal('hide');
+      }).error(function(data){
+        $('.loading-indicator-modal').modal('hide');
+      });
       console.log(url);
       $scope.monitoring.image = url;
     }

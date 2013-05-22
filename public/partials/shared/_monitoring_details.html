@@ -17,7 +17,9 @@
   </div>
 
   <div class="monitoring-image">
-    <img src="{{monitoring.image}}" />
+    <div ng-repeat="image in monitoring.images">      
+      <img src="{{image.url}}" />
+    </div>   
   </div>
   <button class="btn pull-right" ng-click="go_back()">Back</button>
 </div>
