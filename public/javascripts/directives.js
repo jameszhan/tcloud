@@ -231,4 +231,15 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
       },
       template: '<div class="graph" width="{{width}}" height="{{height}}" style="width:{{width}}px; height:{{height}}px"></div>'
     };
+  })
+  .directive('selectable', function(){
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs){
+        element.on('click', function(){
+          element.closest('tbody').find('td').removeClass('selected');
+          element.find('td').addClass('selected');;
+        });
+      }
+    };
   });

@@ -40,13 +40,31 @@ div.loading-indicator-modal{
   padding-right: 20px;
 }
 
-.table tbody tr:hover td, .table tbody tr:hover th {
-  background-color: rgba(0, 0, 0, 0.1);
-}
+.table {
+  &.no-hover{
+    tbody{
+      tr:hover{
+        td, th{
+          background-color: rgba(0, 0, 0, 0);
+        }
+      }
+    }
+  }
+  tbody{
+    tr:hover{
+      td, th{
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+    tr{
+      td.selected {
+        background-color: rgba(176, 192, 224, 0.99);
+        color: #fcfcfc;
+      }
+    }
+  }
+}   
 
-.table.no-hover tbody tr:hover td, .table.no-hover tbody tr:hover th {
-  background-color: rgba(0, 0, 0, 0);
-}
 
 
 .table td {

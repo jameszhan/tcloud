@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="storage in storages | startFrom:(current_page * page_size) | limitTo:page_size">
+        <tr selectable ng-repeat="storage in storages | startFrom:(current_page * page_size) | limitTo:page_size">
           <td><input type="checkbox" value="{{storage.id}}" ng-model="selected[storage.id]" /></td>
           <td>{{storage.name}}</td>
           <td>{{storage.type}}</td>  

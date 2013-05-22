@@ -181,6 +181,7 @@ function HostMgmtCtrl($scope, Util){
   $scope.selected || ($scope.selected = {});
   
   $scope.show_details = function(){
+    console.log(this);
     $scope.selected_host = this.m;
   };
   
