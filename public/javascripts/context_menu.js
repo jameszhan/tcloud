@@ -44,18 +44,18 @@ angular.module('webvirtContextMenu', []).factory('ContextMenu', function($rootSc
 
 function ContextMenuCtrl($rootScope, $scope, Util){
   $scope.add_storage = function(){
-    Util.dialog("/partials/storages/_storage_dialog.html", 'DialogStorageCtrl', $scope);
+    Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope);
   };
   
   $scope.add_network = function(){
-    Util.dialog("/partials/networks/_network_dialog.html", 'DialogTypeCtrl', $scope);
+    Util.dialog("/partials/networks/_network_dialog.html", 'NetworkConfigDialogCtrl', $scope);
   }
 }
 
 function DataCenterContextMenuCtrl(){}
 function ClusterContextMenuCtrl($rootScope, $scope, Cluster, Util){
   $scope.add_host = function(){
-    Util.dialog("/partials/hosts/_form.html", 'HostFormCtrl', $scope);
+    Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope);
   }
   
   $rootScope.$on('event:cluster-selected', function(e, args) {
@@ -92,7 +92,7 @@ function HostContextMenuCtrl($rootScope, $scope, Host, VM, Util){
       }
       
       $scope.add_vm = function(){
-        Util.dialog("vm_workflow.html", 'VMWorkflowCtrl', $scope);
+        Util.dialog("vm_workflow.html", 'VMWorkflowDialogCtrl', $scope);
       }
       
       $scope.start_all_vms = function(){
@@ -114,7 +114,7 @@ function VMContextMenuCtrl($rootScope, $scope, VM, Util){
       $scope.vm = vm;
       $scope.selected_vm = vm;      
       $scope.do_edit = function() {
-        Util.dialog("vm_workflow.html", 'VMWorkflowCtrl', $scope);
+        Util.dialog("vm_workflow.html", 'VMWorkflowDialogCtrl', $scope);
       };
 
       $scope.do_delete = function(){
@@ -122,7 +122,7 @@ function VMContextMenuCtrl($rootScope, $scope, VM, Util){
       };
       
       $scope.do_migrate = function(){
-        Util.dialog("/partials/vms/migrate_dialog.html", 'MigrateDialogCtrl', $scope);
+        Util.dialog("/partials/vms/migrate_dialog.html", 'VMMigrateDialogCtrl', $scope);
       };
 
       $scope.do_suspend = function(){

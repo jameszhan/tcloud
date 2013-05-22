@@ -1,17 +1,3 @@
-var flatten = function(arr, target){
-  var ret = [];
-  for(var i = 0; i < arr.length; i++){
-    if(arr[i][target] instanceof Array){
-      for(var j = 0; j < arr[i][target].length; j++){
-        ret.push(arr[i][target][j]);
-      }
-    }else{
-      ret.push(arr[i][target]);
-    }      
-  }      
-  return ret;
-};
-
 function ActivityCtrl($rootScope, Activity){
   Activity.query({}, function(data){    
     $rootScope.activities = data;

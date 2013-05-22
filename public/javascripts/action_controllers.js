@@ -71,14 +71,6 @@ function VMMgmtCtrl($scope, Util){
 }
 
 function VMActionBarCtrl($scope, $q, $dialog, VM, Util){
-  var d = $dialog.dialog({
-    backdrop: true,
-    keyboard: true,
-    backdropClick: false,
-    templateUrl: "",
-    controller: ''
-  });
-  
   $scope.min_msg = "你至少应该选择{0}台虚拟机."
   $scope.max_msg = "你不能选择超过{0}台虚拟机."
   
