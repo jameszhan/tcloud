@@ -3,7 +3,7 @@
     <img src="/images/preview.png">
   </div>
   <div class="span9">
-    <table class="table table-overview">
+    <table class="table table-overview no-hover">
       <thead>
         <th>虚拟机信息</th>
       </thead>
@@ -58,16 +58,13 @@
   <ng:include src="'/partials/vms/_action_bar.html'" />
 </div>
 <div class="row-fluid">
-  <div class="span4">
-    CPU使用率
-    <curvegraph url="/vms/{{vm.id}}/current_cpu" width="300" height="160" max="100" min="0"></curvegraph> 
+  <div class="span4">    
+    <curvegraph url="/vms/{{vm.id}}/current_cpu" width="300" height="160" max="100" min="0" title="CPU使用率"></curvegraph> 
   </div>
-  <div class="span4">
-    内存使用量
-    <curvegraph url="/vms/{{vm.id}}/current_memory" width="300" height="160" min="0" max="8192"></curvegraph> 
+  <div class="span4">    
+    <curvegraph url="/vms/{{vm.id}}/current_memory" width="300" height="160" min="0" max="8192" title="内存使用量"></curvegraph> 
   </div>
-  <div class="span4">
-     以太网
-     <curvegraph url="/vms/{{vm.id}}/current_traffic" width="300" height="160" min="0" max="1024"></curvegraph> 
+  <div class="span4">     
+    <curvegraph url="/vms/{{vm.id}}/current_traffic" width="300" height="160" min="0" max="1024" title="以太网"></curvegraph> 
   </div>
 </div>

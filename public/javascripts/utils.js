@@ -155,7 +155,6 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
           $scope.prev_class = '';
         }
         if(current == $scope.page_count() - 1){
-          console.log(current);
           $scope.next_class = 'disabled';
         }else{
           $scope.next_class = '';

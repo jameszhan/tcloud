@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-click="show_details()" ng-repeat="m in hosts | startFrom:(current_page * page_size) | limitTo:page_size"> 
+      <tr ng-click="show_details()" selectable ng-repeat="m in hosts | startFrom:(current_page * page_size) | limitTo:page_size"> 
         <td><input type="checkbox" value="{{m.id}}" ng-model="selected[m.id]" /></td> 
         <td>{{m.name}}</td>
         <td><div class="progress active">

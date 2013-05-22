@@ -14,6 +14,27 @@ h6 {
   }
 }
 
+div.loading-indicator-modal{
+  background-color: rgba(255, 255, 255, 0);
+  div.loading-indicator {
+    width: 520px;
+    height: 150px;
+    background-image: url('/images/loading-indicator.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+  }  
+}
+
+.search-query {
+  padding-left: 29px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJ5JREFUeNpi+P//PwMQMANxERCfAeI/UBrEZwbJQ9WAFR0A4u1AbAnEbFB6O1ScGaawGoi3wHQiYyBYDZKHKbwHxLo4FOqC5GEKf4Ksw6EQ5IyfIDYTkPEUiNUZsAOQ+F9GRkYJEKcFiDficSOIcRjE4QTiY0C8DuRbqAJLKP8/FP9kQArHUiA+jySJjA8w4LAS5KZd0MAHhaccQIABALsMiBZy4YLtAAAAAElFTkSuQmCC);
+  background-repeat: no-repeat;
+  background-position: 12px 8px;
+}
+
+
 .navbar-inner {
   background-color: #2C2C2C;
   @include background-image(linear-gradient(center top, #555555, #222222)); 
@@ -26,8 +47,33 @@ h6 {
   padding-right: 20px;
 }
 
-.table tbody tr:hover td, .table tbody tr:hover th {
-  background-color: rgba(0, 0, 0, 0.1);;
+.table {
+  &.no-hover{
+    tbody{
+      tr:hover{
+        td, th{
+          background-color: rgba(0, 0, 0, 0);
+        }
+      }
+    }
+  }
+  tbody{
+    tr:hover{
+      td, th{
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+    tr{
+      td.selected {
+        background-color: rgba(176, 192, 224, 0.99);
+        color: #fcfcfc;
+      }
+    }
+  }
+}   
+
+.input-append button.add-on {
+  height: inherit !important;
 }
 
 .table td {

@@ -1,6 +1,5 @@
 .monitoring-image{
   width: 100%;
-  height: 300px;
   img{
     width: 100%;
     height: 100%;
@@ -36,6 +35,10 @@
     background-color: #EEEEEE;
     padding: 2px 2px 2px 10px;
     position: relative;
+    
+    a{
+      cursor: pointer;
+    }
   }
   
   .contextmenu-hover {

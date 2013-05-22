@@ -1,7 +1,21 @@
 exports.monitoring = function(req, res){
   console.log("monitor host %d with type: %s(%s => %s)", req.params.id, req.params.type, req.params.start, req.params.finish);
-  res.set("ContentType", "image/jpeg");
-  res.sendfile(__dirname + '/images/' + req.params.type + '_monitor.jpg');
+  var images = [];
+  for(var i = 0; i < 3; i++){
+    images.push({ url: "/images/" + req.params.type + '_monitor.jpg' });
+  }
+  function sleep(milliseconds) {
+    var start_time = new Date().getTime();
+    while (new Date().getTime() < start_time + milliseconds);
+  }
+  
+  //sleep(15000);
+  //res.json(images);
+  setTimeout(function(){    
+    res.json(images);
+  }, 5000);
+  //res.set("ContentType", "image/jpeg");
+  //res.sendfile(__dirname + '/images/' + req.params.type + '_monitor.jpg');
 }
 
 exports.backups = function(req, res){
