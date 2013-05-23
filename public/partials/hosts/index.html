@@ -13,17 +13,8 @@
     </div>
   </div>
   <div class="tab-content">
-    <div id="overview" class="tab-pane active" style="padding:0px 10px">
-      <ng:include src="'/partials/hosts/_overview.html'" />
-    </div>
-    <div id="vms" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/shared/_vm_list.html'" />
-    </div> 
-    <div id="storages" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/storages/_storage_list.html'" />
-    </div> 
-    <div id="backups" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/shared/_backups.html'" />
+    <div class="tab-pane active" style="padding:0px 10px">
+      <div ng-include="current_template" />
     </div>
   </div>
 </div>

@@ -18,32 +18,8 @@
     </div>
   </div>
   <div class="tab-content">
-    <div id="overview" class="tab-pane active" style="padding:0px 10px">
-      <ng:include src="'/partials/datacenters/_overview.html'" />
-    </div>
-    <div id="events" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/datacenters/_events.html'" />
-    </div>
-    <div id="hosts" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/shared/_host_list.html'" />
-    </div>
-    <div id="vms" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/shared/_vm_list.html'" />
-    </div>    
-    <div id="networks" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/networks/_network_types.html'" />
-    </div>
-    <div id="storages" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/storages/_storage_list.html'" />
-    </div>
-    <div id="backups" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/shared/_backups.html'" />
-    </div>
-    <div id="tasks" class="tab-pane" style="padding:0px 10px"> 
-      <ng:include src="'/partials/datacenters/_tasks.html'">   
-    </div>
-    <div id="templates" class="tab-pane" style="padding:0px 10px">
-      <ng:include src="'/partials/templates/_templates.html'"/>
+    <div class="tab-pane active" style="padding:0px 10px">
+      <div ng-include="current_template" />
     </div>
   </div>
 </div>
