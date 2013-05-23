@@ -47,14 +47,17 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
 
 
 function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent, Util){
+  $scope.selected || ($scope.selected = {});
   DataCenterEvent.query({data_center_id: $routeParams.id}, function(events, headersFn){
     $scope.events = events;
+    Util.pagination($scope, 'events', 5);
   });
 
-  $scope.delete_all = function(id){
-    if(confirm("你确定要删除它们吗，此操作将无法恢复!")){
-      console.log("DELETE event " + id);
-      new DataCenterEvent({data_center_id: $routeParams.id, id: id}).$delete_all(function(data){
+  $scope.do_delete = function(){
+    Util.bind($scope, 'events').select(1, 100).confirm("你确定要移除它们吗，此操作将无法恢复!").then(function(events){
+      var dataCenterEvent_ids = events.map(function(dataCenterEvent){return dataCenterEvent.id;});
+      console.log("REMOVE ALL DataCenterEvent " + dataCenterEvent_ids);
+      new DataCenterEvent({data_center_id: $routeParams.id, ids: dataCenterEvent_ids}).$delete_all(function(data){
         if(data.success){
           angular.forEach(events, function(event){
             var index = $scope.events.indexOf(event);
@@ -63,8 +66,8 @@ function DataCenterEventCtrl($scope, $routeParams, DataCenterEvent, Util){
           Util.update_activities(data);
         }
       });
-    }
-  }
+    });
+  };
 }
 
 /********************************** URL(#/datacenters/:id) End ********************************/
