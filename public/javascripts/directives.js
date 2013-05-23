@@ -241,9 +241,21 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
     return {
       restrict: 'A',
       link: function(scope, element, attrs){
+        element.find('input[type="checkbox"]').on('click', function(e){
+          e.stopPropagation();
+        })
         element.on('click', function(){
           element.closest('tbody').find('td').removeClass('selected');
-          element.find('td').addClass('selected');;
+          element.find('td').addClass('selected');
+          if(attrs.exclusive){
+            element.closest('tbody').find('input[type="checkbox"]').prop('checked', false);
+            element.find('input[type="checkbox"]').prop('checked', true);
+          }else{
+            scope.$apply(function(){
+              var checkbox = element.find('input[type="checkbox"]');
+              checkbox.prop('checked', !checkbox.prop('checked'));
+            });
+          }
         });
       }
     };
