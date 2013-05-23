@@ -35,8 +35,7 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
     backups: "/partials/shared/_backups.html",
     tasks: "/partials/datacenters/_tasks.html",
     templates: "/partials/templates/_templates.html"
-  };
-  
+  };  
   $scope.current_template = $scope.templates['overview'];
 
   Util.bind_tab($scope);
@@ -117,6 +116,7 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
     templates: "/partials/templates/_templates.html",    
     monitoring: "/partials/shared/_monitoring.html"
   };
+  $scope.current_template = $scope.templates['overview'];
 
   Util.bind_tab($scope);
   
@@ -226,6 +226,7 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
     storages: "/partials/storages/_storage_list.html",
     backups: "/partials/shared/_backups.html"
   };
+  $scope.current_template = $scope.templates['overview'];
   
   Util.bind_tab($scope);
   
@@ -262,6 +263,7 @@ function VMCtrl($scope, $routeParams, VM, Util, $location) {
     overview: "/partials/vms/_overview.html",
     snapshots: "/partials/vms/_snapshots.html"
   };
+  $scope.current_template = $scope.templates['overview'];
   
   Util.bind_tab($scope);
   
