@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="m in vms | startFrom:(current_page * page_size) | limitTo:page_size">  
+        <tr selectable='m' ng-repeat="m in vms | startFrom:(current_page * page_size) | limitTo:page_size">  
           <td><input type="checkbox" value="{{m.id}}" ng-model="selected[m.id]" /></td>
           <td>{{m.name}}</td>
           <td><div class="progress active">

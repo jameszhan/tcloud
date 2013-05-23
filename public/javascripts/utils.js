@@ -186,7 +186,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
       
       $scope.should_hide = function(){
-        return $scope[target_name].length <= $scope.page_size;
+        return ($scope[target_name] && $scope[target_name].length <= $scope.page_size);
       };
       
       $scope.unselected_all = function(){

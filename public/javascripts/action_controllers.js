@@ -80,7 +80,6 @@ function VMActionBarCtrl($scope, $q, $dialog, VM, Util){
   };
   
   $scope.do_edit = function() {
-    d.context_scope = $scope;
     Util.bind($scope, 'vms').select(1, 1).then(function(vms){      
       $scope.selected_vm = vms[0];
       Util.dialog("vm_workflow.html", 'VMWorkflowDialogCtrl', $scope, {backdropClick: false});
@@ -173,7 +172,6 @@ function HostMgmtCtrl($scope, Util){
   $scope.selected || ($scope.selected = {});
   
   $scope.show_details = function(){
-    console.log(this);
     $scope.selected_host = this.m;
   };
   
