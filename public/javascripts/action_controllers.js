@@ -56,7 +56,14 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
       },
       dayClick: $scope.day_click,
       eventDrop: $scope.event_on_drop,
-      eventResize: $scope.event_on_resize
+      eventResize: $scope.event_on_resize,
+      eventClick: function(cal_event, e, view) {
+        var title = prompt('Event Title:', cal_event.title, { buttons: { OK: true, Cancel: false} });
+        if(title){
+          cal_event.title = title;
+          $scope.current_calendar.fullCalendar('updateEvent', cal_event);
+        }
+      }
     }
   };
 }
