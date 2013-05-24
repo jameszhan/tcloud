@@ -400,6 +400,10 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
     Util.pagination($scope, 'storages', 5);
   });
 
+  $scope.show_details = function(){
+    $scope.selected_storage = this.storage;
+  }
+
   $scope.do_delete = function(){
     Util.bind($scope, 'storages').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(storages){
       var storage_ids = storages.map(function(storage){return storage.id;});
