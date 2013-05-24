@@ -70,7 +70,7 @@ function VMMgmtCtrl($scope, Util){
   Util.pagination($scope, 'vms', 5);
 }
 
-function VMActionBarCtrl($scope, $q, $dialog, VM, Util){
+function VMActionBarCtrl($scope, $q, VM, Util){
   $scope.min_msg = "你至少应该选择{0}台虚拟机."
   $scope.max_msg = "你不能选择超过{0}台虚拟机."
   
@@ -80,10 +80,9 @@ function VMActionBarCtrl($scope, $q, $dialog, VM, Util){
   };
   
   $scope.do_edit = function() {
-    d.context_scope = $scope;
     Util.bind($scope, 'vms').select(1, 1).then(function(vms){      
       $scope.selected_vm = vms[0];
-      Util.dialog("vm_workflow.html", 'VMWorkflowDialogCtrl', $scope, {backdropClick: false});
+      Util.dialog("/partials/vms/vm_config.html", 'VMConfigDialogCtrl', $scope, {backdropClick: false});
     });
   };
   

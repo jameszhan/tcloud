@@ -151,6 +151,25 @@ function VMWorkflowDialogCtrl($scope, VM, dialog, Util) {
   load_step();
 }
 
+function VMConfigDialogCtrl($scope, VM, dialog, Util){
+  $scope.close = function(result){
+    dialog.close(result)
+  }
+  $scope.vm = dialog.context_scope.selected_vm;
+
+  $scope.do_update = function(){
+    if($scope.vm){
+      new VM($scope.vm).$update(function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+    dialog.close();
+  }
+}
+
 function SaveAsTemplateDialogCtrl($scope, dialog, VM, Util){
   $scope.title = "存为模版";
   $scope.template = {};

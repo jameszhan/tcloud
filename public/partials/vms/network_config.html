@@ -1,0 +1,82 @@
+<div id="network">
+  <div id="networktable">
+    <div class="btn-toolbar server-btn-toolbar ">
+      <div class="btn-group">
+        <button class="btn btn-mini" onclick="$('#networktable').hide();$('#createnetwork').show();">添加</button>
+        <button class="btn btn-mini">修改</button>
+        <button class="btn btn-mini disabled">移除</button>
+      </div>
+    </div>
+    <table class="table table-striped table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>网络组</th>
+          <th>mac</th>
+          <th>类型</th>
+          <th>创建日期</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Muham</td>
+          <td class="center">
+            default
+          </td>
+          <td class="center">52:54:00:36:48:c2</td>
+          <td class="center">
+            virtio
+          </td>
+          <td class="center">
+            2012-12-20 8:30:10
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="createnetwork" style="display: none;" class=" well">
+    <h6>网络配置</h6>
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label">名称</label>
+        <div class="controls">
+          <input type="text">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">网络组</label>
+        <div class="controls">
+          <select class="span6">
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+            <option>Option 4</option>
+            <option>Option 5</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">设备类型</label>
+        <div class="controls">
+          <select class="span6">
+            <option>系统选择</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+            <option>Option 4</option>
+            <option>Option 5</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="name" class="control-label">mac地址</label>
+        <div class="controls">
+          <input type="text" value="52:54:00:36:48:c2" class="span6">
+        </div>
+      </div>
+    </form>
+    <div style="text-align:center;">
+      <button class="btn btn-primary" type="submit">确定</button>
+      <button class="btn" type="reset" onclick="$('#networktable').show();$('#createnetwork').hide();">取消</button>
+    </div>
+  </div>
+</div>
