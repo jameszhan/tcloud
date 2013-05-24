@@ -4,10 +4,6 @@
   <button type="button" class="btn btn-mini" ng-click="do_edit()">修改</button>
   <button type="button" class="btn btn-danger btn-mini" ng-click="do_delete()">删除</button>
 </div>
-<div class="input-prepend input-append">
-  <button type="button" class="btn btn-mini" ng-click="do_test()">测试</button>
-  <button type="button" class="btn btn-mini" ng-click="do_refresh()">刷新</button>
-</div>
 <div class="row-fluid">
   <div class="span8">
     <div class="table-height">
@@ -25,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr selectable='storage' exclusive ng-repeat="storage in storages | startFrom:(current_page * page_size) | limitTo:page_size">
+          <tr ng-click="show_details()" selectable='storage' exclusive ng-repeat="storage in storages | startFrom:(current_page * page_size) | limitTo:page_size">
             <td>{{storage.name}}</td>
             <td>{{storage.type}}</td>  
             <td>{{storage.server}}</td>  
@@ -48,18 +44,14 @@
       </ul>
     </div>
   </div>
-  <div class="span3 well">
+  <div class="span3 offset1 well" id="details_info" ng-show="selected_storage">
     <div>
-    可用大小:<span class="label label-success">{{status.idle_size}}</span>
-    已用大小:<span class="label label-success">{{status.useage_size}}</span>
+      名称:<span class="label label-success">{{selected_storage.name}}</span>
+      大小:<span class="label label-success">{{selected_storage.storage_size}}</span>
     </div>
     <div>
-    镜像:<span class="label label-success">{{status.mirrors}}</span>
-    实例:<span class="label label-success">{{status.instances}}</span>
-    </div>
-    <div>
-    模板:<span class="label label-success">{{status.templates}}</span>
-    磁盘:<span class="label label-success">{{status.disk}}</span>
+      关联集群:<span class="label label-success">{{selected_storage.cluster}}</span>
+      PATH: <span class="label label-success">{{selected_storage.pos}}</span>
     </div>
   </div>
 </div>

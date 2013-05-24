@@ -33,8 +33,7 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
     networks: "/partials/networks/_network_types.html",
     storages: "/partials/storages/_storage_list.html",
     backups: "/partials/shared/_backups.html",
-    tasks: "/partials/datacenters/_tasks.html",
-    templates: "/partials/templates/_templates.html"
+    tasks: "/partials/datacenters/_tasks.html"
   };  
   $scope.current_template = $scope.templates['overview'];
 
@@ -112,8 +111,7 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
     vms: "/partials/shared/_vm_list.html",
     networks: "/partials/networks/_network_types.html",
     backups: "/partials/shared/_backups.html",    
-    storages: "/partials/storages/_storage_list.html",
-    templates: "/partials/templates/_templates.html",    
+    storages: "/partials/storages/_storage_list.html",  
     monitoring: "/partials/shared/_monitoring.html"
   };
   $scope.current_template = $scope.templates['overview'];
@@ -399,6 +397,10 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
     $scope.status = storage.status;
     Util.pagination($scope, 'storages', 5);
   });
+
+  $scope.show_details = function(){
+    $scope.selected_storage = this.storage;
+  }
 
   $scope.do_delete = function(){
     Util.bind($scope, 'storages').select(1, 100).confirm('你确定要移除它们吗，此操作将无法恢复!').then(function(storages){
