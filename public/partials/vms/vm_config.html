@@ -1,0 +1,49 @@
+<form class="form-horizontal" name="vm_form">
+  <div class="modal-header">
+    <a class="close" ng-click="close()">&times;</a>
+    <h3>虚拟机配置</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span2">
+        <ul class="nav nav-list">
+          <li class="active"><a href="#basic" data-toggle="tab">基本</a></li>
+          <li><a href="#disk" data-toggle="tab">磁盘</a></li>
+          <li><a href="#network" data-toggle="tab">网卡</a></li>
+          <li><a href="#bootmenu" data-toggle="tab">启动顺序</a></li>
+          <li><a href="#display" data-toggle="tab">显示</a></li>
+          <li><a href="#other" data-toggle="tab">其他</a></li>
+          <li class="divider"></li>
+          <li><a href="#backup" data-toggle="tab">备份</a></li>
+          <li><a href="#HA" data-toggle="tab">HA</a></li>
+          <li class="divider"></li>
+          <li><a href="#help" data-toggle="tab">帮助</a></li>
+        </ul>
+      </div>
+      <div class="span10 tab-content">
+        <div id="basic" class="tab-pane active">
+          <ng:include src="'/partials/vms/basic_config.html'"/>
+        </div>
+        <div id="disk" class="tab-pane">
+          <ng:include src="'/partials/vms/disk_config.html'"/>
+        </div>
+        <div id="network" class="tab-pane">
+          <ng:include src="'/partials/vms/network_config.html'"/>
+        </div>
+        <div id="bootmenu" class="tab-pane">
+          <ng:include src="'/partials/vms/bootmenu_config.html'"/>
+        </div>
+        <div id="display" class="tab-pane">
+          <ng:include src="'/partials/vms/display_config.html'"/>
+        </div>
+        <div id="HA" class="tab-pane">
+          <ng:include src="'/partials/vms/ha_config.html'"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
+    <button type="submit" ng-disabled="!vm_form.$valid" class="btn btn-primary" ng-click="do_update()">更新</button>
+  </div>
+</form>
