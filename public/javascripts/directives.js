@@ -240,10 +240,32 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
   .directive('selectable', function(){
     return {
       restrict: 'A',
-      link: function(scope, element, attrs){
-        element.on('click', function(){
+      link: function(scope, element, attrs){   
+        var fn;
+        //element.find('input[type="checkbox"]').on('click', function(e){
+          //e.stopPropagation();
+        //});
+        scope.selected || (scope.$parent.selected = {}); //The selected collection must defined in parent scope first.
+        element.on('click', function(e){
           element.closest('tbody').find('td').removeClass('selected');
-          element.find('td').addClass('selected');;
+          element.find('td').addClass('selected');
+          if(attrs.selectable != ''){
+            if(attrs.exclusive != undefined){
+              fn = function(){
+                angular.forEach(scope.selected, function(value, key){
+                  scope.selected[key] = false;
+                });
+                scope.selected[scope[attrs.selectable].id] = true;
+              };
+            }else{
+              fn = function(){
+                if(e.target.nodeName != 'INPUT'){
+                  scope.selected[scope[attrs.selectable].id] = !scope.selected[scope[attrs.selectable].id];
+                }
+              };            
+            }
+            scope.$apply(fn);
+          }
         });
       }
     };

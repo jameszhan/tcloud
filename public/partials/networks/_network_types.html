@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="network in networks | startFrom:(current_page * page_size) | limitTo:page_size">  
+        <tr selectable='network' exclusive ng-repeat="network in networks | startFrom:(current_page * page_size) | limitTo:page_size">  
           <td><input type="checkbox" value="{{network.id}}"  ng-model="selected[network.id]" /></td>
           <td>{{network.name}}</td>
           <td>{{network.type}}</td>  

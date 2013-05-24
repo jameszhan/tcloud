@@ -50,13 +50,53 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
       height: 450,
       editable: true,
       header:{
-        left: 'month basicWeek basicDay agendaWeek agendaDay',
+        left: 'month basicWeek basicDay',
         center: 'title',
-        right: 'today prev,next'
+        right: 'agendaWeek agendaDay, today prev,next'
       },
+      
+      // time formats
+    	titleFormat: {
+    		month: 'MMMM yyyy',
+    		week: "MMMd - {MMMd}",
+    		day: 'dddd, MMMd, yyyy'
+    	},
+    	columnFormat: {
+    		month: 'ddd',
+    		week: 'ddd M/d',
+    		day: 'dddd M/d'
+    	},
+    	timeFormat: { // for event elements
+    		'': 'h(:mm)t' // default
+    	},
+      
+      // locale
+    	isRTL: false,
+    	firstDay: 0,    	
+      monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+    	dayNamesShort: ['日','一','二','三','四','五','六'],
+      buttonText: {
+    		prev: '&nbsp;&#9668;&nbsp;',
+    		next: '&nbsp;&#9658;&nbsp;',
+    		prevYear: '&nbsp;&lt;&lt;&nbsp;',
+    		nextYear: '&nbsp;&gt;&gt;&nbsp;',
+    		today: '今天',
+    		month: '月',
+    		week: '星期',
+    		day: '天'
+    	},
       dayClick: $scope.day_click,
       eventDrop: $scope.event_on_drop,
-      eventResize: $scope.event_on_resize
+      eventResize: $scope.event_on_resize,
+      eventClick: function(cal_event, e, view) {
+        var title = prompt('Event Title:', cal_event.title, { buttons: { OK: true, Cancel: false} });
+        if(title){
+          cal_event.title = title;
+          $scope.current_calendar.fullCalendar('updateEvent', cal_event);
+        }
+      }
     }
   };
 }
@@ -172,7 +212,6 @@ function HostMgmtCtrl($scope, Util){
   $scope.selected || ($scope.selected = {});
   
   $scope.show_details = function(){
-    console.log(this);
     $scope.selected_host = this.m;
   };
   

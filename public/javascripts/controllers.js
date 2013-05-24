@@ -24,6 +24,19 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
       });
     });
   });
+  
+  $scope.templates = {
+    overview: "/partials/datacenters/_overview.html",
+    events: "/partials/datacenters/_events.html",
+    hosts: "/partials/shared/_host_list.html",
+    vms: "/partials/shared/_vm_list.html",
+    networks: "/partials/networks/_network_types.html",
+    storages: "/partials/storages/_storage_list.html",
+    backups: "/partials/shared/_backups.html",
+    tasks: "/partials/datacenters/_tasks.html",
+    templates: "/partials/templates/_templates.html"
+  };  
+  $scope.current_template = $scope.templates['overview'];
 
   Util.bind_tab($scope);
   
@@ -92,6 +105,18 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
       });
     });
   });
+
+  $scope.templates = {
+    overview: "/partials/clusters/_overview.html",
+    hosts: "/partials/shared/_host_list.html",
+    vms: "/partials/shared/_vm_list.html",
+    networks: "/partials/networks/_network_types.html",
+    backups: "/partials/shared/_backups.html",    
+    storages: "/partials/storages/_storage_list.html",
+    templates: "/partials/templates/_templates.html",    
+    monitoring: "/partials/shared/_monitoring.html"
+  };
+  $scope.current_template = $scope.templates['overview'];
 
   Util.bind_tab($scope);
   
@@ -194,7 +219,14 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
       });
     });
   });
-
+  
+  $scope.templates = {
+    overview: "/partials/hosts/_overview.html",
+    vms: "/partials/shared/_vm_list.html",  
+    storages: "/partials/storages/_storage_list.html",
+    backups: "/partials/shared/_backups.html"
+  };
+  $scope.current_template = $scope.templates['overview'];
   
   Util.bind_tab($scope);
   
@@ -226,6 +258,12 @@ function VMCtrl($scope, $routeParams, VM, Util, $location) {
     $scope.vms = [vm]; //Here is compatible with action_bar.
     $scope.selected[vm.id] = true;
   });
+  
+  $scope.templates = {
+    overview: "/partials/vms/_overview.html",
+    snapshots: "/partials/vms/_snapshots.html"
+  };
+  $scope.current_template = $scope.templates['overview'];
   
   Util.bind_tab($scope);
   

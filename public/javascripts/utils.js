@@ -186,7 +186,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       };
       
       $scope.should_hide = function(){
-        return $scope[target_name].length <= $scope.page_size;
+        return ($scope[target_name] && $scope[target_name].length <= $scope.page_size);
       };
       
       $scope.unselected_all = function(){
@@ -205,9 +205,9 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     },
     bind_tab: function($scope){
       $scope.$on('$locationChangeStart', function(e){
-        if($location.absUrl().split('#').length >= 3){
-          e.preventDefault();
-        }
+        //if($location.absUrl().split('#').length >= 3){
+        //  e.preventDefault();
+        //}
       });
       $scope.$on('$locationChangeSuccess', function(e){
       });
@@ -215,19 +215,22 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       var hs = $location.absUrl().split('#');
       if(hs.length == 3){
         var h = hs[2];
-        $('.tabbable a:first').tab('show'); //Here is for wrong hash input.
+        //$('.tabbable a:first').tab('show'); //Here is for wrong hash input.
         $('.tabbable a[href="#' + h + '"]').tab('show');//.closest('li').addClass('active'); 
+        if($scope.templates){
+          $scope.current_template = $scope.templates[h];
+        }
       }
       $scope.location = $location.absUrl();
+      
       $('a[data-toggle="tab"]').on('shown', function (e) {             
         $scope.$apply(function(){
           $location.hash(e.target.hash.substr(1));
           $scope.location = $location.absUrl();
-          $scope.shortcut_name = e.target.hash.substr(1)
-          //$window.history.pushState("tab", "Tabs", $location.path());
+          $scope.shortcut_name = e.target.hash.substr(1);
         });
         
-        $('#directives-calendar').find('.calendar').fullCalendar('render');
+        //$('#directives-calendar').find('.calendar').fullCalendar('render');
         return false;
       });
     },
