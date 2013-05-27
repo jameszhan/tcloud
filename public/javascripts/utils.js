@@ -5,6 +5,14 @@ String.format = function(formatter){
   });
 };
 
+alertInfo = function(info){
+  var message = '<div class="alert">'+
+                  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+                  '<strong>Warning!</strong> '+ info +
+                '</div>';
+  return message;
+} 
+
 Date.prototype.format = function(format){   
   var o = {   
     "M+" : this.getMonth()+1,   
@@ -121,13 +129,15 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         return $scope.selected[item.id];
       }), ok = true;
       return {
-        select: function(min, max){          
+        select: function(min, max){
+          $(".alert").alert('close');          
           if(items.length < min){
-            alert(String.format($scope.min_msg, min));
+            //alert(String.format($scope.min_msg, min));
+            $("#flash").append(alertInfo(String.format($scope.min_msg, min)));
             ok = false;
           }
           if(items.length > max){
-            alert(String.format($scope.max_msg, min));
+            $("#flash").append(alertInfo(String.format($scope.max_msg, min)));
             ok = false;
           }
           return {
