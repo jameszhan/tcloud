@@ -111,7 +111,8 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
     vms: "/partials/shared/_vm_list.html",
     networks: "/partials/networks/_network_types.html",
     backups: "/partials/shared/_backups.html",    
-    storages: "/partials/storages/_storage_list.html",  
+    storages: "/partials/storages/_storage_list.html",
+    disk: "/partials/storages/_storage_list.html",  
     monitoring: "/partials/shared/_monitoring.html"
   };
   $scope.current_template = $scope.templates['overview'];
@@ -199,7 +200,6 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
   Host.get({id: $routeParams.id}, function(host){
     $scope.host = host;
     $scope.hosts = [host]; //Here is compatible with action_bar.
-    $scope.selected[host.id] = true;
     $scope.vms = $scope.host.virtual_machines;
     $scope.os_info = $scope.vms.reduce(function(ret, vm){
       if(ret[vm.os_type] != undefined){
@@ -220,8 +220,7 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
   
   $scope.templates = {
     overview: "/partials/hosts/_overview.html",
-    vms: "/partials/shared/_vm_list.html",  
-    storages: "/partials/storages/_storage_list.html",
+    vms: "/partials/shared/_vm_list.html",
     backups: "/partials/shared/_backups.html"
   };
   $scope.current_template = $scope.templates['overview'];
@@ -254,7 +253,6 @@ function VMCtrl($scope, $routeParams, VM, Util, $location) {
   VM.get({id: $routeParams.id}, function(vm){
     $scope.vm = vm;
     $scope.vms = [vm]; //Here is compatible with action_bar.
-    $scope.selected[vm.id] = true;
   });
   
   $scope.templates = {
