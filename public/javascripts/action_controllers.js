@@ -106,7 +106,6 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
 /******************************* VM Action Start ******************************/
 function VMMgmtCtrl($scope, Util){
   $scope.selected || ($scope.selected = {});
-    
   Util.pagination($scope, 'vms', 5);
 }
 
