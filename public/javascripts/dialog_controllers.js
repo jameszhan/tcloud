@@ -42,6 +42,32 @@ function HostUpsertDialogCtrl($scope, dialog, Util, Host){
     $scope.host.cluster = $scope.clusters[0];
   }
 }
+
+function HostActivateDialogCtrl($scope, dialog){
+  $scope.close = function(result){
+    dialog.close(result)
+  }
+
+  $scope.do_save_activate_config = function(){
+    
+  }
+
+  $scope.host = dialog.context_scope.selected_host;
+  
+  var cluster = dialog.context_scope.cluster;
+  if(cluster){
+    $scope.clusters = [
+      {name: cluster.name, id: cluster.id}
+    ];   
+    $scope.host.cluster = $scope.clusters[0];  
+  }else{
+    $scope.clusters = [];
+    angular.forEach(dialog.context_scope.clusters, function(cluster){
+      $scope.clusters.push({name: cluster.name, id: cluster.id});
+    });
+    $scope.host.cluster = $scope.clusters[0];
+  }
+}
   
 /********************* Task Calendar Start ******************************/
 function TaskCalendarDialogCtrl($scope, dialog, DataCenter){
