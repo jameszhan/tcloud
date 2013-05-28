@@ -1,0 +1,78 @@
+<form class="form-horizontal" name="activate_form"  ng-submit="do_save_activate_config()">
+<div class="modal-header">
+  <a class="close" ng-click="close()">×</a>
+  <h3>主机激活配置</h3>
+</div>
+<div class="modal-body">
+  <fieldset>
+    <legend>主机激活配置</legend>
+    <div class="row-fluid">  
+      <div class="span8">
+        <div class="control-group">
+          <label class="control-label">名称：</label>
+          <div class="controls">
+            <input type="text" required ng-model="host.name" placeholder="主机名称" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">IP：</label>
+          <div class="controls">
+            <input type="text" required ng-model="host.name" placeholder="IP" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="cluster" class="control-label">SSH密码：</label>
+          <div class="controls">
+            <input type="password" required ng-model="host.name" placeholder="SSH密码" />
+          </div>
+        </div>
+        <br/>
+        <div class="control-group">
+          <label for="cluster" class="control-label">集群：</label>
+          <div class="controls">
+            <select ng-options="c.name for c in clusters" class="span5" ng-model="host.cluster">
+            </select>
+          </div>
+        </div>
+        <!-- begin 网络IP配置 -->
+        <div class="control-group">
+          <label class="control-label">eth1：</label>
+          <div class="controls">
+            <input type="text" class="span4" />
+            <input type="text" class="span4" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">eth2：</label>
+          <div class="controls">
+            <input type="text" class="span4" />
+            <input type="text" class="span4" />
+          </div>
+        </div>
+        <!-- end 网络IP配置 -->
+        <div class="control-group">
+          <label for="cluster" class="control-label">远程管理：</label>
+          <div class="controls">
+            <select ng-options="c.name for c in clusters" class="span5" ng-model="host.cluster">
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">远程管理IP：</label>
+          <div class="controls">
+            <input type="text" required ng-model="host.total_memory" placeholder="远程管理IP" />
+          </div>
+        </div>
+      </div>
+      <div class="span4">
+
+      </div>
+    </div>  
+  </fieldset>  
+
+</div>
+<div class="modal-footer">
+  <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
+  <button type="submit" ng-disabled="!activate_form.$valid" class="btn btn-primary">保存</button>
+</div>
+</form>
