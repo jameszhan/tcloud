@@ -5,14 +5,6 @@ String.format = function(formatter){
   });
 };
 
-alertInfo = function(info){
-  var message = '<div class="alert">'+
-                  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
-                  '<strong>Warning!</strong> '+ info +
-                '</div>';
-  return message;
-}
-
 Date.begin_of_date = function(date){
   start = $.datepicker.parseDate('yyyy-mm-dd', $.datepicker.formatDate( "yyyy-mm-dd", date));
   return start;
@@ -48,7 +40,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     }      
   }, schedule = function(){
     run();
-   // $timeout(schedule, next_delay());
+    $timeout(schedule, next_delay());
   }, add = function(task, key){
     task.first_time = true;
     key && (task.key = key);
@@ -138,17 +130,18 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       $scope.max_msg = ($scope.max_msg || "你不能选择超过{0}个");
       var items = $.grep($scope[target_name], function(item) {
         return $scope.selected[item.id];
-      }), ok = true;
+      }), ok = true, alert_message = function(title, msg){
+        var btns = [{result:'ok', label: 'OK', cssClass: 'btn-primary'}];
+        $dialog.messageBox(title, msg, btns, {dialogClass: 'modal alert-message'}).open().then(function(result){});
+      };
       return {
-        select: function(min, max){
-          $(".alert").alert('close');          
+        select: function(min, max){       
           if(items.length < min){
-            //alert(String.format($scope.min_msg, min));
-            $("#flash").append(alertInfo(String.format($scope.min_msg, min)));
+            alert_message("提示信息", String.format($scope.min_msg, min));
             ok = false;
           }
           if(items.length > max){
-            $("#flash").append(alertInfo(String.format($scope.max_msg, min)));
+            alert_message("提示信息", String.format($scope.max_msg, min));
             ok = false;
           }
           return {

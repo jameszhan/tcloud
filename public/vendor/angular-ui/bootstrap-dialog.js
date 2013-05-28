@@ -267,16 +267,22 @@ dialogModule.provider("$dialog", function(){
       // * `result`: the result to pass to the `close` method of the dialog when the button is clicked
       // * `label`: the label of the button
       // * `cssClass`: additional css class(es) to apply to the button for styling
-      messageBox: function(title, message, buttons){
-        return new Dialog({templateUrl: 'template/dialog/message.html', controller: 'MessageBoxController', resolve:
-          {model: function() {
-            return {
-              title: title,
-              message: message,
-              buttons: buttons
-            };
+      messageBox: function(title, message, buttons, opts){
+        var config = {
+          templateUrl: 'template/dialog/message.html', 
+          controller: 'MessageBoxController', 
+          resolve: {
+            model: function() {
+              return {
+                title: title,
+                message: message,
+                buttons: buttons
+              };
+            }
           }
-        }});
+        };
+        angular.extend(config, opts);
+        return new Dialog(config);
       }
     };
   }];
