@@ -256,6 +256,7 @@ function NetworkConfigDialogCtrl($scope, dialog, Util, Network){
       });
     }
   };
+  $scope.security_levels = [{value: "低"},{value: "中"},{value: "高"}];
 
   var selected_type = dialog.context_scope.selected_type;  
   if(selected_type){
@@ -267,6 +268,7 @@ function NetworkConfigDialogCtrl($scope, dialog, Util, Network){
     $scope.action = "$save";
     $scope.network = {};   
   }
+  $scope.network.security_level = $scope.security_levels[1];
 }
 
 
@@ -291,18 +293,20 @@ function SecurityRuleDialogCtrl($scope, dialog, Util, SecurityRule){
   };
 
   var security_rule = dialog.context_scope.selected_rule;
-  $scope.data_directions = [{"key":"in"},{"key":"out"},{"key":"inout"}];  
+  $scope.data_directions = [{"key":"in"},{"key":"out"},{"key":"inout"}];
+  $scope.security_levels = [{value: "低"},{value: "中"},{value: "高"}];
+    
   if(security_rule){
     $scope.title = "编辑配置网络";
     $scope.action = "$update";
     $scope.security_rule = security_rule;
-    $scope.security_rule.data_direction = $scope.data_directions[0];
   } else {
     $scope.title = "配置网络";
     $scope.action = "$save";
     $scope.security_rule = {};
-    $scope.security_rule.data_direction = $scope.data_directions[0];    
   }
+  $scope.security_rule.data_direction = $scope.data_directions[0];
+  $scope.security_rule.security_level = $scope.security_levels[1];
 }
 
 

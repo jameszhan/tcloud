@@ -5,6 +5,7 @@
     "protocol": "tcp",
     "port_begin": "22",
     "port_end": "22",
+    "security_level": {"value": "高"},
     "data_direction": {"key":"in"},
     "created_at": ""
   },
@@ -14,6 +15,7 @@
     "protocol": "tcp",
     "port_begin": "22",
     "port_end": "22",
+    "security_level": {"value": "中"},
     "data_direction": {"key":"in"},
     "created_at": ""
   },
@@ -23,6 +25,7 @@
     "protocol": "tcp",
     "port_begin": "22",
     "port_end": "22",
+    "security_level": {"value": "低"},
     "data_direction": {"key":"out"},
     "created_at": ""
   },
@@ -32,6 +35,7 @@
     "protocol": "tcp",
     "port_begin": "22",
     "port_end": "22",
+    "security_level": {"value": "中"},
     "data_direction": {"key":"inout"},
     "created_at": ""
   },
@@ -41,6 +45,7 @@
     "protocol": "tcp",
     "port_begin": "22",
     "port_end": "22",
+    "security_level": {"value": "高"},
     "data_direction": {"key":"out"},
     "created_at": ""
   },
@@ -50,6 +55,7 @@
     "protocol": "tcp",
     "port_begin": "22",
     "port_end": "22",
+    "security_level": {"value": "中"},
     "data_direction": {"key":"in"},
     "created_at": ""
   }
