@@ -31,6 +31,20 @@ exports.event_delete = function(req, res){
   });
 }
 
+exports.add_task = function(req, res){
+  var task = req.body.task;
+  task.id = Math.ceil(Math.random() * 1000);
+  console.log(task);
+  res.json(task);
+}
+
+exports.update_task = function(req, res){
+  var task = req.body.task;
+  console.log(task);
+  res.json(task);
+}
+
+
 
 exports.top_hosts = function(req, res){
   res.set("ContentType", "application/json");
@@ -47,18 +61,6 @@ exports.top_vms = function(req, res){
   var rand = Math.ceil(Math.random() * 5)
   res.render("templates/tops.json", {hosts: vms});   
 }
-
-exports.add_task = function(req, res){
-  var task = req.body.task;
-  task.id = Math.ceil(Math.random() * 100);
-  console.log(task);
-  res.json(task);
-}
-
-exports.update_task = function(req, res){
-  res.json({success: true});
-}
-
 
 exports.tasks = function(req, res){
   res.set("ContentType", "application/json");

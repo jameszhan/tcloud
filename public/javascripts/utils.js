@@ -35,7 +35,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     }      
   }, schedule = function(){
     run();
-    $timeout(schedule, next_delay());
+   // $timeout(schedule, next_delay());
   }, add = function(task, key){
     task.first_time = true;
     key && (task.key = key);

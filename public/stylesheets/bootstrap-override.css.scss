@@ -94,6 +94,10 @@ td > .progress{
 body .modal.ng-scope {
   width: 700px;
   margin-left: -350px; 
+  &.mini{
+    width: 450px;
+    margin-left: -200px; 
+  }
   fieldset {
     padding-top: 10px;
     border: 1px solid #666;

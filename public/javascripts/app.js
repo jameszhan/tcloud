@@ -14,9 +14,10 @@ jQuery(document).ready(function($){
       spacing_open: 5
     }    
   });
+  $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 });
 
-angular.module('webvirt', ['ui.calendar', 'webvirtDirectives', 'webvirtServices', 'webvirtFilters', 'ui.bootstrap.dialog', 'ngResource']).
+angular.module('webvirt', ['ui.calendar', 'ui.date', 'webvirtDirectives', 'webvirtServices', 'webvirtFilters', 'ui.bootstrap.dialog', 'ngResource']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.
       when('/datacenters/:id', {templateUrl: '/partials/datacenters/index.html', controller: DataCenterCtrl}).

@@ -1,16 +1,28 @@
 /******************************* Calendar Start ******************************/
 function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
   $scope.events = [];
-  $scope.event_sources = [$scope.events];
-  var today = new Date();
+  $scope.event_sources = [$scope.events];  
+  
+  DataCenter.tasks({id: $routeParams.id}, function(data){
+    angular.forEach(data, function(v){
+      console.log(v);
+      $scope.events.push(v);
+    });
+  });  
+  
+  var today = $.datepicker.parseDate('yyyy-mm-dd', $.datepicker.formatDate( "yyyy-mm-dd", new Date()));
   var d = today.getDate();
   var m = today.getMonth();
   var y = today.getFullYear();
   
+  $scope.add_task = function() {
+    open_dialog(today, null);
+  };
+
+  
   $scope.day_click = function(date, all_day, js_event, view){
     $scope.$apply(function(){
-      $scope.current_date = date;
-      Util.dialog("/partials/datacenters/_task.html", 'TaskCalendarDialogCtrl', $scope, {backdropClick: false});
+      open_dialog(date, null);
     });
   };
 
@@ -20,15 +32,16 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
     });
   };
 
-  $scope.event_on_resize = function(event, day_delta, minute_delta, revert_func, js_event, ui, view ){
+  $scope.event_on_resize = function(event, day_delta, minute_delta, revert_func, js_event, ui, view){
     $scope.$apply(function(){
       $scope.alert_message = ('Event Resized to make dayDelta ' + minute_delta);
     });
   };
-
-  $scope.add_task = function() {
-    $scope.current_date = today;
-    Util.dialog("/partials/datacenters/_task.html", 'TaskCalendarDialogCtrl', $scope, {backdropClick: false});
+  
+  $scope.edit_task = function(cal_event, e, view) {
+    $scope.$apply(function(){      
+      open_dialog(today, cal_event);
+    });
   };
 
   $scope.remove = function(index) {
@@ -38,17 +51,13 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
   $scope.change_view = function(view) {
     $scope.current_calendar.fullCalendar('changeView', view);
   };
-  
-  DataCenter.tasks({id: $routeParams.id}, function(data){
-    angular.forEach(data, function(v){
-      $scope.events.push(v);
-    });
-  });
+
   
   $scope.ui_config = {
     calendar:{
       height: 450,
       editable: true,
+      ignoreTimezone: false,
       header:{
         left: 'month basicWeek basicDay',
         center: 'title',
@@ -90,15 +99,15 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
       dayClick: $scope.day_click,
       eventDrop: $scope.event_on_drop,
       eventResize: $scope.event_on_resize,
-      eventClick: function(cal_event, e, view) {
-        var title = prompt('Event Title:', cal_event.title, { buttons: { OK: true, Cancel: false} });
-        if(title){
-          cal_event.title = title;
-          $scope.current_calendar.fullCalendar('updateEvent', cal_event);
-        }
-      }
+      eventClick: $scope.edit_task
     }
-  };
+  };  
+  
+  function open_dialog(date, event){
+    $scope.selected_event = event;
+    $scope.selected_date = date;
+    Util.dialog("/partials/datacenters/_task.html", 'TaskCalendarDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
+  }
 }
 
 /******************************* Calendar End ******************************/
