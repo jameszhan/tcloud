@@ -14,7 +14,7 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
   
   DataCenter.tasks({id: $routeParams.id}, function(data){    
     angular.forEach(data, function(v){   
-      $scope["events_at_" + v.priority].push(Util.event_with_color(v));
+      $scope["events_at_" + v.priority].push(v);
       $scope.events.push(v);
     });
   });  
@@ -33,7 +33,7 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
 
   $scope.event_on_drop = function(event, day_delta, minute_delta, all_day, revert_func, js_event, ui, view){
     $scope.$apply(function(){
-      Util.event_with_color(event);
+      //Util.event_with_color(event);
       DataCenter.update_task({id: $scope.datacenter.id, task: {id: event.id, day_delta: day_delta, minute_delta: minute_delta, all_day: all_day}});
     });
   };
@@ -109,7 +109,11 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
       eventResize: $scope.event_on_resize,
       eventClick: $scope.edit_task,
       eventRender: function(event, element) {
-        element.find('span.fc-event-title').append('<span class="pull-right"><i class="icon-pencil"></i><i class="icon-trash"><i></span>'); 
+        var clazz = "event_at_" + event.priority;
+        if(event.start < today){
+          clazz = "event_expired";
+        }
+        element.addClass(clazz).find('span.fc-event-title').append('<span class="pull-right"><i class="icon-pencil"></i><i class="icon-trash"><i></span>'); 
         element.on('click', '.icon-remove', function(e){
           if(window.confirm("你真的确定要删除这个事件吗?")){
             $scope.$apply(function(){              

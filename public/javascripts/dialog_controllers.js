@@ -119,7 +119,8 @@ function TaskCalendarDialogCtrl($scope, dialog, DataCenter, Util){
     angular.extend($scope.event, event_duration());
     DataCenter.add_task({id: dialog.context_scope.datacenter.id, task: $scope.event}, function(event){        
       dialog.context_scope.events.push(event);
-      dialog.context_scope["events_at_" + event.priority].push(Util.event_with_color(event));
+      dialog.context_scope["events_at_" + event.priority].push(event);
+      //dialog.context_scope["events_at_" + event.priority].push(Util.event_with_color(event));
       dialog.close();
     });
   };
@@ -127,7 +128,7 @@ function TaskCalendarDialogCtrl($scope, dialog, DataCenter, Util){
   $scope.update_task = function(){
     angular.extend($scope.event, event_duration());
     DataCenter.update_task({id: dialog.context_scope.datacenter.id, task: $scope.event}, function(event){
-      Util.event_with_color(event);
+      //Util.event_with_color(event);
       Util.update(dialog.context_scope.events, [event]);  
       Util.update(dialog.context_scope["events_at_" + event.priority], [event]);
       dialog.close();
