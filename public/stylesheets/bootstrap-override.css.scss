@@ -6,6 +6,30 @@ h6 {
   }
 }
 
+
+.fc-event{
+  &.event_expired {
+    background-color: #cfcfcf; 
+    border-color: #c0c0c0; 
+    color: #9a9a9a;
+  }
+  &.event_at_0{
+    background-color: #ff3300;
+    border-color: #ff9900; 
+    color: #f0f0f0;
+  }
+  &.event_at_5{
+    background-color: #f0f033;
+    border-color:#cfcf33;
+    color: #696969;
+  }
+  &.event_at_10{
+    background-color: #339933; 
+    border-color: #669966;
+    color: #f0f0f0;
+  }
+}
+
 #main-tabs{
   .ui-state-default{
     background-color: none;
@@ -94,6 +118,15 @@ td > .progress{
 body .modal.ng-scope {
   width: 700px;
   margin-left: -350px; 
+  &.mini{
+    width: 450px;
+    margin-left: -200px; 
+  }
+  &.alert-message{
+    width: 450px;
+    margin-left: -200px;
+    margin-top: 120px;
+  }
   fieldset {
     padding-top: 10px;
     border: 1px solid #666;

@@ -48,7 +48,7 @@ function ContextMenuCtrl($rootScope, $scope, Util){
   }
 
   $scope.add_storage = function(){
-    Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope);
+    Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope, {dialogClass: 'modal mini'});
   };
   
   $scope.add_network = function(){
@@ -59,7 +59,7 @@ function ContextMenuCtrl($rootScope, $scope, Util){
 function DataCenterContextMenuCtrl(){}
 function ClusterContextMenuCtrl($rootScope, $scope, Cluster, Util){
   $scope.add_host = function(){
-    Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope);
+    Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {dialogClass: 'modal mini'});
   }
   
   $rootScope.$on('event:cluster-selected', function(e, args) {
@@ -126,7 +126,7 @@ function VMContextMenuCtrl($rootScope, $scope, VM, Util){
       };
       
       $scope.do_migrate = function(){
-        Util.dialog("/partials/vms/migrate_dialog.html", 'VMMigrateDialogCtrl', $scope);
+        Util.dialog("/partials/vms/migrate_dialog.html", 'VMMigrateDialogCtrl', $scope, {dialogClass: 'modal mini'});
       };
 
       $scope.do_suspend = function(){

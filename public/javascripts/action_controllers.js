@@ -1,17 +1,34 @@
 /******************************* Calendar Start ******************************/
 function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
+  var today = Date.begin_of_date(new Date());
+  var d = today.getDate(), m = today.getMonth(), y = today.getFullYear();
   $scope.events = [];
-  $scope.event_sources = [$scope.events];
-  var today = new Date();
-  var d = today.getDate();
-  var m = today.getMonth();
-  var y = today.getFullYear();
+  $scope.event_sources = [];   
+
+  $scope.priorities = [{name: '低', value: 10}, {name: '普通', value: 5}, {name: '高', value: 0}];
+  $scope.search = {priority:5};    
+  angular.forEach($scope.priorities, function(obj){   
+    $scope["events_at_" + obj.value] = [];    
+    $scope.event_sources.push($scope["events_at_" + obj.value] );
+  });
+  
+  DataCenter.tasks({id: $routeParams.id}, function(data){    
+    angular.forEach(data, function(v){   
+      $scope["events_at_" + v.priority].push(v);
+      $scope.events.push(v);
+    });
+  });  
+  
+  $scope.add_task = function() {
+    open_dialog(today, null);
+  };
   
   $scope.day_click = function(date, all_day, js_event, view){
-    $scope.$apply(function(){
-      $scope.current_date = date;
-      Util.dialog("/partials/datacenters/_task.html", 'TaskCalendarDialogCtrl', $scope, {backdropClick: false});
-    });
+    if(date >= today){
+      $scope.$apply(function(){
+        open_dialog(date, null);
+      });
+    }
   };
 
   $scope.event_on_drop = function(event, day_delta, minute_delta, all_day, revert_func, js_event, ui, view){
@@ -20,35 +37,34 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
     });
   };
 
-  $scope.event_on_resize = function(event, day_delta, minute_delta, revert_func, js_event, ui, view ){
+  $scope.event_on_resize = function(event, day_delta, minute_delta, revert_func, js_event, ui, view){
     $scope.$apply(function(){
       $scope.alert_message = ('Event Resized to make dayDelta ' + minute_delta);
     });
   };
-
-  $scope.add_task = function() {
-    $scope.current_date = today;
-    Util.dialog("/partials/datacenters/_task.html", 'TaskCalendarDialogCtrl', $scope, {backdropClick: false});
+  
+  $scope.edit_task = function(cal_event, e, view) {
+    $scope.$apply(function(){      
+      open_dialog(today, cal_event);
+    });
   };
 
-  $scope.remove = function(index) {
-    $scope.events.splice(index, 1);
+  $scope.remove = function(index, e) {
+    remove_event($scope.events, e);
+    remove_event($scope["events_at_" + e.priority], e);  
   };
+  
 
   $scope.change_view = function(view) {
     $scope.current_calendar.fullCalendar('changeView', view);
   };
-  
-  DataCenter.tasks({id: $routeParams.id}, function(data){
-    angular.forEach(data, function(v){
-      $scope.events.push(v);
-    });
-  });
+
   
   $scope.ui_config = {
     calendar:{
       height: 450,
       editable: true,
+      ignoreTimezone: false,
       header:{
         left: 'month basicWeek basicDay',
         center: 'title',
@@ -90,15 +106,45 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
       dayClick: $scope.day_click,
       eventDrop: $scope.event_on_drop,
       eventResize: $scope.event_on_resize,
-      eventClick: function(cal_event, e, view) {
-        var title = prompt('Event Title:', cal_event.title, { buttons: { OK: true, Cancel: false} });
-        if(title){
-          cal_event.title = title;
-          $scope.current_calendar.fullCalendar('updateEvent', cal_event);
+      eventClick: $scope.edit_task,
+      eventRender: function(event, element) {
+        var clazz = "event_at_" + event.priority;
+        if(event.start < today){
+          clazz = "event_expired";
         }
+        element.addClass(clazz).find('span.fc-event-title').append('<span class="pull-right"><i class="icon-pencil"></i><i class="icon-trash"><i></span>'); 
+        element.on('click', '.icon-trash', function(e){
+          if(window.confirm("你真的确定要删除这个事件吗?")){
+            $scope.$apply(function(){              
+              $scope.remove(-1, event);
+            });
+          }
+          e.stopPropagation();
+        });
       }
     }
-  };
+  };  
+  
+  function remove_event(c, e){
+    var index = -1;
+    for(var i = 0; i < c.length; i++){
+      if(e.id == c[i].id){
+        index = i;
+        break;
+      }
+    }
+    if(index >= 0){
+      c.splice(index, 1);
+    }else{
+      alert("你所选的事件不存在");
+    }
+  }
+  
+  function open_dialog(date, event){
+    $scope.selected_event = event;
+    $scope.selected_date = date;
+    Util.dialog("/partials/datacenters/_task.html", 'TaskCalendarDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
+  }
 }
 
 /******************************* Calendar End ******************************/
@@ -145,14 +191,14 @@ function VMActionBarCtrl($scope, $q, VM, Util){
   $scope.do_template = function(){
     Util.bind($scope, 'vms').select(1, 1).then(function(vms){
       $scope.selected_vm = vms[0];
-      Util.dialog("/partials/vms/template_dialog.html", 'SaveAsTemplateDialogCtrl', $scope, {backdropClick: false});
+      Util.dialog("/partials/vms/template_dialog.html", 'SaveAsTemplateDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
     }); 
   };
   
   $scope.do_migrate = function(){
     Util.bind($scope, 'vms').select(1, 1).then(function(vms){
       $scope.selected_vm = vms[0];
-      Util.dialog("/partials/vms/migrate_dialog.html", 'VMMigrateDialogCtrl', $scope, {backdropClick: false});
+      Util.dialog("/partials/vms/migrate_dialog.html", 'VMMigrateDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
     }); 
   };
   
@@ -186,6 +232,10 @@ function VMActionBarCtrl($scope, $q, VM, Util){
       console.log("Shutdown VMS " + vm_ids);
       new VM({ids: vm_ids}).$shutdown(Util.update_activities);
     }); 
+  };
+
+  $scope.do_force_shutdown = function(){
+    
   };
   
   $scope.do_snapshot = function(){
@@ -224,13 +274,13 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
   
   $scope.do_add = function(){
     $scope.selected_host = null;
-    Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {backdropClick: false});
+    Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
   };
   
   $scope.do_edit = function() {
     Util.bind($scope, 'hosts').select(1, 1).then(function(hosts) {
       $scope.selected_host = hosts[0];
-      Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {backdropClick: false});
+      Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
     });
   };
   

@@ -70,21 +70,84 @@ function HostActivateDialogCtrl($scope, dialog){
 }
   
 /********************* Task Calendar Start ******************************/
-function TaskCalendarDialogCtrl($scope, dialog, DataCenter){
-  $scope.task = {};
-  $scope.title = "添加任务";
+function TaskCalendarDialogCtrl($scope, dialog, DataCenter, Util){
   $scope.close = function(result){
     dialog.close(result)
   };
-  $scope.save_task = function(){
-    DataCenter.add_task({id: dialog.context_scope.datacenter.id, task: $scope.task}, function(task){
-      dialog.context_scope.events.push(task);
+  
+  $scope.priorities = [{name: '低', value: 10}, {name: '普通', value: 5}, {name: '高', value: 0}];
+  $scope.durations = [{name: '不限', value: 0}, {name: '1分钟', value: 1 * 60 * 1000}, {name: '3分钟', value: 3 * 60 * 1000}, 
+    {name: '5分钟', value: 5 * 60 * 1000}, {name: '10分钟', value: 10 * 60 * 1000}, {name: '20分钟', value: 20 * 60 * 1000}, 
+    {name: '30分钟', value: 30 * 60 * 1000}, {name: '1小时', value: 60 * 60 * 1000}, {name: '2小时', value: 2 * 60 * 60 * 1000}, 
+    {name: '3小时', value: 3 * 60 * 60 * 1000}, {name: '5小时', value: 5 * 60 * 60 * 1000}, {name: '8小时', value: 8 * 60 * 60 * 1000}, 
+    {name: '10小时', value: 10 * 60 * 60 * 1000}, {name: '12小时', value: 12 * 60 * 60 * 1000}, {name: '24小时', value: 24 * 60 * 60 * 1000}, 
+    {name: '48小时', value: 24 * 60 * 60 * 1000}, {name: '72小时', value: 72 * 60 * 60 * 1000}];    
+  $scope.duration = 0;
+  $scope.start_time = "08:00";
+  $scope.event = {
+    priority: 5
+  }  
+  
+  if(dialog.context_scope.selected_event){
+    $scope.title = "更新任务";
+    $scope.action = 'update_task'; 
+    copy($scope.event, dialog.context_scope.selected_event, 'id', 'title', 'desc', 'start', 'priority');   
+    $scope.event.start = Date.begin_of_date($scope.event.start);
+    $scope.start_time = dialog.context_scope.selected_event.start.format("hh:mm");
+  } else {
+    $scope.title = "添加任务";
+    $scope.action = 'create_task';
+    if(dialog.context_scope.selected_date){
+      $scope.event.start = dialog.context_scope.selected_date;
+    }
+  }   
+  
+  function event_duration(){    
+    var time_ms = $scope.event.start.getTime();    
+    if((/^(\d{2})\:(\d{2})$/gi).test($scope.start_time)){   
+      var constant = 60 * 1000;   
+      var ms = + RegExp.$1 * 60 * constant + RegExp.$2 * 60 * constant;
+      time_ms += ms;
+    }
+    return {
+      start: new Date(time_ms),
+      end: new Date(time_ms + $scope.duration)
+    };
+  }
+  
+  $scope.create_task = function(){
+    angular.extend($scope.event, event_duration());
+    DataCenter.add_task({id: dialog.context_scope.datacenter.id, task: $scope.event}, function(event){        
+      dialog.context_scope.events.push(event);
+      dialog.context_scope["events_at_" + event.priority].push(event);
       dialog.close();
     });
   };
-  if(dialog.context_scope.current_date){
-    $scope.task.start = dialog.context_scope.current_date.format("yyyy-MM-dd");
-    $scope.task.end = dialog.context_scope.current_date.format("yyyy-MM-dd");
+  
+  $scope.update_task = function(){
+    angular.extend($scope.event, event_duration());
+    DataCenter.update_task({id: dialog.context_scope.datacenter.id, task: $scope.event}, function(event){
+      Util.update(dialog.context_scope.events, [event]);  
+      Util.update(dialog.context_scope["events_at_" + event.priority], [event]);
+      dialog.close();
+    });    
+  };
+  
+  $scope.do_submit = function(){
+    $scope[$scope.action]();
+  };
+  
+  function copy(dst, src){    
+    //angular.extend($scope.event, dialog.context_scope.selected_event);  //Here is a bug.
+    if(arguments.length > 2){
+      var property_names = [].slice.call(arguments, 2);
+      for(var i = 0; i < property_names.length; i++){
+        var name = property_names[i];
+        dst[name] = src[name]
+      }
+    }else{
+      angular.extend(dst, src);
+    }
   }
 }
 /********************* Task Calendar End ******************************/

@@ -43,14 +43,14 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
       },
       link: function(scope, element, attrs){        
         var _tree = element.find("#search-tree");
-        //element.on('keyup', '.search', function(){
-        //  _filter(scope.data, scope.search);
-        //  ztree = $.fn.zTree.init(_tree, _settings, scope.data);
-        //});
-        element.on('click', 'button.add-on', function(){
+        element.on('keyup', '.search', function(){
           _filter(scope.data, scope.search);
           ztree = $.fn.zTree.init(_tree, _settings, scope.data);
         });
+        //element.on('click', 'button.add-on', function(){
+        //  _filter(scope.data, scope.search);
+        //  ztree = $.fn.zTree.init(_tree, _settings, scope.data);
+        //});
         $http.get(attrs.url).success(function(data, status, headers, config) {
           scope.data = data
           ztree = $.fn.zTree.init(_tree, _settings, scope.data);
