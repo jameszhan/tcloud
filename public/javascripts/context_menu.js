@@ -43,6 +43,10 @@ angular.module('webvirtContextMenu', []).factory('ContextMenu', function($rootSc
 
 
 function ContextMenuCtrl($rootScope, $scope, Util){
+  $scope.add_cluster = function(){
+    Util.dialog("/partials/clusters/_add_cluster_dialog.html", 'ClusterConfigCtrl', $scope);
+  }
+
   $scope.add_storage = function(){
     Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope);
   };

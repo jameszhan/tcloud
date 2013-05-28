@@ -472,3 +472,17 @@ function BackupStrategyDialogCtrl($scope, dialog, Util, BackupStrategy){
 
 
 /********************* Backup Strategy End  *********************/
+
+/************************ Cluster Start  ***********************/
+
+function ClusterConfigCtrl($scope, dialog, Util, Cluster){
+  $scope.close = function(result){
+    dialog.close(result);
+  }
+
+  $scope.save_cluster = function(){
+    console.log("save cluster!");
+  }
+}
+
+/************************ Cluster End  ************************/
