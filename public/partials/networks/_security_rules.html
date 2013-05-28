@@ -29,6 +29,7 @@
         <th>协议</th>
         <th>起始端口</th>
         <th>终止端口</th>
+        <th>安全级别</th>
         <th>数据流向</th>
         <th>创建时间</th>
         <th>操作</th>
@@ -41,7 +42,8 @@
         <td>{{port.name}}</td>  
         <td>{{port.protocol}}</td>  
         <td>{{port.port_begin}}</td> 
-        <td>{{port.port_end}}</td> 
+        <td>{{port.port_end}}</td>
+        <td>{{port.security_level.value}}</td> 
         <td>{{port.data_direction.key}}</td> 
         <td>{{port.created_at}}</td> 
         <td>

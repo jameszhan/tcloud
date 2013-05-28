@@ -8,6 +8,7 @@
     "dhcp_begin": "172.16.10.10",
     "dhcp_end": "172.16.10.96",
     "relate_instance": "65",
+    "security_level": {"value": "中"},
     "status": "停用"
   },
   {
@@ -19,6 +20,7 @@
     "dhcp_begin": "172.16.10.10",
     "dhcp_end": "172.16.10.96",
     "relate_instance": "65",
+    "security_level": {"value": "低"},
     "status": "禁用"
   },
   {
@@ -30,6 +32,7 @@
     "dhcp_begin": "172.16.10.10",
     "dhcp_end": "172.16.10.96",
     "relate_instance": "65",
+    "security_level": {"value": "中"},
     "status": "启动"
   },
   {
@@ -41,6 +44,7 @@
     "dhcp_begin": "172.16.10.10",
     "dhcp_end": "172.16.10.96",
     "relate_instance": "65",
+    "security_level": {"value": "中"},
     "status": "停用"
   },
   {
@@ -52,6 +56,7 @@
     "dhcp_begin": "172.16.10.10",
     "dhcp_end": "172.16.10.96",
     "relate_instance": "65",
+    "security_level": {"value": "高"},
     "status": "禁用"
   },
   {
@@ -63,6 +68,7 @@
     "dhcp_begin": "172.16.10.10",
     "dhcp_end": "172.16.10.96",
     "relate_instance": "65",
+    "security_level": {"value": "低"},
     "status": "启动"
   }
 ]

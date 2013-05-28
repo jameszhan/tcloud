@@ -37,6 +37,13 @@
         </select>
       </div>
     </div>
+    <div class="control-group">
+      <label for="name" class="control-label">安全级别：</label>
+      <div class="controls">
+        <select ng-model="security_rule.security_level" ng-options="s.value for s in security_levels" class="span2">
+        </select>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <a data-dismiss="modal" class="btn" ng-click="close()">关闭</a>
