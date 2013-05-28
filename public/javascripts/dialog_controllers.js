@@ -42,6 +42,32 @@ function HostUpsertDialogCtrl($scope, dialog, Util, Host){
     $scope.host.cluster = $scope.clusters[0];
   }
 }
+
+function HostActivateDialogCtrl($scope, dialog){
+  $scope.close = function(result){
+    dialog.close(result)
+  }
+
+  $scope.do_save_activate_config = function(){
+    
+  }
+
+  $scope.host = dialog.context_scope.selected_host;
+  
+  var cluster = dialog.context_scope.cluster;
+  if(cluster){
+    $scope.clusters = [
+      {name: cluster.name, id: cluster.id}
+    ];   
+    $scope.host.cluster = $scope.clusters[0];  
+  }else{
+    $scope.clusters = [];
+    angular.forEach(dialog.context_scope.clusters, function(cluster){
+      $scope.clusters.push({name: cluster.name, id: cluster.id});
+    });
+    $scope.host.cluster = $scope.clusters[0];
+  }
+}
   
 /********************* Task Calendar Start ******************************/
 function TaskCalendarDialogCtrl($scope, dialog, DataCenter, Util){
@@ -202,6 +228,25 @@ function VMWorkflowDialogCtrl($scope, VM, dialog, Util) {
   };
 
   load_step();
+}
+
+function VMConfigDialogCtrl($scope, VM, dialog, Util){
+  $scope.close = function(result){
+    dialog.close(result)
+  }
+  $scope.vm = dialog.context_scope.selected_vm;
+
+  $scope.do_update = function(){
+    if($scope.vm){
+      new VM($scope.vm).$update(function(data){
+        if(data.success){
+          Util.update_activities(data);
+          dialog.close("Save Successful!");
+        }
+      });
+    }
+    dialog.close();
+  }
 }
 
 function SaveAsTemplateDialogCtrl($scope, dialog, VM, Util){

@@ -7,27 +7,6 @@
        <div class="span2">备份总大小：{{backup_status.size | bytes}}</div>
    </div>
 </div>
-<div class="row-fluid">
-  <div class="span6">
-    <h6 class="title">备份策略</h6>
-    <table class="table table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>策略名称</th>
-        <th>备份类型</th>
-        <th>计划时间</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="strategy in backup_strategies">
-        <td>{{strategy.name}}</td>
-        <td class="center">{{strategy.type.name}}</td>
-        <td class="center">{{strategy.schedule.name}}</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
-</div>
 
 <div class="row-fluid">
   <h6 class="title">备份列表</h6>

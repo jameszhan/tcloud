@@ -1,0 +1,62 @@
+<div id="bootmenu">
+  <h6>启动顺序</h6>
+  <form class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label">随系统启动</label>
+      <div class="controls">
+        <input type="checkbox">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">允许启动菜单</label>
+      <div class="controls">
+        <input type="checkbox">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">顺序(拖动排序)</label>
+      <div class="controls">
+        <ul id="bootorder" class="span6">
+          <li class="ui-state-default"><input type="checkbox" id="testt">DISK</li>
+          <li class="ui-state-default ui-state-disabled"><input type="checkbox">CDROM</li>
+          <li class="ui-state-default ui-state-disabled"><input type="checkbox">network</li>
+        </ul>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">指定ISO</label>
+      <div class="controls">
+        <select class="span8">
+          <option>未指定</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+          <option>Option 4</option>
+          <option>Option 5</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <i class="icon-arrow-down"></i><a href="javascript:void(0)" onclick="$('#boot_advance').toggle();">内核启动</a>
+    </div>
+    <div id="boot_advance" style="display: none;">
+      <div class="control-group">
+        <label class="control-label">kernel路径</label>
+        <div class="controls">
+          <input type="text">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">initrd路径</label>
+        <div class="controls">
+          <input type="text">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">启动参数</label>
+        <div class="controls">
+          <input type="text">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
