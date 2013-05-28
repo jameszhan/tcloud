@@ -50,9 +50,11 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
     });
   };
 
-  $scope.remove = function(index) {
-    $scope.events.splice(index, 1);
+  $scope.remove = function(index, e) {
+    remove_event($scope.events, e);
+    remove_event($scope["events_at_" + e.priority], e);  
   };
+  
 
   $scope.change_view = function(view) {
     $scope.current_calendar.fullCalendar('changeView', view);
@@ -105,9 +107,35 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
       dayClick: $scope.day_click,
       eventDrop: $scope.event_on_drop,
       eventResize: $scope.event_on_resize,
-      eventClick: $scope.edit_task
+      eventClick: $scope.edit_task,
+      eventRender: function(event, element) {
+        element.find('span.fc-event-title').append('<span class="pull-right"><i class="icon-pencil"></i><i class="icon-trash"><i></span>'); 
+        element.on('click', '.icon-remove', function(e){
+          if(window.confirm("你真的确定要删除这个事件吗?")){
+            $scope.$apply(function(){              
+              $scope.remove(-1, event);
+            });
+          }
+          e.stopPropagation();
+        });
+      }
     }
   };  
+  
+  function remove_event(c, e){
+    var index = -1;
+    for(var i = 0; i < c.length; i++){
+      if(e.id == c[i].id){
+        index = i;
+        break;
+      }
+    }
+    if(index >= 0){
+      c.splice(index, 1);
+    }else{
+      alert("你所选的事件不存在");
+    }
+  }
   
   function open_dialog(date, event){
     $scope.selected_event = event;

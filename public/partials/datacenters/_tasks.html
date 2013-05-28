@@ -13,7 +13,7 @@
         <ul class="unstyled">
           <li ng-repeat="e in events | filter:search">
             <div class="alert alert-info">
-              <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
+              <a class="close" ng-click="remove($index, e)"><i class="icon-remove"></i></a>
               <b> {{e.title}}</b> - {{e.start | date:"MMM dd"}}
             </div>
           </li>
