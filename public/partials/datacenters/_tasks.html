@@ -6,9 +6,12 @@
   <div class="tab-content">
     <div class="row-fluid tab-pane active" id="calendars">
       <div class="span2">
-        <p><button type="button" class="btn btn-primary" ng-click="add_task()">添加任务</button></p>
+        <p>
+          <button type="button" class="btn btn-primary" ng-click="add_task()">添加任务</button>
+          <select ng-model="search.priority" ng-options="o.value as o.name for o in priorities" class="span6"></select>
+        </p>
         <ul class="unstyled">
-          <li ng-repeat="e in events">
+          <li ng-repeat="e in events | filter:search">
             <div class="alert alert-info">
               <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
               <b> {{e.title}}</b> - {{e.start | date:"MMM dd"}}
@@ -37,7 +40,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="e in events">
+          <tr ng-repeat="e in events | filter:search">
             <td>{{e.title}}</td>
             <td>{{e.start | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
             <td>{{e.end | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>

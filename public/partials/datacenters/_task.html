@@ -20,8 +20,8 @@
     <div class="control-group">
       <label class="control-label">开始时间：</label>
       <div class="controls">
-        <input type="text" class="span4" ui-date ng-model="event.start" ui-validate="{future: 'dateInFuture($value)'}" required placeholder="开始时间" />
-        <input type="text" class="span4" ng-model="start_time" placeholder="08:00" />
+        <input type="text" class="span4" ui-date ng-model="event.start" required placeholder="开始时间" />
+        <input type="text" class="span4" ng-model="start_time" placeholder="08:00" ng-pattern="/^\d{2}\:\d{2}$/" required/>
       </div>
     </div>
     <div class="control-group">

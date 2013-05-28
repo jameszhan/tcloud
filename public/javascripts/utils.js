@@ -11,7 +11,12 @@ alertInfo = function(info){
                   '<strong>Warning!</strong> '+ info +
                 '</div>';
   return message;
-} 
+}
+
+Date.begin_of_date = function(date){
+  start = $.datepicker.parseDate('yyyy-mm-dd', $.datepicker.formatDate( "yyyy-mm-dd", date));
+  return start;
+};
 
 Date.prototype.format = function(format){   
   var o = {   
@@ -92,6 +97,12 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     }
   };
 }).factory("Util", function($rootScope, $location, $window, $dialog, $q, Shortcut){
+  var colors = {
+    h: {backgroundColor: '#cfcfcf', borderColor: '#c0c0c0', textColor: '#9a9a9a'},
+    0: {backgroundColor: '#ff3300', borderColor: '#ff9900', textColor: '#f0f0f0'},
+    5: {backgroundColor: '#f0f033', borderColor: '#cfcf33', textColor: '#696969'},
+    10: {backgroundColor: '#339933', borderColor: '#669966', textColor: '#f0f0f0'}
+  }, today = Date.begin_of_date(new Date());
   return {
     update: function(dst, update_data){
       angular.forEach(dst, function(vm){
@@ -278,9 +289,17 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     },
     update_list: function(list, data){
       if(list){
-        data.id = 10+Math.round(Math.random()*10); 
+        data.id = 10 + Math.round(Math.random()*10); 
         list.unshift(data);
       }
+    },
+    event_with_color: function(e){
+      var config = colors[e.priority];
+      if(new Date(e.start) < today){
+        config = colors['h'];
+      }
+      angular.extend(e, config);
+      return e;
     }
   };
 });

@@ -1,33 +1,39 @@
 /******************************* Calendar Start ******************************/
 function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
+  var today = Date.begin_of_date(new Date());
+  var d = today.getDate(), m = today.getMonth(), y = today.getFullYear();
   $scope.events = [];
-  $scope.event_sources = [$scope.events];  
+  $scope.event_sources = [];   
+
+  $scope.priorities = [{name: '低', value: 10}, {name: '普通', value: 5}, {name: '高', value: 0}];
+  $scope.search = {priority:5};    
+  angular.forEach($scope.priorities, function(obj){   
+    $scope["events_at_" + obj.value] = [];    
+    $scope.event_sources.push($scope["events_at_" + obj.value] );
+  });
   
-  DataCenter.tasks({id: $routeParams.id}, function(data){
-    angular.forEach(data, function(v){
-      console.log(v);
+  DataCenter.tasks({id: $routeParams.id}, function(data){    
+    angular.forEach(data, function(v){   
+      $scope["events_at_" + v.priority].push(Util.event_with_color(v));
       $scope.events.push(v);
     });
   });  
   
-  var today = $.datepicker.parseDate('yyyy-mm-dd', $.datepicker.formatDate( "yyyy-mm-dd", new Date()));
-  var d = today.getDate();
-  var m = today.getMonth();
-  var y = today.getFullYear();
-  
   $scope.add_task = function() {
     open_dialog(today, null);
   };
-
   
   $scope.day_click = function(date, all_day, js_event, view){
-    $scope.$apply(function(){
-      open_dialog(date, null);
-    });
+    if(date > today){
+      $scope.$apply(function(){
+        open_dialog(date, null);
+      });
+    }
   };
 
   $scope.event_on_drop = function(event, day_delta, minute_delta, all_day, revert_func, js_event, ui, view){
     $scope.$apply(function(){
+      Util.event_with_color(event);
       DataCenter.update_task({id: $scope.datacenter.id, task: {id: event.id, day_delta: day_delta, minute_delta: minute_delta, all_day: all_day}});
     });
   };
