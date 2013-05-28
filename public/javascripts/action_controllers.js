@@ -202,6 +202,10 @@ function VMActionBarCtrl($scope, $q, VM, Util){
       new VM({ids: vm_ids}).$shutdown(Util.update_activities);
     }); 
   };
+
+  $scope.do_force_shutdown = function(){
+    
+  };
   
   $scope.do_snapshot = function(){
     Util.bind($scope, 'vms').select(1, 100).confirm("确定要创建快照吗？").then(function(vms){
