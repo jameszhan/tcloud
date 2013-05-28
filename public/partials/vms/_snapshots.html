@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="snapshot in snapshots | startFrom:(current_page * page_size) | limitTo:page_size">  
+        <tr selectable='snapshot' ng-repeat="snapshot in snapshots | startFrom:(current_page * page_size) | limitTo:page_size">  
           <td><input type="checkbox" value="{{snapshot.id}}" ng-model="selected[snapshot.id]" /></td>
           <td>{{snapshot.name}}</td>  
           <td>{{snapshot.desc}}</td>  
