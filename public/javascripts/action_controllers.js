@@ -33,7 +33,6 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
 
   $scope.event_on_drop = function(event, day_delta, minute_delta, all_day, revert_func, js_event, ui, view){
     $scope.$apply(function(){
-      //Util.event_with_color(event);
       DataCenter.update_task({id: $scope.datacenter.id, task: {id: event.id, day_delta: day_delta, minute_delta: minute_delta, all_day: all_day}});
     });
   };
@@ -114,7 +113,7 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
           clazz = "event_expired";
         }
         element.addClass(clazz).find('span.fc-event-title').append('<span class="pull-right"><i class="icon-pencil"></i><i class="icon-trash"><i></span>'); 
-        element.on('click', '.icon-remove', function(e){
+        element.on('click', '.icon-trash', function(e){
           if(window.confirm("你真的确定要删除这个事件吗?")){
             $scope.$apply(function(){              
               $scope.remove(-1, event);
