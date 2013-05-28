@@ -24,7 +24,7 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
   };
   
   $scope.day_click = function(date, all_day, js_event, view){
-    if(date > today){
+    if(date >= today){
       $scope.$apply(function(){
         open_dialog(date, null);
       });
@@ -160,14 +160,14 @@ function VMActionBarCtrl($scope, $q, VM, Util){
   $scope.do_template = function(){
     Util.bind($scope, 'vms').select(1, 1).then(function(vms){
       $scope.selected_vm = vms[0];
-      Util.dialog("/partials/vms/template_dialog.html", 'SaveAsTemplateDialogCtrl', $scope, {backdropClick: false});
+      Util.dialog("/partials/vms/template_dialog.html", 'SaveAsTemplateDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
     }); 
   };
   
   $scope.do_migrate = function(){
     Util.bind($scope, 'vms').select(1, 1).then(function(vms){
       $scope.selected_vm = vms[0];
-      Util.dialog("/partials/vms/migrate_dialog.html", 'VMMigrateDialogCtrl', $scope, {backdropClick: false});
+      Util.dialog("/partials/vms/migrate_dialog.html", 'VMMigrateDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
     }); 
   };
   
@@ -243,13 +243,13 @@ function HostActionBarCtrl($scope, $dialog, Host, Util){
   
   $scope.do_add = function(){
     $scope.selected_host = null;
-    Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {backdropClick: false});
+    Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
   };
   
   $scope.do_edit = function() {
     Util.bind($scope, 'hosts').select(1, 1).then(function(hosts) {
       $scope.selected_host = hosts[0];
-      Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {backdropClick: false});
+      Util.dialog("/partials/hosts/_form.html", 'HostUpsertDialogCtrl', $scope, {backdropClick: false, dialogClass: 'modal mini'});
     });
   };
   

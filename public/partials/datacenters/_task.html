@@ -21,7 +21,7 @@
       <label class="control-label">开始时间：</label>
       <div class="controls">
         <input type="text" class="span4" ui-date ng-model="event.start" required placeholder="开始时间" />
-        <input type="text" class="span4" ng-model="start_time" placeholder="08:00" ng-pattern="/^\d{2}\:\d{2}$/" required/>
+        <input type="text" class="span4" ng-model="start_time" placeholder="08:00" ng-pattern="/^([01][0-9]|2[0-3])\:[0-5][0-9]$/" required/>
       </div>
     </div>
     <div class="control-group">

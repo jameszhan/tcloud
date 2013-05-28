@@ -418,13 +418,13 @@ function StorageCtrl($scope, $dialog, $routeParams, Storage, Util){
 
   $scope.do_add = function(){
     $scope.selected_storage = null;
-    Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope);
+    Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope, {dialogClass: 'modal mini'});
   };
 
   $scope.do_edit = function(){
     Util.bind($scope, 'storages').select(1, 1).then(function(storages){
       $scope.selected_storage = storages[0];
-      Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope);
+      Util.dialog("/partials/storages/_storage_dialog.html", 'StorageConfigDialogCtrl', $scope, {dialogClass: 'modal mini'});
     });
   };
 }
