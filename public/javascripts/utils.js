@@ -237,7 +237,6 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
           $scope.location = $location.absUrl();
           $scope.shortcut_name = e.target.hash.substr(1);
         });
-        
         //$('#directives-calendar').find('.calendar').fullCalendar('render');
         return false;
       });
@@ -262,7 +261,16 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       var deferred = $q.defer();
       deferred.promise.then(function(){
         if(shortcut){
-          $rootScope.shortcuts.unshift(shortcut);
+          var title = "提示信息";
+          var msg = "添加书签?";
+          var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
+          $dialog.messageBox(title, msg, btns, {dialogClass: 'modal alert-message'})
+            .open()
+            .then(function(result){
+              if(result){
+                $rootScope.shortcuts.unshift(shortcut);   
+              }
+          });
         }
       });
       if(!$rootScope.shortcuts){

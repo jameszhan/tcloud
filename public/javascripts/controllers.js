@@ -38,7 +38,7 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
   $scope.current_template = $scope.templates['overview'];
 
   Util.bind_tab($scope);
-  
+
   $scope.add_bookmark = function(){
     var name="DataCenter ";
     var subname = $scope.shortcut_name;
@@ -51,9 +51,7 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
       "url": $scope.location,
       "desc": "Datacenter快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut);
   };  
 }
 
@@ -131,9 +129,7 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
       "url": $scope.location,
       "desc": "Cluster快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut); 
   };  
 }
 
@@ -239,9 +235,7 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
       "url": $scope.location,
       "desrc": "Host快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut);
   }; 
 }
 
@@ -275,9 +269,7 @@ function VMCtrl($scope, $routeParams, VM, Util, $location) {
       "url": $scope.location,
       "desc": "VM快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut);
   };
 }
 
@@ -496,9 +488,7 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
       "url": "/#/templates",
       "desc": "Template快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut);
   };
 }
 
@@ -512,9 +502,7 @@ function NetworkCtrl($scope, $routeParams, Network, Util){
       "url": "/#/networks",
       "desc": "Network快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut);
   };
 }
 
@@ -606,9 +594,7 @@ function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util)
       "url": $scope.location,
       "desc": "BackupStrategy快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut); 
   };
 }
 
@@ -627,9 +613,7 @@ function ProposalCtrl($scope, $routeParams, Proposal, Util){
       "url": $scope.location,
       "desrc": "Project快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut);
   };
 }
 
@@ -742,9 +726,7 @@ function ArchitectCtrl($scope, Util){
       "url": "/#/architects",
       "desc": "Network快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut); 
   };
 }
 
@@ -763,9 +745,7 @@ function GlobalConfigCtrl($scope, Util){
       "url": $scope.location,
       "desc": "Global Config快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut); 
   };
 }
 
@@ -784,9 +764,7 @@ function PlatformCtrl($scope, Util){
       "url": $scope.location,
       "desc": "Platform快捷方式"
     };
-    if(confirm("添加书签?")){
-      Util.bookmark(shortcut); 
-    }
+    Util.bookmark(shortcut);
   };
 }
 /******************************************************** ROOT Section End *******************************************/
