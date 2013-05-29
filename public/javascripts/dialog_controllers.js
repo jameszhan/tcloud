@@ -545,6 +545,7 @@ function ClusterConfigCtrl($scope, dialog, Util, Cluster){
 
   $scope.save_cluster = function(){
     console.log("save cluster!");
+    dialog.close();
   }
 }
 
