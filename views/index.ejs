@@ -77,14 +77,15 @@
 
 <div id="right-click-menu" ng-controller="ContextMenuCtrl"> 
   <ul class="datacenters contextmenu-list" ng-controller="DataCenterContextMenuCtrl">
+    <li class="contextmenu-item"><a ng-click="add_cluster()">新建集群</a></li>
     <li class="contextmenu-item"><a ng-click="add_storage()">新建存储</a></li>
-    <li class="contextmenu-item"><a ng-click="add_network()">新建网络</li>
+    <li class="contextmenu-item"><a ng-click="add_network()">新建网络</a></li>
   </ul>
   
   <ul class="clusters contextmenu-list" ng-controller="ClusterContextMenuCtrl">
     <li class="contextmenu-item"><a ng-click="add_host()">添加主机</a></li>
     <li class="contextmenu-item"><a ng-click="add_storage()">添加存储</a></li>
-    <li class="contextmenu-item"><a ng-click="add_network()">添加存储</a></li>
+    <li class="contextmenu-item"><a ng-click="add_network()">添加网络</a></li>
   </ul>
   
   <ul class="hosts contextmenu-list" ng-controller="HostContextMenuCtrl">    
