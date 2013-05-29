@@ -1,18 +1,13 @@
 <div class="tabbable">
   <div class="row-fluid tab-style">
-    <div class="span10">
-      <ul class="nav nav-tabs tab-ul">
-        <li class="active"><a href="#overview" data-toggle="tab">概览</a></li>
-        <li><a href="#vms" data-toggle="tab">虚拟机</a></li>
-        <li><a href="#backups" data-toggle="tab">备份</a></li>
-      </ul>
-    </div>
-    <div class="span2 btn-layout">
-      <button class="btn btn-info" ng-click="add_bookmark()">存为书签</button>
-    </div>
+    <ul class="nav nav-tabs tab-ul">
+      <li class="active"><a href="#overview" data-toggle="tab">概览</a></li>
+      <li><a href="#vms" data-toggle="tab">虚拟机</a></li>
+      <li><a href="#backups" data-toggle="tab">备份</a></li>
+      <li class="pull-right bookmark"><button class="btn btn-info" ng-click="add_bookmark()">存为书签</button></li>
+    </ul>
   </div>
   <div class="tab-content">
-    <div id="flash"></div>
     <div class="tab-pane active" style="padding:0px 10px">
       <div ng-include="current_template" />
     </div>
