@@ -124,11 +124,13 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         }
       }
     },
-    confirm: function(msg, callback){
+    confirm: function(msg, succ, fail){
       var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
       message_box("提示信息", msg, btns, function(result){
         if(result){
-          callback();
+          succ();
+        }else{
+          fail();
         }
       });
     },
@@ -162,6 +164,8 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
             confirm: function(msg){
               _this.confirm(msg, function(){
                 defer.resolve(items);
+              }, function(){
+                defer.reject('User Cancelled.');
               });
               return defer.promise;
             }
