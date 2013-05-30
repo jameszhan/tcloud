@@ -224,18 +224,7 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
   Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
-    var name="Host ";
-    var subname = $scope.shortcut_name;
-    if(subname && subname != "overview"){
-      name += subname;
-    }
-    shortcut = {
-      "id": "611"+$routeParams.id,
-      "name": name,
-      "url": $scope.location,
-      "desrc": "Host快捷方式"
-    };
-    Util.bookmark(shortcut);
+    Util.bookmark($scope, 'Host', "Host快捷方式");
   }; 
 }
 

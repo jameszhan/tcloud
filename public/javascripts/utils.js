@@ -89,6 +89,11 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
     }
   };
 }).factory("Util", function($rootScope, $location, $window, $dialog, $q, Shortcut){
+  var message_box = function(title, msg, btns, callback){
+    $dialog.messageBox(title, msg, btns, {dialogClass: 'modal alert-message'}).open().then(function(result){
+      (callback || angular.noop)(result);
+    });
+  };
   return {
     update: function(dst, update_data){
       angular.forEach(dst, function(vm){
@@ -119,23 +124,24 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         }
       }
     },
+    alert: function(msg){      
+      var btns = [{result:'ok', label: '确定', cssClass: 'btn-primary mini'}];
+      message_box("提示信息", msg, btns);
+    },
     bind: function($scope, target_name){
       $scope.min_msg = ($scope.min_msg || "你至少应该选择{0}个");
       $scope.max_msg = ($scope.max_msg || "你不能选择超过{0}个");
       var items = $.grep($scope[target_name], function(item) {
         return $scope.selected[item.id];
-      }), ok = true, alert_message = function(title, msg){
-        var btns = [{result:'ok', label: 'OK', cssClass: 'btn-primary'}];
-        $dialog.messageBox(title, msg, btns, {dialogClass: 'modal alert-message'}).open().then(function(result){});
-      };
+      }), ok = true, _this = this;
       return {
         select: function(min, max){       
           if(items.length < min){
-            alert_message("提示信息", String.format($scope.min_msg, min));
+            _this.alert(String.format($scope.min_msg, min));
             ok = false;
           }
           if(items.length > max){
-            alert_message("提示信息", String.format($scope.max_msg, min));
+            _this.alert(String.format($scope.max_msg, min));
             ok = false;
           }
           return {
@@ -212,30 +218,31 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       });      
     },
     bind_tab: function($scope){
-      $scope.$on('$locationChangeStart', function(e){
+      //$scope.$on('$locationChangeStart', function(e){
         //if($location.absUrl().split('#').length >= 3){
         //  e.preventDefault();
         //}
-      });
-      $scope.$on('$locationChangeSuccess', function(e){
-      });
+      //});
+      //$scope.$on('$locationChangeSuccess', function(e){
+      //});
       
       var hs = $location.absUrl().split('#');
       if(hs.length == 3){
         var h = hs[2];
         //$('.tabbable a:first').tab('show'); //Here is for wrong hash input.
         $('.tabbable a[href="#' + h + '"]').tab('show');//.closest('li').addClass('active'); 
-        if($scope.templates){
+         if($scope.templates){
           $scope.current_template = $scope.templates[h];
         }
       }
-      $scope.location = $location.absUrl();
+      $scope.shortcut = {
+        url: $location.absUrl(),
+        subname: (hs[2] || "")
+      }
       
       $('a[data-toggle="tab"]').on('shown', function (e) {             
         $scope.$apply(function(){
           $location.hash(e.target.hash.substr(1));
-          $scope.location = $location.absUrl();
-          $scope.shortcut_name = e.target.hash.substr(1);
         });
         //$('#directives-calendar').find('.calendar').fullCalendar('render');
         return false;
@@ -257,19 +264,26 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         }
       });
     },
-    bookmark: function(shortcut){
-      var deferred = $q.defer();
+    confirm: function(msg, callback){
+      var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
+      message_box("提示信息", msg, btns, function(result){
+        if(result){
+          callback();
+        }
+      });
+    },
+    bookmark: function($scope, name, desc){
+      var deferred = $q.defer(), _this = this;
       deferred.promise.then(function(){
-        if(shortcut){
-          var title = "提示信息";
-          var msg = "添加书签?";
-          var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
-          $dialog.messageBox(title, msg, btns, {dialogClass: 'modal alert-message'})
-            .open()
-            .then(function(result){
-              if(result){
-                $rootScope.shortcuts.unshift(shortcut);   
-              }
+        if(name && desc){
+          _this.confirm('你确定要添加该书签吗？', function(){            
+            var shortcut = $scope.shortcut;
+            var id = Math.floor(Math.random() * 100000);
+            angular.extend(shortcut, {id: id, name: name, desc: desc});
+            if(shortcut.subname && shortcut.subname != ""){
+              shortcut.name = shortcut.name + " -> " + shortcut.subname;
+            }
+            $rootScope.shortcuts.unshift(shortcut);
           });
         }
       });
