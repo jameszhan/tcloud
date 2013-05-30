@@ -227,3 +227,29 @@ body .modal.ng-scope.page-modal {
 .label-startup{
   background-color: #3a87ad;
 }
+
+/********tab********/
+
+.nav-tabs {
+  border-bottom: 2px solid #0088CC;
+}
+
+.nav-tabs > li > a {
+  font-size: 15px;
+  color: #2a2a2a;
+}
+
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
+  border-color: #eeeeee #eeeeee #eeeeee;
+}
+
+.nav-tabs > .active > a,
+.nav-tabs > .active > a:hover,
+.nav-tabs > .active > a:focus {
+  color: #FFFFFF;
+  cursor: default;
+  background-color: #0093cc;
+  border: 2px solid #0093cc;
+  border-bottom-color: transparent;
+}
