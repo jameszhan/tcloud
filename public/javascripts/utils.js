@@ -124,6 +124,14 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
         }
       }
     },
+    confirm: function(msg, callback){
+      var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
+      message_box("提示信息", msg, btns, function(result){
+        if(result){
+          callback();
+        }
+      });
+    },
     alert: function(msg){      
       var btns = [{result:'ok', label: '确定', cssClass: 'btn-primary mini'}];
       message_box("提示信息", msg, btns);
@@ -133,27 +141,30 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       $scope.max_msg = ($scope.max_msg || "你不能选择超过{0}个");
       var items = $.grep($scope[target_name], function(item) {
         return $scope.selected[item.id];
-      }), ok = true, _this = this;
+      }), _this = this, defer = $q.defer();
       return {
         select: function(min, max){       
           if(items.length < min){
-            _this.alert(String.format($scope.min_msg, min));
-            ok = false;
+            var msg = String.format($scope.min_msg, min);
+            _this.alert(msg);
+            defer.reject(msg);
           }
           if(items.length > max){
-            _this.alert(String.format($scope.max_msg, min));
-            ok = false;
+            var msg = String.format($scope.max_msg, min);
+            _this.alert(msg);
+            defer.reject(msg);
           }
           return {
-            confirm: function(msg){
-              if(!ok || !window.confirm(msg)){
-                ok = false;
-              }
-              return {
-                then: function(fn){ ok && (fn || angular.noop)(items); }
-              };
+            then: function(fn){
+              defer.promise.then(fn);
+              defer.resolve(items);
             },
-            then: function(fn){ ok && (fn || angular.noop)(items); }
+            confirm: function(msg){
+              _this.confirm(msg, function(){
+                defer.resolve(items);
+              });
+              return defer.promise;
+            }
           };
         }
       }
@@ -261,14 +272,6 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       d.open().then(function(result){
         if(result){
           alert('dialog closed with result: ' + result);
-        }
-      });
-    },
-    confirm: function(msg, callback){
-      var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
-      message_box("提示信息", msg, btns, function(result){
-        if(result){
-          callback();
         }
       });
     },
