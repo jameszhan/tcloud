@@ -40,18 +40,7 @@ function DataCenterCtrl($scope, $routeParams, $location, $dialog, DataCenter, Ho
   Util.bind_tab($scope);
 
   $scope.add_bookmark = function(){
-    var name="DataCenter ";
-    var subname = $scope.shortcut_name;
-    if(subname && subname != "overview"){
-      name += subname;
-    }
-    shortcut = {
-      "id": 6,
-      "name": name,
-      "url": $scope.location,
-      "desc": "Datacenter快捷方式"
-    };
-    Util.bookmark(shortcut);
+    Util.bookmark($scope,"数据中心", "数据中心快捷方式");
   };  
 }
 
@@ -118,18 +107,7 @@ function ClusterCtrl($scope, $routeParams, Cluster, Host, VM, $pollingPool, Util
   Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
-    var name="Cluster ";
-    var subname = $scope.shortcut_name;
-    if(subname && subname != "overview"){
-      name += subname;
-    }
-    shortcut = {
-      "id": "61"+$routeParams.id,
-      "name": name,
-      "url": $scope.location,
-      "desc": "Cluster快捷方式"
-    };
-    Util.bookmark(shortcut); 
+    Util.bookmark($scope, '集群', "集群快捷方式"); 
   };  
 }
 
@@ -224,7 +202,7 @@ function HostCtrl($scope, $routeParams, Host, VM, $pollingPool, Util, $location)
   Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
-    Util.bookmark($scope, 'Host', "Host快捷方式");
+    Util.bookmark($scope, '主机', "主机快捷方式");
   }; 
 }
 
@@ -247,18 +225,7 @@ function VMCtrl($scope, $routeParams, VM, Util, $location) {
   Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
-    var name="VM ";
-    var subname = $scope.shortcut_name;
-    if(subname && subname != "overview"){
-      name += subname;
-    }
-    shortcut = {
-      "id": "6111"+$routeParams.id,
-      "name": name,
-      "url": $scope.location,
-      "desc": "VM快捷方式"
-    };
-    Util.bookmark(shortcut);
+    Util.bookmark($scope, '虚拟机', "虚拟机快捷方式");
   };
 }
 
@@ -471,13 +438,7 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
   };
 
   $scope.add_bookmark = function(){
-    shortcut = {
-      "id": "7",
-      "name": "Template",
-      "url": "/#/templates",
-      "desc": "Template快捷方式"
-    };
-    Util.bookmark(shortcut);
+    Util.bookmark($scope, '模板', "模板快捷方式");
   };
 }
 
@@ -485,13 +446,7 @@ function TemplateCtrl($scope, $routeParams, Template, Util){
 
 function NetworkCtrl($scope, $routeParams, Network, Util){
   $scope.add_bookmark = function(){
-    shortcut = {
-      "id": "8",
-      "name": "Network",
-      "url": "/#/networks",
-      "desc": "Network快捷方式"
-    };
-    Util.bookmark(shortcut);
+    Util.bookmark($scope, '网络安全', "网络安全快捷方式");
   };
 }
 
@@ -572,18 +527,7 @@ function BackupStrategyCtrl($scope, $dialog, $routeParams, BackupStrategy, Util)
   Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
-    var name="BackupStrategy ";
-    var subname = $scope.shortcut_name;
-    if(subname && subname != "overview"){
-      name += subname;
-    }
-    shortcut = {
-      "id": "11",
-      "name": name,
-      "url": $scope.location,
-      "desc": "BackupStrategy快捷方式"
-    };
-    Util.bookmark(shortcut); 
+    Util.bookmark($scope, '备份策略', "备份策略快捷方式"); 
   };
 }
 
@@ -591,18 +535,7 @@ function ProposalCtrl($scope, $routeParams, Proposal, Util){
   Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
-    var name="Project ";
-    var subname = $scope.shortcut_name;
-    if(subname && subname != "overview"){
-      name += subname;
-    }
-    shortcut = {
-      "id": "10"+$routeParams.id,
-      "name": name,
-      "url": $scope.location,
-      "desrc": "Project快捷方式"
-    };
-    Util.bookmark(shortcut);
+    Util.bookmark($scope, '方案管理', "方案管理快捷方式"); 
   };
 }
 
@@ -709,13 +642,7 @@ function NetworkProposalCtrl($scope, $dialog, $routeParams, Proposal, Util){
 
 function ArchitectCtrl($scope, Util){
   $scope.add_bookmark = function(){
-    shortcut = {
-      "id": "9",
-      "name": "Architect",
-      "url": "/#/architects",
-      "desc": "Network快捷方式"
-    };
-    Util.bookmark(shortcut); 
+    Util.bookmark($scope, '基础架构', "基础架构快捷方式");
   };
 }
 
@@ -723,18 +650,7 @@ function GlobalConfigCtrl($scope, Util){
   Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
-    var name="Global Config";
-    var subname = $scope.shortcut_name;
-    if(subname && subname != "overview"){
-      name += subname;
-    }
-    shortcut = {
-      "id": "12",
-      "name": name,
-      "url": $scope.location,
-      "desc": "Global Config快捷方式"
-    };
-    Util.bookmark(shortcut); 
+    Util.bookmark($scope, '全局配置', "全局配置快捷方式");
   };
 }
 
@@ -742,18 +658,7 @@ function PlatformCtrl($scope, Util){
   Util.bind_tab($scope);
   
   $scope.add_bookmark = function(){
-    var name="Platform";
-    var subname = $scope.shortcut_name;
-    if(subname && subname != "overview"){
-      name += subname;
-    }
-    shortcut = {
-      "id": "12",
-      "name": name,
-      "url": $scope.location,
-      "desc": "Platform快捷方式"
-    };
-    Util.bookmark(shortcut);
+    Util.bookmark($scope, '平台信息', "平台信息快捷方式");
   };
 }
 /******************************************************** ROOT Section End *******************************************/

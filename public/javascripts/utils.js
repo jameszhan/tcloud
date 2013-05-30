@@ -281,7 +281,7 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
             var id = Math.floor(Math.random() * 100000);
             angular.extend(shortcut, {id: id, name: name, desc: desc});
             if(shortcut.subname && shortcut.subname != ""){
-              shortcut.name = shortcut.name + " -> " + shortcut.subname;
+              shortcut.name = shortcut.name + " => " + shortcut.subname;
             }
             $rootScope.shortcuts.unshift(shortcut);
           });
