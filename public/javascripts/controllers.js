@@ -236,7 +236,7 @@ function VMSnapshotCtrl($scope, $routeParams, $location, VM, Util){
   });
   
   $scope.do_add = function(){
-     if(confirm("要增加快照?")){
+     Util.confirm("要增加快照?", function(){
        new VM({id: $routeParams.id}).$snapshot(function(data){
          if(data.success){
            snapshot = {
@@ -248,7 +248,7 @@ function VMSnapshotCtrl($scope, $routeParams, $location, VM, Util){
            Util.update_activities(data);
          }
        });
-     }
+     });
    }
 
    $scope.do_recover = function(){
