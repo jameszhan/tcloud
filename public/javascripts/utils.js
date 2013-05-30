@@ -128,9 +128,9 @@ angular.module('webvirtUtils', []).factory("$pollingPool", function($timeout, Fi
       var btns = [{result: false, label: '取消'}, {result: true, label: '确定', cssClass: 'btn-primary mini'}];
       message_box("提示信息", msg, btns, function(result){
         if(result){
-          succ();
+          (angular.noop || succ)();
         }else{
-          fail();
+          (angular.noop || fail)();
         }
       });
     },
