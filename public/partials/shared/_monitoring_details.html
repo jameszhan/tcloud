@@ -13,6 +13,14 @@
         结束日期：<input type="datetime-local" ng-model="monitoring.finish" class="input-date" /><br />
         目标：<select ng-options="c.name for c in targets"  class="span2" ng-model="monitoring.target" ng-change="show_target_image()"></select>
       </div>
+      <div class="control-group input-append">
+        <input type="text" ng-model="datepicker.date" data-date-format="yyyy-mm-dd" bs-datepicker>
+        <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+      </div>
+      <div class="control-group input-append">
+        <input type="text" ng-model="datepicker.time" bs-timepicker>
+        <button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>
+      </div>
     </div>
   </div>
 

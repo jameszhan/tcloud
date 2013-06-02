@@ -12,22 +12,28 @@
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label">任务描述：</label>
-      <div class="controls">
-        <textarea ng-model="event.desc"></textarea>
-      </div>
-    </div>
-    <div class="control-group">
       <label class="control-label">开始时间：</label>
       <div class="controls">
-        <input type="text" class="span4" ui-date ng-model="event.start" required placeholder="开始时间" />
-        <input type="text" class="span4" ng-model="start_time" placeholder="08:00" ng-pattern="/^([01][0-9]|2[0-3])\:[0-5][0-9]$/" required/>
+        <div class="input-append span5"> 
+          <input type="text" class="span9" ng-model="event.start" data-date-format="yyyy-mm-dd" bs-datepicker>
+          <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
+        </div>  
+          <div class="input-append span5">  
+          <input type="text" class="span8" ng-model="start_time" bs-timepicker>
+          <button type="button" class="btn" data-toggle="timepicker"><i class="icon-time"></i></button>
+          </div>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">持续时间：</label>
       <div class="controls">
         <select ng-model="duration" ng-options="o.value as o.name for o in durations" class="span5"></select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">任务描述：</label>
+      <div class="controls">
+        <textarea ng-model="event.desc"></textarea>
       </div>
     </div>
     <div class="control-group">

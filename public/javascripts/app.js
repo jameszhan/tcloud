@@ -17,7 +17,7 @@ jQuery(document).ready(function($){
   $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 });
 
-angular.module('webvirt', ['ui.calendar', 'ui.date', 'webvirtDirectives', 'webvirtServices', 'webvirtFilters', 'ui.bootstrap.dialog', 'ngResource']).
+angular.module('webvirt', ['ui.calendar', 'ui.date', 'webvirtDirectives', 'webvirtServices', 'webvirtFilters', 'ui.bootstrap.dialog', 'ngResource', '$strap.directives']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.
       when('/datacenters/:id', {templateUrl: '/partials/datacenters/index.html', controller: DataCenterCtrl}).
