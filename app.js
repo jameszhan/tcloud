@@ -56,6 +56,9 @@ app.configure(function(){
   app.use(sass.middleware({
       src: __dirname + '/public/stylesheets'
     , dest: __dirname + '/public/stylesheets'
+    , style: 'compact'
+    , output_style: 'compact'
+    , outputStyle: 'compact'
     , debug: true
   }));
   app.use(compass());
