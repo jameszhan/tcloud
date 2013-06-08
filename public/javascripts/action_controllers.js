@@ -3,18 +3,12 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
   var today = Date.begin_of_date(new Date());
   var d = today.getDate(), m = today.getMonth(), y = today.getFullYear();
   $scope.events = [];
-  $scope.event_sources = [];   
+  $scope.event_sources = [$scope.events];   
 
   $scope.priorities = [{name: '低', value: 10}, {name: '普通', value: 5}, {name: '高', value: 0}];
-  $scope.search = {priority:5};    
-  angular.forEach($scope.priorities, function(obj){   
-    $scope["events_at_" + obj.value] = [];    
-    $scope.event_sources.push($scope["events_at_" + obj.value] );
-  });
   
   DataCenter.tasks({id: $routeParams.id}, function(data){    
     angular.forEach(data, function(v){   
-      $scope["events_at_" + v.priority].push(v);
       $scope.events.push(v);
     });
   });  
@@ -51,7 +45,6 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
 
   $scope.remove = function(index, e) {
     remove_event($scope.events, e);
-    remove_event($scope["events_at_" + e.priority], e);  
   };
   
 
