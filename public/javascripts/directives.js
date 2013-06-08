@@ -1,5 +1,5 @@
 angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
-  directive('searchtree', function($q, $http, $templateCache, ContextMenu) {
+  directive('searchtree', function($q, $http, $location, $templateCache, ContextMenu) {
     function _filter(data, text){
       var status = false;      
       if(!data){
@@ -52,8 +52,13 @@ angular.module('webvirtDirectives', ['webvirtUtils', 'webvirtContextMenu']).
         //  ztree = $.fn.zTree.init(_tree, _settings, scope.data);
         //});
         $http.get(attrs.url).success(function(data, status, headers, config) {
-          scope.data = data
-          ztree = $.fn.zTree.init(_tree, _settings, scope.data);
+          scope.data = data;
+          ztree = $.fn.zTree.init(_tree, _settings, scope.data);   
+          var re = new RegExp("^#" + $location.path() + "$", "gi");
+          var node = ztree.getNodesByFilter(function(node){
+            return (node.url && re.test(node.url));
+          }, true);
+          ztree.selectNode(node);
         }).error(function(data, status, headers, config) {
           scope.data = []
         });        
