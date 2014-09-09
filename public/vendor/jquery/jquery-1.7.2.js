@@ -6869,7 +6869,7 @@ jQuery.each([ "height", "width" ], function( i, name ) {
 if ( !jQuery.support.opacity ) {
 	jQuery.cssHooks.opacity = {
 		get: function( elem, computed ) {
-			// IE uses filters for opacity
+			// IE uses filters.js for opacity
 			return ropacity.test( (computed && elem.currentStyle ? elem.currentStyle.filter : elem.style.filter) || "" ) ?
 				( parseFloat( RegExp.$1 ) / 100 ) + "" :
 				computed ? "1" : "";
@@ -6885,7 +6885,7 @@ if ( !jQuery.support.opacity ) {
 			// Force it by setting the zoom level
 			style.zoom = 1;
 
-			// if setting opacity to 1, and no other filters exist - attempt to remove filter attribute #6652
+			// if setting opacity to 1, and no other filters.js exist - attempt to remove filter attribute #6652
 			if ( value >= 1 && jQuery.trim( filter.replace( ralpha, "" ) ) === "" ) {
 
 				// Setting style.filter to null, "" & " " still leave "filter:" in the cssText

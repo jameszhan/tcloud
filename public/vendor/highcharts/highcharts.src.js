@@ -4742,7 +4742,7 @@ Highcharts.VMLElement = VMLElement = {
 							key = 'fillcolor';
 						}
 
-					// opacity: don't bother - animation is too slow and filters introduce artifacts
+					// opacity: don't bother - animation is too slow and filters.js introduce artifacts
 					} else if (key === 'opacity') {
 						/*css(element, {
 							opacity: value

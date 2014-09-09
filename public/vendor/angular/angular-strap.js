@@ -6,10 +6,10 @@
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 angular.module('$strap.config', []).constant('$strapConfig', {});
-angular.module('$strap.filters', ['$strap.config']);
+angular.module('$strap.filters.js', ['$strap.config']);
 angular.module('$strap.directives', ['$strap.config']);
 angular.module('$strap', [
-  '$strap.filters',
+  '$strap.filters.js',
   '$strap.directives',
   '$strap.config'
 ]);

@@ -2553,7 +2553,7 @@ if(!Array.prototype.indexOf){
 		}
 		svg.Element.clipPath.prototype = new svg.Element.ElementBase;
 
-		// filters
+		// filters.js
 		svg.Element.filter = function(node) {
 			this.base = svg.Element.ElementBase;
 			this.base(node);
@@ -2590,7 +2590,7 @@ if(!Array.prototype.indexOf){
 				tempCtx.translate(-x + px, -y + py);
 				element.render(tempCtx);
 			
-				// apply filters
+				// apply filters.js
 				for (var i=0; i<this.children.length; i++) {
 					this.children[i].apply(tempCtx, 0, 0, width + 2*px, height + 2*py);
 				}

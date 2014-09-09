@@ -6870,7 +6870,7 @@ jQuery.each([ "height", "width" ], function( i, name ) {
 if ( !jQuery.support.opacity ) {
 	jQuery.cssHooks.opacity = {
 		get: function( elem, computed ) {
-			// IE uses filters for opacity
+			// IE uses filters.js for opacity
 			return ropacity.test( (computed && elem.currentStyle ? elem.currentStyle.filter : elem.style.filter) || "" ) ?
 				( parseFloat( RegExp.$1 ) / 100 ) + "" :
 				computed ? "1" : "";
@@ -6886,7 +6886,7 @@ if ( !jQuery.support.opacity ) {
 			// Force it by setting the zoom level
 			style.zoom = 1;
 
-			// if setting opacity to 1, and no other filters exist - attempt to remove filter attribute #6652
+			// if setting opacity to 1, and no other filters.js exist - attempt to remove filter attribute #6652
 			if ( value >= 1 && jQuery.trim( filter.replace( ralpha, "" ) ) === "" ) {
 
 				// Setting style.filter to null, "" & " " still leave "filter:" in the cssText
@@ -10467,7 +10467,7 @@ function setupModuleLoader(window) {
      *
      * # Module
      *
-     * A module is a collocation of services, directives, filters, and configuration information. Module
+     * A module is a collocation of services, directives, filters.js, and configuration information. Module
      * is used to configure the {@link AUTO.$injector $injector}.
      *
      * <pre>
@@ -18868,7 +18868,7 @@ function $TimeoutProvider() {
  * @name ng.$filterProvider
  * @description
  *
- * Filters are just functions which transform input to an output. However filters need to be Dependency Injected. To
+ * Filters are just functions which transform input to an output. However filters.js need to be Dependency Injected. To
  * achieve this a filter definition consists of a factory function which is annotated with dependencies and is
  * responsible for creating a filter function.
  *
@@ -18886,7 +18886,7 @@ function $TimeoutProvider() {
  *       // return the filter function which uses the greet service
  *       // to generate salutation
  *       return function(text) {
- *         // filters need to be forgiving so check input validity
+ *         // filters.js need to be forgiving so check input validity
  *         return text && greet(text) || text;
  *       };
  *     });
@@ -18907,8 +18907,8 @@ function $TimeoutProvider() {
  * </pre>
  *
  *
- * For more information about how angular filters work, and how to create your own filters, see
- * {@link guide/dev_guide.templates.filters Understanding Angular Filters} in the angular Developer
+ * For more information about how angular filters.js work, and how to create your own filters.js, see
+ * {@link guide/dev_guide.templates.filters.js Understanding Angular Filters} in the angular Developer
  * Guide.
  */
 /**
@@ -18993,7 +18993,7 @@ function $FilterProvider($provide) {
  *     property of the object. That's equivalent to the simple substring match with a `string`
  *     as described above.
  *
- *   - `function`: A predicate function can be used to write arbitrary filters. The function is
+ *   - `function`: A predicate function can be used to write arbitrary filters.js. The function is
  *     called for each element of `array`. The final result is an array of those elements that
  *     the predicate returned true for.
  *

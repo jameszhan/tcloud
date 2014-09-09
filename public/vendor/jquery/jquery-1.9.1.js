@@ -5358,7 +5358,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 					}
 				}
 
-				// Track unmatched elements for set filters
+				// Track unmatched elements for set filters.js
 				if ( bySet ) {
 					// They will have gone through all possible matchers
 					if ( (elem = !matcher && elem) ) {
@@ -5372,7 +5372,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 				}
 			}
 
-			// Apply set filters to unmatched elements
+			// Apply set filters.js to unmatched elements
 			matchedCount += i;
 			if ( bySet && i !== matchedCount ) {
 				j = 0;
@@ -7175,7 +7175,7 @@ jQuery.each([ "height", "width" ], function( i, name ) {
 if ( !jQuery.support.opacity ) {
 	jQuery.cssHooks.opacity = {
 		get: function( elem, computed ) {
-			// IE uses filters for opacity
+			// IE uses filters.js for opacity
 			return ropacity.test( (computed && elem.currentStyle ? elem.currentStyle.filter : elem.style.filter) || "" ) ?
 				( 0.01 * parseFloat( RegExp.$1 ) ) + "" :
 				computed ? "1" : "";
@@ -7191,7 +7191,7 @@ if ( !jQuery.support.opacity ) {
 			// Force it by setting the zoom level
 			style.zoom = 1;
 
-			// if setting opacity to 1, and no other filters exist - attempt to remove filter attribute #6652
+			// if setting opacity to 1, and no other filters.js exist - attempt to remove filter attribute #6652
 			// if value === "", then remove inline opacity #12685
 			if ( ( value >= 1 || value === "" ) &&
 					jQuery.trim( filter.replace( ralpha, "" ) ) === "" &&

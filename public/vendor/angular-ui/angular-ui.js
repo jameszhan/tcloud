@@ -7,9 +7,9 @@
 
 
 angular.module('ui.config', []).value('ui.config', {});
-angular.module('ui.filters', ['ui.config']);
+angular.module('ui.filters.js', ['ui.config']);
 angular.module('ui.directives', ['ui.config']);
-angular.module('ui', ['ui.filters', 'ui.directives', 'ui.config']);
+angular.module('ui', ['ui.filters.js', 'ui.directives', 'ui.config']);
 
 /**
  * Animates the injection of new DOM elements by simply creating the DOM with a class and then immediately removing it
@@ -1326,7 +1326,7 @@ angular.module('ui.directives').directive('uiValidate', function () {
  * @example: 'Records $0 to $1 out of $2 total'.format(['10', '20', '3000'])
  * @example: '$0 agrees to all mentions $0 makes in the event that $0 hits a tree while $0 is driving drunk'.format('Bob')
  */
-angular.module('ui.filters').filter('format', function(){
+angular.module('ui.filters.js').filter('format', function(){
   return function(value, replace) {
     if (!value) {
       return value;
@@ -1353,7 +1353,7 @@ angular.module('ui.filters').filter('format', function(){
  * @param search {string} needle to search for
  * @param [caseSensitive] {boolean} optional boolean to use case-sensitive searching
  */
-angular.module('ui.filters').filter('highlight', function () {
+angular.module('ui.filters.js').filter('highlight', function () {
   return function (text, search, caseSensitive) {
     if (search || angular.isNumber(search)) {
       text = text.toString();
@@ -1378,7 +1378,7 @@ angular.module('ui.filters').filter('highlight', function () {
  *          {{ 'Here Is my_phoneNumber' | inflector:'underscore' }} => here_is_my_phone_number
  *          {{ 'Here Is my_phoneNumber' | inflector:'variable' }} => hereIsMyPhoneNumber
  */
-angular.module('ui.filters').filter('inflector', function () {
+angular.module('ui.filters.js').filter('inflector', function () {
   function ucwords(text) {
     return text.replace(/^([a-z])|\s+([a-z])/g, function ($1) {
       return $1.toUpperCase();
@@ -1421,7 +1421,7 @@ angular.module('ui.filters').filter('inflector', function () {
  if the key === false then no filtering will be performed
  * @return {array}
  */
-angular.module('ui.filters').filter('unique', function () {
+angular.module('ui.filters.js').filter('unique', function () {
 
   return function (items, filterOn) {
 

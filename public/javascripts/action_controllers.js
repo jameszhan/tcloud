@@ -33,7 +33,7 @@ function TaskCalendarCtrl($scope, $dialog, $routeParams, DataCenter, Util){
 
   $scope.event_on_resize = function(event, day_delta, minute_delta, revert_func, js_event, ui, view){
     $scope.$apply(function(){
-      $scope.alert_message = ('Event Resized to make dayDelta ' + minute_delta);
+      $scope.alertMessage = ('Event Resized to make dayDelta ' + minute_delta);
     });
   };
   

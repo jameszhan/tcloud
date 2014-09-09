@@ -1061,7 +1061,7 @@ function setupModuleLoader(window) {
      *
      * # Module
      *
-     * A module is a collocation of services, directives, filters, and configuration information. Module
+     * A module is a collocation of services, directives, filters.js, and configuration information. Module
      * is used to configure the {@link AUTO.$injector $injector}.
      *
      * <pre>
@@ -9462,7 +9462,7 @@ function $TimeoutProvider() {
  * @name ng.$filterProvider
  * @description
  *
- * Filters are just functions which transform input to an output. However filters need to be Dependency Injected. To
+ * Filters are just functions which transform input to an output. However filters.js need to be Dependency Injected. To
  * achieve this a filter definition consists of a factory function which is annotated with dependencies and is
  * responsible for creating a filter function.
  *
@@ -9480,7 +9480,7 @@ function $TimeoutProvider() {
  *       // return the filter function which uses the greet service
  *       // to generate salutation
  *       return function(text) {
- *         // filters need to be forgiving so check input validity
+ *         // filters.js need to be forgiving so check input validity
  *         return text && greet(text) || text;
  *       };
  *     });
@@ -9501,8 +9501,8 @@ function $TimeoutProvider() {
  * </pre>
  *
  *
- * For more information about how angular filters work, and how to create your own filters, see
- * {@link guide/dev_guide.templates.filters Understanding Angular Filters} in the angular Developer
+ * For more information about how angular filters.js work, and how to create your own filters.js, see
+ * {@link guide/dev_guide.templates.filters.js Understanding Angular Filters} in the angular Developer
  * Guide.
  */
 /**
@@ -9587,7 +9587,7 @@ function $FilterProvider($provide) {
  *     property of the object. That's equivalent to the simple substring match with a `string`
  *     as described above.
  *
- *   - `function`: A predicate function can be used to write arbitrary filters. The function is
+ *   - `function`: A predicate function can be used to write arbitrary filters.js. The function is
  *     called for each element of `array`. The final result is an array of those elements that
  *     the predicate returned true for.
  *
